@@ -21,17 +21,32 @@
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	
-	<link rel="stylesheet" href="/css/main.css" />
+	<link rel="stylesheet" href="css/main.css" />
 	
 	<?php echo($base->get_styles($page)); ?>
 	
 </head>
 	<body>
-		<?php echo("<pre>".$page."</pre>") ?>
-			<div class="container">
-			
-				<?php include($base->get_content($page)); ?>
-			
+		<div class="container">
+			<div class="col-12">
+				
+				<ul class="list-inline">
+				<?php 
+					//fetching each page to display on the menu
+					foreach ($base->pagestructure as $key => $value) {
+						if (isset($value['menu']) && $value['menu'] == true) {
+						
+							echo("<li><a href='".$key."'>".$value['name']."</a></li>");
+							
+						}
+					}
+				 ?>
+				</ul>
 			</div>
+		</div>
+	
+		<div class="container">
+			<?php include($base->get_content($page)); ?>
+		</div>
 	</body>
 </html>

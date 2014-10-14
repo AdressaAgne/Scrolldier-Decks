@@ -1,19 +1,29 @@
 <?php 
 class Structure {
 	
-	//Define the variable devider, and how you get a variable
-	private $variableDevider = "-";
+	//Define the variable divider, and how you get a variable
+	private $variableDevider = "/";
 	
 	//declaring page structures
-	private $pagestructure = array(
-		"" => array(
-			"title" => "Scrolldier.com",
+	public $pagestructure = array(
+		"/" => array(
+			"title" => "Scrolldier",
 			"page" => "main",
+			"menu" => true,
+			"name" => "Home",
 			"style" => ""
 		),
 	
 		"/decks" => array(
-			"title" => "Scrolldier Decks",
+			"title" => "Scrolldier - Decks",
+			"page" => "deck",
+			"menu" => true,
+			"name" => "Decks",
+			"style" => ""
+		),
+		
+		"/deck" => array(
+			"title" => "Scrolldier - Deck",
 			"page" => "deck",
 			"style" => "",
 			"var" => array(
@@ -36,19 +46,29 @@ class Structure {
 	
 	
 	//gets the real name of a url to feed to the _checkPage, so we can have variables
-	private function _get_page_name($page) {
+	public function _get_page_name($page) {
 		return substr($page, 0, strpos($page, $this->variableDevider));
 	}
 	
 	
 	//check the if the page exists, if it does not display 404 page
 	private function _checkPage($page) {
-		$page = $this->_get_page_name($page);
-		
-		if (array_key_exists($page, $this->pagestructure)) {
-			return $page;
+		if (!empty($page)) {
+			if (array_key_exists($page, $this->pagestructure)) {
+				return $page;
+			} else {
+				
+				$page = $this->_get_page_name($page);
+				
+				if (array_key_exists($page, $this->pagestructure)) {
+					return $page;
+				} else {
+					return "404";
+				}
+				
+			}
 		} else {
-			return "404";
+			return "/";	
 		}
 	}
 	
@@ -84,7 +104,7 @@ class Structure {
 	
 	
 	//get a variable assigned to the specific page
-	public function get_var($page, $var, $var_pos) {
+	public function get_var($page, $var) {
 		return substr($page, strpos($page, $this->variableDevider) +1);
 	}
 	
