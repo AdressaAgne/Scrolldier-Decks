@@ -1,7 +1,7 @@
 <?php 
 	require_once("controllers/connection.php");
 	require_once("controllers/structure.php");
-	require_once("controllers/pagehandler.php");
+//	require_once("controllers/pagehandler.php");
 	
 	$base = new Structure();
 	
@@ -15,15 +15,15 @@
 	<meta name="description" content="" />
 	
 	<!--	Getting page title-->
-	<title><?php echo($base->get_title($page)); ?></title>
+	<title><?php echo($base->get_title()); ?></title>
 	
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	
-	<link rel="stylesheet" href="css/main.css" />
+	<link rel="stylesheet" href="/css/main.css" />
 	
-	<?php echo($base->get_styles($page)); ?>
+	<?php echo($base->get_styles()); ?>
 	
 </head>
 	<body>
@@ -46,7 +46,7 @@
 		</div>
 	
 		<div class="container">
-			<?php include($base->get_content($page)); ?>
+			<?php include($base->get_content()); ?>
 		</div>
 	</body>
 </html>

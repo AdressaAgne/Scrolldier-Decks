@@ -1,5 +1,16 @@
 <?php 
-class Structure {
+class Structure{
+	
+	
+	protected $_request;
+	protected $_path;
+	protected $_page;
+		
+	function __construct() {
+		$this->_request = parse_url($_SERVER['REQUEST_URI']);
+		$this->_path = $this->_request["path"];
+		$this->_page = rtrim(str_replace(basename($_SERVER['SCRIPT_NAME']), '', $this->_path), '/');
+	}
 	
 	//Define the variable divider, and how you get a variable
 	private $variableDevider = "/";
@@ -47,18 +58,18 @@ class Structure {
 	
 	//gets the real name of a url to feed to the _checkPage, so we can have variables
 	public function _get_page_name($page) {
-		return substr($page, 0, strpos($page, $this->variableDevider));
+		return substr($page, strpos($page, $this->variableDevider), 6);
 	}
 	
 	
 	//check the if the page exists, if it does not display 404 page
-	private function _checkPage($page) {
-		if (!empty($page)) {
-			if (array_key_exists($page, $this->pagestructure)) {
-				return $page;
+	private function _checkPage() {
+		if (!empty($this->_page)) {
+			if (array_key_exists($this->_page, $this->pagestructure)) {
+				return $this->_page;
 			} else {
 				
-				$page = $this->_get_page_name($page);
+				$page = $this->_get_page_name($this->_page);
 				
 				if (array_key_exists($page, $this->pagestructure)) {
 					return $page;
@@ -74,29 +85,29 @@ class Structure {
 	
 	
 	//gets the correct file to display
-	public function get_content($page) {
+	public function get_content() {
 		//inclueds
-		$page = $this->_checkPage($page);
+		$page = $this->_checkPage($this->_page);
 		
 		return $this->_completeUrl($this->pagestructure[$page]['page']);
 		
 	}
 	
 	//gets page title
-	public function get_title($page) {
+	public function get_title() {
 		//echo
 		
-		$page = $this->_checkPage($page);
+		$page = $this->_checkPage($this->_page);
 		
 		return $this->pagestructure[$page]['title'];
 		
 	}
 	
 	//gets additional styles to link up
-	public function get_styles($page) {
+	public function get_styles() {
 		//echo
 		
-		$page = $this->_checkPage($page);
+		$page = $this->_checkPage($this->_page);
 		
 		return $this->pagestructure[$page]['style'];
 		
@@ -104,8 +115,8 @@ class Structure {
 	
 	
 	//get a variable assigned to the specific page
-	public function get_var($page, $var) {
-		return substr($page, strpos($page, $this->variableDevider) +1);
+	public function get_var($var) {
+		return substr(strrchr($this->_page, $this->variableDevider), 1);
 	}
 	
 	
