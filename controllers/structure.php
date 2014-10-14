@@ -26,11 +26,17 @@ class Structure {
 		return "view/".$page.".php";
 	}
 	
+	private function _checkPage($page) {
+		if (array_key_exists($page, $this->pagestructure)) {
+			return $page;
+		} else {
+			return "404";
+		}
+	}
+	
 	public function get_content($page) {
 		//inclueds
-		if (!array_key_exists($page, $this->pagestructure)) {
-			$page = "404";
-		}
+		$page = $this->_checkPage($page);
 		
 		return $this->_completeUrl($this->pagestructure[$page]['page']);
 		
@@ -39,9 +45,7 @@ class Structure {
 	public function get_title($page) {
 		//echo
 		
-		if (!array_key_exists($page, $this->pagestructure)) {
-			$page = "404";
-		}
+		$page = $this->_checkPage($page);
 		
 		return $this->pagestructure[$page]['title'];
 		
@@ -50,9 +54,8 @@ class Structure {
 	public function get_styles($page) {
 		//echo
 		
-		if (!array_key_exists($page, $this->pagestructure)) {
-			$page = "404";
-		}
+		$page = $this->_checkPage($page);
+		
 		return $this->pagestructure[$page]['style'];
 		
 	}
