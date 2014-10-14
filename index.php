@@ -1,7 +1,7 @@
 <?php 
 	require_once("controllers/connection.php");
+	require_once("controllers/pagehandler.php");
 	require_once("controllers/structure.php");
-//	require_once("controllers/pagehandler.php");
 	
 	$base = new Structure();
 	

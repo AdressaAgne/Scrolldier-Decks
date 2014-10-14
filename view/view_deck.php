@@ -1,0 +1,1 @@
+<h2>Viewing a deck <small>deck id: <?php echo($base->get_var(2)); ?></small></h2>

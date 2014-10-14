@@ -1,53 +1,22 @@
 <?php 
-class Structure{
-	
-	
-	protected $_request;
-	protected $_path;
+class Structure extends Base{
+
 	protected $_page;
-		
+	protected $_vars;
+	
+	//Define the variable divider
+	protected $variableDevider = "/";
+	
+	//getting the current page the user are viewing
 	function __construct() {
-		$this->_request = parse_url($_SERVER['REQUEST_URI']);
-		$this->_path = $this->_request["path"];
-		$this->_page = rtrim(str_replace(basename($_SERVER['SCRIPT_NAME']), '', $this->_path), '/');
+		$request = parse_url($_SERVER['REQUEST_URI']);
+		$path = $request["path"];
+		
+		$this->_vars = explode("/", $path);
+		$this->_page = "/".$this->_vars[1];
 	}
 	
-	//Define the variable divider, and how you get a variable
-	private $variableDevider = "/";
-	
-	//declaring page structures
-	public $pagestructure = array(
-		"/" => array(
-			"title" => "Scrolldier",
-			"page" => "main",
-			"menu" => true,
-			"name" => "Home",
-			"style" => ""
-		),
-	
-		"/decks" => array(
-			"title" => "Scrolldier - Decks",
-			"page" => "deck",
-			"menu" => true,
-			"name" => "Decks",
-			"style" => ""
-		),
-		
-		"/deck" => array(
-			"title" => "Scrolldier - Deck",
-			"page" => "deck",
-			"style" => "",
-			"var" => array(
-				"deck_id" => null
-			)
-		),
-		
-		"404" => array(
-			"title" => "404 Error",
-			"page" => "404",
-			"style" => ""
-		)
-	);
+
 	
 	
 	// completes the page/file url
@@ -57,32 +26,25 @@ class Structure{
 	
 	
 	//gets the real name of a url to feed to the _checkPage, so we can have variables
-	public function _get_page_name($page) {
-		return substr($page, strpos($page, $this->variableDevider), 6);
+	public function _get_page_name() {
+	
+		return substr($this->_page, strpos($this->_page, $this->variableDevider), 6);
 	}
 	
 	
 	//check the if the page exists, if it does not display 404 page
 	private function _checkPage() {
+		$page = $this->_get_page_name();
 		if (!empty($this->_page)) {
 			if (array_key_exists($this->_page, $this->pagestructure)) {
 				return $this->_page;
 			} else {
-				
-				$page = $this->_get_page_name($this->_page);
-				
-				if (array_key_exists($page, $this->pagestructure)) {
-					return $page;
-				} else {
-					return "404";
-				}
-				
+				return "404";
 			}
 		} else {
 			return "/";	
 		}
 	}
-	
 	
 	//gets the correct file to display
 	public function get_content() {
@@ -113,13 +75,33 @@ class Structure{
 		
 	}
 	
+	//gets additional styles to link up
+	public function get_name() {
+		//echo
+		
+		$page = $this->_checkPage($this->_page);
+		
+		return $this->pagestructure[$page]['name'];
+		
+	}
+	
+	//gets additional styles to link up
+	public function get_page() {
+		//echo
+		
+		return $this->_page;
+		
+	}
 	
 	//get a variable assigned to the specific page
 	public function get_var($var) {
-		
-		$vars = explode("/", $this->_page);
+		if (isset($this->_vars[$var + 1])) {
+			return $this->_vars[$var + 1];
+		} else {
+			return "none";
+		}
 	
-		return $vars[$var];
+		
 	}
 	
 	
