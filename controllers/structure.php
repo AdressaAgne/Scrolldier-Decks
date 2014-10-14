@@ -116,7 +116,10 @@ class Structure{
 	
 	//get a variable assigned to the specific page
 	public function get_var($var) {
-		return substr(strrchr($this->_page, $this->variableDevider), 1);
+		
+		$vars = explode("/", $this->_page);
+	
+		return $vars[$var];
 	}
 	
 	
