@@ -1,1 +1,1 @@
-<h2>HI this is the deck page</h2>
+<h2>Deck page! <small>var: <?php echo($base->get_var($page, "deck_id", 2)); ?></small></h2>

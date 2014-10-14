@@ -1,10 +1,8 @@
 <?php 
 	require_once("controllers/connection.php");
 	require_once("controllers/structure.php");
-	
 	require_once("controllers/pagehandler.php");
 	
-
 	$base = new Structure();
 	
  ?>
@@ -16,6 +14,7 @@
 	<meta name="author" content="Agne Ødegaard" />
 	<meta name="description" content="" />
 	
+	<!--	Getting page title-->
 	<title><?php echo($base->get_title($page)); ?></title>
 	
 	<!--[if lt IE 9]>
@@ -28,6 +27,7 @@
 	
 </head>
 	<body>
+		<?php echo("<pre>".$page."</pre>") ?>
 			<div class="container">
 			
 				<?php include($base->get_content($page)); ?>
