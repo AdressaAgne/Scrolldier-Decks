@@ -1,17 +1,23 @@
 <?php 
-class structure {
+class Structure {
 	
 	//declaring page structures
-	private $page_structure = array(
+	private $pagestructure = array(
 		"/decks" => array(
 			"title" => "Scrolldier Decks",
 			"page" => "deck",
 			"style" => ""
 		),
 		
-		"/" => array(
+		"" => array(
 			"title" => "Scrolldier.com",
-			"page" => "main.php",
+			"page" => "main",
+			"style" => ""
+		),
+		
+		"404" => array(
+			"title" => "Scrolldier 404 Error",
+			"page" => "404",
 			"style" => ""
 		)
 	);
@@ -22,22 +28,32 @@ class structure {
 	
 	public function get_content($page) {
 		//inclueds
+		if (!array_key_exists($page, $this->pagestructure)) {
+			$page = "404";
+		}
 		
-		return $this->_completeUrl($this->$page_structure[$page]['page']);
+		return $this->_completeUrl($this->pagestructure[$page]['page']);
 		
 	}
 	
 	public function get_title($page) {
 		//echo
 		
-		return $this->_completeUrl($this->$page_structure[$page]['title']);
+		if (!array_key_exists($page, $this->pagestructure)) {
+			$page = "404";
+		}
+		
+		return $this->pagestructure[$page]['title'];
 		
 	}
 	
 	public function get_styles($page) {
 		//echo
 		
-		return $this->_completeUrl($this->$page_structure[$page]['style']);
+		if (!array_key_exists($page, $this->pagestructure)) {
+			$page = "404";
+		}
+		return $this->pagestructure[$page]['style'];
 		
 	}
 	

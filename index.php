@@ -2,9 +2,10 @@
 	require_once("controllers/connection.php");
 	require_once("controllers/structure.php");
 	
-	$page = "/decks";
+	require_once("controllers/pagehandler.php");
+	
 
-	$base = new structure();
+	$base = new Structure();
 	
  ?>
 
@@ -15,7 +16,7 @@
 	<meta name="author" content="Agne Ødegaard" />
 	<meta name="description" content="" />
 	
-	<!-- <title><?php //echo($base->get_title($page)); ?></title> -->
+	<title><?php echo($base->get_title($page)); ?></title>
 	
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
@@ -23,12 +24,14 @@
 	
 	<link rel="stylesheet" href="/css/main.css" />
 	
-	<?php // echo($base->get_styles($page)); ?>
+	<?php echo($base->get_styles($page)); ?>
 	
 </head>
 	<body>
-		
-		<?php include($base->get_content($page)); ?>
-		123
+			<div class="container">
+			
+				<?php include($base->get_content($page)); ?>
+			
+			</div>
 	</body>
 </html>
