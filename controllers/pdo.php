@@ -1,0 +1,47 @@
+<?php 
+
+class Database {
+	
+	protected $_db_host;
+	protected $_db_username;
+	protected $_db_password;
+	protected $_db_name;
+	protected $_db;
+	
+	function __construct() {
+		
+		$this->_db_host = "localhost";
+		$this->_db_username = "root";
+		$this->_db_password = "root";
+		$this->_db_name = "orangee_test";
+		
+//		$this->_db_host = "scrolldier.com.mysql";
+//		$this->_db_username = "scrolldier_com";
+//		$this->_db_password = "wDtvKMgE";
+//		$this->_db_name = "scrolldier_com";
+			
+		try {
+			$this->_db = new PDO('mysql:host='.$this->_db_host.';dbname='.$this->_db_name, $this->_db_username, $this->_db_password);
+			$this->_db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+		} catch (PDOException $e) {
+			
+			$_GET['error'] .= "\n".$e;
+			
+		}
+	}
+	
+	
+	private function arrayBinder(&$pdo, &$array) {
+		foreach ($array as $key => $value) {
+			$pdo->bindValue(':'.$key,$value);
+		}
+	}
+	
+	
+	private function arrayBinderInt(&$pdo, &$array) {
+		foreach ($array as $key => $value) {
+			$pdo->bindValue(':'.$key, (int) $value, PDO::PARAM_INT);
+		}
+	}
+	
+}

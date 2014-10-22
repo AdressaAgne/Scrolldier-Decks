@@ -7,15 +7,72 @@
 
 
 body{
-	background-color: @light;
-	color: @dark;
+	background-color: @color;
+	color: @light;
 	font-family: 'open sans', sans-serif;
 	font-size: @font-size;
 	line-height: @font-line-height;
+	padding-top: 0px;
 }
 
 .container{
 	width: 100%;
 	margin: 0 auto;
 	padding: 5px @size * 2;
+	
+}
+
+
+.bottom-content{
+	margin-top: 80px;
+}
+
+a{
+	text-decoration: none !important;
+	color: #80C000;
+	
+	&:hover{
+		color: #40C000;
+	}
+}
+
+@wallpaper-offset: -40px;
+
+.wallpaper{
+	height: 200px;
+	width: 100%;
+	background-position: center @wallpaper-offset;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+}
+
+.menu{
+	padding: 10px;
+	background: url(../img/backgrounds/cover-1.jpg) center @wallpaper-offset;
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-color: @color;
+	background-attachment: fixed;
+	width: 100%;
+}
+
+.menu-fixed{
+	position: fixed;
+	top: 0px;
+	
+}
+
+@media (max-width: 1024px) {
+	.container{
+		padding: 5px @size * 1;
+		font-size: 14px;
+	}
+}
+
+@media (max-width: 768px) {
+	.container{
+		padding: 5px 0px;
+		font-size: 12px;
+	}
 }

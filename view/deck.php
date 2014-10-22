@@ -1,1 +1,5 @@
-<h2>Deck page! <small>var: <?php echo($base->get_var(1)); ?></small></h2>
+<div class="container">
+	<div class="page-header">
+		<h2>Decks</h2>
+	</div>
+</div>

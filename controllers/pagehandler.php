@@ -4,7 +4,7 @@
 class Base {
 	public $pagestructure = array(
 		"/" => array( 						//url extension
-			"title" 	=> "Scrolldier", 	//title
+			"title" 	=> "Scrolldier",	//title
 			"page" 		=> "main", 			//file name without .php
 			"menu" 		=> true, 			//if its included in the menu or not
 			"name" 		=> "Home", 			//name of the page
@@ -15,15 +15,31 @@ class Base {
 			"title" 	=> "Scrolldier - Decks",
 			"page" 		=> "deck",
 			"menu" 		=> true,
-			"name" 		=> "Decks",
+			"name" 		=> "View Decks",
 			"style" 	=> ""
 		),
 		
 		"/deck" => array(
 			"title" 	=> "Scrolldier - Deck",
 			"page" 		=> "view_deck",
-			"menu" 		=> true,
+			"menu" 		=> false,
 			"name" 		=> "Deck",
+			"style" 	=> ""
+		),
+		
+		"/guide" => array(
+			"title" 	=> "Scrolldier - Deck guides",
+			"page" 		=> "guide",
+			"menu" 		=> true,
+			"name" 		=> "Deck Guides",
+			"style" 	=> ""
+		),
+		
+		"/new" => array(
+			"title" 	=> "Scrolldier - Deckbuilder",
+			"page" 		=> "deckbuilder",
+			"menu" 		=> true,
+			"name" 		=> "New Deck",
 			"style" 	=> ""
 		),
 		

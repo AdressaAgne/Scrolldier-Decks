@@ -3,6 +3,7 @@ class Structure extends Base{
 
 	protected $_page;
 	protected $_vars;
+	public $_host;
 	
 	//Define the variable divider
 	protected $variableDevider = "/";
@@ -11,30 +12,20 @@ class Structure extends Base{
 	function __construct() {
 		$request = parse_url($_SERVER['REQUEST_URI']);
 		$path = $request["path"];
-		
-		$this->_vars = explode("/", $path);
-		$this->_page = "/".$this->_vars[1];
-	}
-	
 
-	
+		$this->_vars = explode("/", $path);
+		$this->_page = $this->variableDevider.$this->_vars[1];
+		$this->_host = $_SERVER['HTTP_HOST'];
+	}
 	
 	// completes the page/file url
 	private function _completeUrl($page) {
 		return "view/".$page.".php";
 	}
 	
-	
-	//gets the real name of a url to feed to the _checkPage, so we can have variables
-	public function _get_page_name() {
-	
-		return substr($this->_page, strpos($this->_page, $this->variableDevider), 6);
-	}
-	
-	
 	//check the if the page exists, if it does not display 404 page
 	private function _checkPage() {
-		$page = $this->_get_page_name();
+
 		if (!empty($this->_page)) {
 			if (array_key_exists($this->_page, $this->pagestructure)) {
 				return $this->_page;
@@ -75,7 +66,7 @@ class Structure extends Base{
 		
 	}
 	
-	//gets additional styles to link up
+	//gets the pages name
 	public function get_name() {
 		//echo
 		
@@ -95,15 +86,14 @@ class Structure extends Base{
 	
 	//get a variable assigned to the specific page
 	public function get_var($var) {
+	
 		if (isset($this->_vars[$var + 1])) {
 			return $this->_vars[$var + 1];
 		} else {
-			return "none";
+			return false;
 		}
-	
-		
+			
 	}
-	
 	
 }
 

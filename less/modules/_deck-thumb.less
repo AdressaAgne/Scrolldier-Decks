@@ -1,0 +1,95 @@
+@deck-main: @color;
+
+@deck-border: darken(@deck-main, 5%);
+//79624E, 341908
+@deck-header-color-1: lighten(@deck-main, 15%);
+@deck-header-color-2: lighten(@deck-main, 10%);
+
+
+a .deck-thumbnail{
+	width: 100%;
+	border-radius: 3px;
+	background-color: lighten(@deck-main, 10%);
+	color: @light;
+	overflow: hidden;
+	text-decoration: none !important;
+	
+	&:hover{
+		background-color: lighten(@deck-main, 5%);
+	}
+	
+	&:visited{
+		text-decoration: none;
+	}
+	
+	
+	
+	& .deck-header{
+		
+		font-size: 14px;
+		color: @dark;
+		padding: 5px 10px;
+		background-position: center center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		height: 100px;
+		-moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2);
+		box-shadow: inset 0 1px rgba(255, 255, 255, 0.2);
+		border-radius: 2px 2px 0px 0px;
+}
+	
+	& h3{
+		line-height: 10px;
+		margin-top: 10px;
+		text-decoration: none;
+	}
+	
+	& small{
+		color: lighten(@color, 35%);
+		margin: 0px;
+		padding: 0px;
+		line-height: 10px;
+	}
+	
+	& .deck-content{
+		font-size: 12px;
+		padding: 2px 10px;
+	}
+	
+	& ul {
+		text-align: center;
+	}
+	
+	& ul li{
+		display: inline;
+		font-size: 9px;
+	}
+	
+	
+	
+	& .bar{
+		height: 7px;
+		float: left;
+		
+		&.bar-energy{
+			background-color: @color-energy;
+			-moz-box-shadow: inset 0 1px lighten(@color-energy, 5%);
+			box-shadow: inset 0 1px lighten(@color-energy, 5%);
+		}
+		&.bar-growth{
+			background-color: @color-growth;
+			-moz-box-shadow: inset 0 1px lighten(@color-growth, 5%);
+			box-shadow: inset 0 1px lighten(@color-growth, 5%);
+		}
+		&.bar-order{
+			background-color: @color-order;
+			-moz-box-shadow: inset 0 1px lighten(@color-order, 5%);
+			box-shadow: inset 0 1px lighten(@color-order, 5%);
+		}
+		&.bar-decay{
+			background-color: @color-decay;
+			-moz-box-shadow: inset 0 1px lighten(@color-decay, 5%);
+			box-shadow: inset 0 1px lighten(@color-decay, 5%);
+		}
+	}
+}
