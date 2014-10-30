@@ -45,13 +45,6 @@ $data = $deck->get_deck_data($base->get_var(1));
 							foreach ($data['scrolls_values'] as $key => $value) { ?>
 								
 								<div class="col-2 col-p-6 col-t-3" data-id="<?php echo($data['scrolls_values'][$key]['id']) ?>" data-count="<?php echo($data['scrolls_values'][$key]['count']) ?>">
-									<!--<?php 
-										if ($data['scrolls_values'][$key]['count'] > 1) {
-											for ($i = 1; $i < $data['scrolls_values'][$key]['count']; $i++) { ?>
-												<div class="scroll-dublicate-<?php echo($data['scrolls_values'][$key]['count']) ?>" data-count="<?php echo($i) ?>" style="background-image: url('/img/scrolls/<?php echo($data['scrolls_values'][$key]['image']) ?>.png');"></div>
-											<?php }
-										}
-									 ?>-->
 									 <div class="col-12 scroll scroll-stack-<?=$data['scrolls_values'][$key]['count']?>" style="background-image: url('/img/scrolls/<?php echo($data['scrolls_values'][$key]['image']) ?>.png');">
 									
 										<i class="icon-<?php echo($data['scrolls_values'][$key]['ressours']) ?>"></i>
