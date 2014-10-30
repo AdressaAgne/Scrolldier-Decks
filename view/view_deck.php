@@ -53,7 +53,7 @@ $data = $deck->get_deck_data($base->get_var(1));
 										}
 									 ?>-->
 									 <div class="col-12 scroll scroll-stack-<?=$data['scrolls_values'][$key]['count']?>" style="background-image: url('/img/scrolls/<?php echo($data['scrolls_values'][$key]['image']) ?>.png');">
-									<
+									
 										<i class="icon-<?php echo($data['scrolls_values'][$key]['ressours']) ?>"></i>
 									</div>
 									<div class="col-12 scroll-content">
