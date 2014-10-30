@@ -19,12 +19,12 @@ $data = $deck->get_deck_data($base->get_var(1));
 			}
 		?>
 		<?php echo($data["name"]) ?> <br />
-		<small><?php echo($data['author']." - ".$data['time']) ?></small></h2>
+		<small>Score: <?php echo($data['vote_up'] - $data['vote_down']) ?> - by: <?php echo($data['author']." - ".$data['time']) ?></small></h2>
 	</div>
 	
 
 		<div class="col-12 align-center">
-			<span><?php echo($data['vote_up'] - $data['vote_down']) ?></span>
+			
 			<button class="btn big success">Vote Up</button>
 			<button class="btn big danger">Vote Down</button>
 		</div>
@@ -45,14 +45,15 @@ $data = $deck->get_deck_data($base->get_var(1));
 							foreach ($data['scrolls_values'] as $key => $value) { ?>
 								
 								<div class="col-2 col-p-6 col-t-3" data-id="<?php echo($data['scrolls_values'][$key]['id']) ?>" data-count="<?php echo($data['scrolls_values'][$key]['count']) ?>">
-									<?php 
+									<!--<?php 
 										if ($data['scrolls_values'][$key]['count'] > 1) {
 											for ($i = 1; $i < $data['scrolls_values'][$key]['count']; $i++) { ?>
-												<div class="scroll-dublicate" data-count="<?php echo($i) ?>" style="background-image: url('/img/scrolls/<?php echo($data['scrolls_values'][$key]['image']) ?>.png');"></div>
+												<div class="scroll-dublicate-<?php echo($data['scrolls_values'][$key]['count']) ?>" data-count="<?php echo($i) ?>" style="background-image: url('/img/scrolls/<?php echo($data['scrolls_values'][$key]['image']) ?>.png');"></div>
 											<?php }
 										}
-									 ?>
-									<div class="col-12 scroll" style="background-image: url('/img/scrolls/<?php echo($data['scrolls_values'][$key]['image']) ?>.png');">
+									 ?>-->
+									 <div class="col-12 scroll scroll-stack-<?=$data['scrolls_values'][$key]['count']?>" style="background-image: url('/img/scrolls/<?php echo($data['scrolls_values'][$key]['image']) ?>.png');">
+									<
 										<i class="icon-<?php echo($data['scrolls_values'][$key]['ressours']) ?>"></i>
 									</div>
 									<div class="col-12 scroll-content">
@@ -61,10 +62,6 @@ $data = $deck->get_deck_data($base->get_var(1));
 								</div>
 								
 							<?php } ?>
-					</div>
-					
-					<div class="col-8 col-offset-2">
-						<?php echo($data['text']) ?>
 					</div>
 				</div>
 		
@@ -169,6 +166,9 @@ $data = $deck->get_deck_data($base->get_var(1));
 				</div>
 		
 		
+		<div class="col-8 col-offset-2">
+			<?php echo($data['text']) ?>
+		</div>
 		
 		
 		

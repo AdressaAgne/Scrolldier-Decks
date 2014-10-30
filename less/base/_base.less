@@ -45,7 +45,16 @@ ul.list-stats li{
 .clear{
 	clear: both;
 }
-
+.clearfix{
+	*zoom: 1;
+	&:before, &:after{
+		content: " ";
+		display: block;
+	}
+	&:after{
+		clear: both;
+	}
+}
 
 
 .bottom-content{
@@ -89,6 +98,7 @@ a{
 
 .menu-fixed{
 	position: fixed;
+	z-index: 99999999999;
 	width: 100%;
 	top: 0px;
 	background-color: @color;
