@@ -55,20 +55,22 @@
 		<?php } ?>
 	</div>
 	
+	
+	<?php 
+		//834
+		$deckData = $deck->get_deck_data(5);
+		
+		if ($deckData != "No Deck with this ID") {
+	 ?>
 	<div class="page-header">
 		<h2>Featured Deck</h2>
 	</div>
+	
+	
 	<div class="col-12">
-		<?php 
-			
-			$query = $deck->_db->prepare("SELECT * FROM decks WHERE id = 834");
-			$query->execute();
-			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-			
-			$deckData = $deck->get_deck_data(834);
-		 ?>
-			<div class="col-4 col-t-12">
-			<a href="/deck/<?php echo($row['id']) ?>">
+		
+		<div class="col-4 col-t-12">
+			<a href="/deck/<?php echo($deckData['id']) ?>">
 				<div class="deck-thumbnail">
 					<div class="deck-header" style="background-image: url(img/decks/<?php echo($deckData['image']) ?>);">
 						
@@ -93,20 +95,38 @@
 					</div>
 				</div>
 			</a>
-				
+			<div class="col-12">
+				<div class="col-12 deck-scrolls">
+					<?php 	
+						foreach ($deckData['scrolls_values'] as $key => $value) { ?>
+							
+							<div class="col-12 scroll-front" data-id="<?php echo($deckData['scrolls_values'][$key]['id']) ?>" data-count="<?php echo($deckData['scrolls_values'][$key]['count']) ?>">
+								 <div class=" scroll scroll-stack-<?=$deckData['scrolls_values'][$key]['count']?>" style="background-image: url('/img/scrolls/<?php echo($deckData['scrolls_values'][$key]['image']) ?>.png');">
+									
+									<div class="col-12 text">
+										<i class="icon-<?php echo($deckData['scrolls_values'][$key]['ressours']) ?> front-text"></i>
+										<?php echo("x".$deckData['scrolls_values'][$key]['count']) ?> <?php echo($deckData['scrolls_values'][$key]['name']) ?>
+									</div>
+								</div>
+								
+							</div>
+							
+						<?php } ?>
+				</div>
 			</div>
+		</div>
 		
 		<div class="col-8 col-t-12">
-			<h3><?php echo(substr($row['deck_title'],0,30)) ?> <small><?php echo('By: '.$deckData['author']." - ".$deckData['time']) ?></small></h3>
+			<h3><?php echo(substr($deckData['name'],0,30)) ?> <small><?php echo('By: '.$deckData['author']." - ".$deckData['time']) ?></small></h3>
 			<p class="col-12 col-t-10 col-t-offset-1">
-				<?php echo($row['text']) ?>
+				<?php echo($deckData['text']) ?>
 			</p>
 
-			<p class="col-12  col-t-offset-1"><a href="deck/<?php echo($row['id']) ?>" class="btn ">Read More</a></p>
+			<p class="col-12  col-t-offset-1"><a href="deck/<?php echo($deckData['id']) ?>" class="btn ">Read More</a></p>
 		</div>
-	<?php } ?>
-	</div>
-	
+
+</div>
+<?php } ?>	
 	
 	<div class="page-header">
 		<h2>News &amp; Spoilers</h2>

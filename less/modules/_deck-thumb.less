@@ -94,6 +94,7 @@ a .deck-thumbnail{
 
 .deck-bar-fixed{
 	position: fixed;
+	z-index: 9999999;
 	top: 53px;
 	width: 100%;
 	height: 7px;
@@ -101,6 +102,12 @@ a .deck-thumbnail{
 @media (max-width: 480px) {
 	.deck-bar-fixed{
 		display: none;
+	}
+	.deck-scrolls {
+	
+		& .scroll-content{
+			height: 35px;
+		}
 	}
 }
 
@@ -111,7 +118,7 @@ a .deck-thumbnail{
 		text-shadow: 0 1px @dark;
 		margin: 0px;
 		padding: 3px 0px;
-		height: 20px;
+		height: 25px;
 	}
 	
 	& .scroll{
@@ -130,6 +137,7 @@ a .deck-thumbnail{
 
 		margin: 0px;
 	}
+
 
 	/* 2-3 cards */
 	& .scroll-stack-2, & .scroll-stack-3 {
@@ -182,6 +190,17 @@ a .deck-thumbnail{
 		-moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), inset 0 6px rgba(0,0,0,.4), 0 -8px 20px -8px #000;
 		box-shadow: inset 0 1px rgba(255, 255, 255, 0.1), inset 0 6px rgba(0,0,0,.4), 0 -8px 20px -8px #000;
 	}
+	
+	& .scroll-front{
+		& .scroll, & .scroll-stack-2:before, & .scroll-stack-3:before, & .scroll-stack-3:after {
+			height: 40px;
+		}
+		& .scroll .text{
+			background-color: rgba(0, 0, 0, .5);
+			height: 40px;
+		}
+	}
+	
 }
 
 @media (min-width: 768px) {
