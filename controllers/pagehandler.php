@@ -46,6 +46,7 @@ class Base {
 		"404" => array(
 			"title" 	=> "404 Error",
 			"page" 		=> "404",
+			
 			"name" 		=> "Error 404, page does not exist",
 			"style" 	=> ""
 		)

@@ -65,31 +65,84 @@ a .deck-thumbnail{
 		font-size: 9px;
 	}
 	
+}
+.bar{
+	height: 7px;
+	float: left;
 	
+	&.bar-energy{
+		background-color: @color-energy;
+		-moz-box-shadow: inset 0 1px lighten(@color-energy, 5%);
+		box-shadow: inset 0 1px lighten(@color-energy, 5%);
+	}
+	&.bar-growth{
+		background-color: @color-growth;
+		-moz-box-shadow: inset 0 1px lighten(@color-growth, 5%);
+		box-shadow: inset 0 1px lighten(@color-growth, 5%);
+	}
+	&.bar-order{
+		background-color: @color-order;
+		-moz-box-shadow: inset 0 1px lighten(@color-order, 5%);
+		box-shadow: inset 0 1px lighten(@color-order, 5%);
+	}
+	&.bar-decay{
+		background-color: @color-decay;
+		-moz-box-shadow: inset 0 1px lighten(@color-decay, 5%);
+		box-shadow: inset 0 1px lighten(@color-decay, 5%);
+	}
+}
+
+.deck-bar-fixed{
+	position: fixed;
+	top: 53px;
+	width: 100%;
+	height: 7px;
+}
+
+
+.deck-scrolls {
+	& .scroll-content{
+		text-shadow: 0 1px @dark;
+		margin: 0px;
+		padding: 3px 0px;
+	}
 	
-	& .bar{
-		height: 7px;
-		float: left;
+	& .scroll-dublicate{
+		position: relative;
+		height: 5px;
+		margin: 0 auto;
+		border-radius: 2px 2px 0px 0px;
+		-moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1);
+		box-shadow: inset 0 1px rgba(255, 255, 255, 0.1);
 		
-		&.bar-energy{
-			background-color: @color-energy;
-			-moz-box-shadow: inset 0 1px lighten(@color-energy, 5%);
-			box-shadow: inset 0 1px lighten(@color-energy, 5%);
+		&[data-count='1']{
+			width: 95%;
+			
 		}
-		&.bar-growth{
-			background-color: @color-growth;
-			-moz-box-shadow: inset 0 1px lighten(@color-growth, 5%);
-			box-shadow: inset 0 1px lighten(@color-growth, 5%);
+		&[data-count='2']{
+			width: 90%;
 		}
-		&.bar-order{
-			background-color: @color-order;
-			-moz-box-shadow: inset 0 1px lighten(@color-order, 5%);
-			box-shadow: inset 0 1px lighten(@color-order, 5%);
-		}
-		&.bar-decay{
-			background-color: @color-decay;
-			-moz-box-shadow: inset 0 1px lighten(@color-decay, 5%);
-			box-shadow: inset 0 1px lighten(@color-decay, 5%);
+		
+	}
+	
+	& .scroll{
+		position: relative;
+		background-size: cover;
+		background-position: center;
+		height: 100px;
+		text-shadow: 0 1px @dark;
+		-moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.1);
+		box-shadow: inset 0 1px rgba(255, 255, 255, 0.1);
+		border-radius: 2px 2px 0px 0px;
+		margin: 0px;
+	}
+}
+
+@media (min-width: 1024px) {
+	.deck-scrolls {
+		& .scroll-content{
+			font-size: 11px;
 		}
 	}
 }
+

@@ -32,7 +32,9 @@
 	<!--[if lt IE 9]>
 	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
-	
+	<script src="/js/min/chart-min.js"></script>
+	<!--jQuery-1.11.1.min-->
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 	
 </head>
 	<body>
@@ -42,26 +44,31 @@
 			}
 		?>
 		
-		<div class="wallpaper" style="background-image: url(/img/backgrounds/cover-1.jpg);">
+		<div class="wallpaper">
 			<div class="container">
 				<h1 class="header">Scrolldier</h1>
 			</div>
+			<button class="dropdown" id="phone-menu">Menu</button>
 			<div class="align-center menu">
-			<?php //fetching each page to display on the menu
-				foreach ($base->pagestructure as $key => $value) {
-					if (isset($value['menu']) && $value['menu'] == true) {
-						echo("<a class='btn' href='".$key."'>".$value['name']."</a>");
+				<ul>
+				<?php 
+					//fetching each page to display on the menu
+					foreach ($base->pagestructure as $key => $value) {
+						if (isset($value['menu']) && $value['menu'] == true) {
+							echo("<li><a class='btn' href='".$key."'>".$value['name']."</a></li>");
+						}
 					}
-				} ?>
+					?>
+				</ul>
 			</div>
+			
 		</div>
 		
 		<?php include($base->get_content()); ?>
 
 	</body>
 	
-	<!--jQuery-1.11.1.min-->
-	<script src="/js/jquery.js"></script>
+	
 	<script>
 		$(function(){
 		   // alert("Testing if jQuery Works");
@@ -73,6 +80,10 @@
 		            nav.removeClass("menu-fixed");
 		        }
 		    });
+		 
+		 	$("#phone-menu").click(function() {
+		 		$(".menu").slideToggle();
+		 	});
 		 
 		});
 	</script>

@@ -6,7 +6,7 @@ class Database {
 	protected $_db_username;
 	protected $_db_password;
 	protected $_db_name;
-	protected $_db;
+	public $_db;
 	
 	function __construct() {
 		
@@ -31,14 +31,14 @@ class Database {
 	}
 	
 	
-	private function arrayBinder(&$pdo, &$array) {
+	public function arrayBinder(&$pdo, &$array) {
 		foreach ($array as $key => $value) {
 			$pdo->bindValue(':'.$key,$value);
 		}
 	}
 	
 	
-	private function arrayBinderInt(&$pdo, &$array) {
+	public function arrayBinderInt(&$pdo, &$array) {
 		foreach ($array as $key => $value) {
 			$pdo->bindValue(':'.$key, (int) $value, PDO::PARAM_INT);
 		}
