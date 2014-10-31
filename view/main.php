@@ -20,31 +20,31 @@
 			<div class="col-4 col-t-6" >
 			<a href="/deck/<?php echo($row['id']) ?>">
 				<div class="deck-thumbnail">
-					<div class="deck-header" style="background-image: url(img/decks/<?php echo($deckData['image']) ?>);">
+					<div class="deck-header" style="background-image: url(img/decks/<?=$deckData->image ?>);">
 						
 						<?php 
-							foreach ($deckData['ressourses'] as $key => $value) {
-								echo('<i class="icon-gold-'.$key.'"></i>');
+							foreach ($deckData->resources as $resource => $count) {
+								echo '<i class="icon-gold-'.$resource.'"></i>';
 							}
 						?>
 					</div>
 					<div class="deck-bar">
-						<?php foreach ($deckData['percentage'] as $key => $value) {
-							echo('<div class="bar bar-'.$key.'" style="width: '.$value.'%;"></div>');
+						<?php foreach ($deckData->percentage as $faction => $percentage) {
+							echo '<div class="bar bar-'.$faction.'" style="width: '.$percentage.'%;"></div>';
 						} ?>
 					</div>
 					<div class="deck-content" >
-						<h3><?php echo(substr($row['deck_title'],0,30)) ?></h3>
-						<small><?php echo('By: '.$deckData['author']." - ".$deckData['time']) ?></small>
+						<h3><?=substr($row['deck_title'],0,30) ?></h3>
+						<small><?='By: '.$deckData->author." - ".$deckData->time ?></small>
 						<ul class="scroll-content">
-							<li><?php echo($deckData['types']['CREATURE']) ?> Creatures</li>
-							<li><?php echo($deckData['types']['ENCHANTMENT']) ?> Enchantments</li>
-							<li><?php echo($deckData['types']['STRUCTURE']) ?> Structures</li>
-							<li><?php echo($deckData['types']['SPELL']) ?> Spells</li>
+							<li><?=$deckData->kinds['CREATURE'] ?> Creatures</li>
+							<li><?=$deckData->kinds['ENCHANTMENT'] ?> Enchantments</li>
+							<li><?=$deckData->kinds['STRUCTURE'] ?> Structures</li>
+							<li><?=$deckData->kinds['SPELL'] ?> Spells</li>
 						</ul>
 						<ul class="scroll-content">
 							<li></li>
-							<li><?php echo($deckData['vote_up'] - $deckData['vote_down']) ?> Stars</li>
+							<li><?=($deckData->vote_up - $deckData->vote_down) ?> Stars</li>
 						</ul>
 					</div>
 				</div>
@@ -60,7 +60,7 @@
 		//834
 		$deckData = $deck->get_deck_data(5);
 		
-		if ($deckData != "No Deck with this ID") {
+		if ($deckData !== FALSE) {
 	 ?>
 	<div class="page-header">
 		<h2>Featured Deck</h2>
@@ -70,27 +70,27 @@
 	<div class="col-12">
 		
 		<div class="col-4 col-t-12">
-			<a href="/deck/<?php echo($deckData['id']) ?>">
+			<a href="/deck/<?=$deckData->id ?>">
 				<div class="deck-thumbnail">
-					<div class="deck-header" style="background-image: url(img/decks/<?php echo($deckData['image']) ?>);">
+					<div class="deck-header" style="background-image: url(img/decks/<?=$deckData->image ?>);">
 						
 						<?php 
-							foreach ($deckData['ressourses'] as $key => $value) {
-								echo('<i class="icon-gold-'.$key.'"></i>');
+							foreach ($deckData->resources as $resource => $count) {
+								echo '<i class="icon-gold-'.$resource.'"></i>';
 							}
 						?>
 					</div>
 					<div class="deck-bar">
-						<?php foreach ($deckData['percentage'] as $key => $value) {
-							echo('<div class="bar bar-'.$key.'" style="width: '.$value.'%;"></div>');
+						<?php foreach ($deckData->percentage as $faction => $percentage) {
+							echo('<div class="bar bar-'.$faction.'" style="width: '.$percentage.'%;"></div>');
 						} ?>
 					</div>
 					<div class="deck-content" >
 						<ul class="scroll-content-featured">
-							<li><?php echo($deckData['types']['CREATURE']) ?> Creatures</li>
-							<li><?php echo($deckData['types']['ENCHANTMENT']) ?> Enchantments</li>
-							<li><?php echo($deckData['types']['STRUCTURE']) ?> Structures</li>
-							<li><?php echo($deckData['types']['SPELL']) ?> Spells</li>
+							<li><?=$deckData->kinds['CREATURE'] ?> Creatures</li>
+							<li><?=$deckData->kinds['ENCHANTMENT'] ?> Enchantments</li>
+							<li><?=$deckData->kinds['STRUCTURE'] ?> Structures</li>
+							<li><?=$deckData->kinds['SPELL'] ?> Spells</li>
 						</ul>
 					</div>
 				</div>
@@ -98,14 +98,14 @@
 			<div class="col-12">
 				<div class="col-12 deck-scrolls">
 					<?php 	
-						foreach ($deckData['scrolls_values'] as $key => $value) { ?>
+						foreach ($deckData->scrolls as $scroll) { ?>
 							
-							<div class="col-12 scroll-front" data-id="<?php echo($deckData['scrolls_values'][$key]['id']) ?>" data-count="<?php echo($deckData['scrolls_values'][$key]['count']) ?>">
-								 <div class=" scroll scroll-stack-<?=$deckData['scrolls_values'][$key]['count']?>" style="background-image: url('/img/scrolls/<?php echo($deckData['scrolls_values'][$key]['image']) ?>.png');">
+							<div class="col-12 scroll-front" data-id="<?=$scroll->id ?>" data-count="<?=$scroll->count ?>">
+								 <div class=" scroll scroll-stack-<?=$scroll->count ?>" style="background-image: url('/img/scrolls/<?=$scroll->image ?>.png');">
 									
 									<div class="col-12 text">
-										<i class="icon-<?php echo($deckData['scrolls_values'][$key]['ressours']) ?> front-text"></i>
-										<?php echo("x".$deckData['scrolls_values'][$key]['count']) ?> <?php echo($deckData['scrolls_values'][$key]['name']) ?>
+										<i class="icon-<?=$scroll->faction ?> front-text"></i>
+										x<?=$scroll->count ?> <?=$scroll->name ?>
 									</div>
 								</div>
 								
@@ -117,12 +117,12 @@
 		</div>
 		
 		<div class="col-8 col-t-12">
-			<h3><?php echo(substr($deckData['name'],0,30)) ?> <small><?php echo('By: '.$deckData['author']." - ".$deckData['time']) ?></small></h3>
+			<h3><?=substr($deckData->name,0,30) ?> <small>By: <?=$deckData->author ?> - <?=$deckData->time ?></small></h3>
 			<p class="col-12 col-t-10 col-t-offset-1">
-				<?php echo($deckData['text']) ?>
+				<?=$deckData->text ?>
 			</p>
 
-			<p class="col-12  col-t-offset-1"><a href="deck/<?php echo($deckData['id']) ?>" class="btn ">Read More</a></p>
+			<p class="col-12  col-t-offset-1"><a href="deck/<?=$deckData->id ?>" class="btn ">Read More</a></p>
 		</div>
 
 </div>
