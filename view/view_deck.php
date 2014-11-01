@@ -103,10 +103,7 @@ $data = $deck->get_deck_data($base->get_var(1));
 						<canvas id="chart-types" width="100px" height="100px" style="margin: 0 auto;"/>
 					</div>
 				</div>
-
 			</div>
-
-
 
 			<div class="page-header">	
 				<h3>Statistics <small>Specific</small></h3>
@@ -151,10 +148,6 @@ $data = $deck->get_deck_data($base->get_var(1));
 		<div class="col-8 col-offset-2">
 			<?=$data->text ?>
 		</div>
-		
-		
-		
-		
 	</div>
 	
 </div>

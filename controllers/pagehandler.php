@@ -27,6 +27,14 @@ class Base {
 			"style" 	=> ""
 		),
 		
+		"/login" => array(
+			"title" 	=> "Scrolldier - Login",
+			"page" 		=> "login",
+			"menu" 		=> false,
+			"name" 		=> "Login",
+			"style" 	=> ""
+		),
+		
 		"/guide" => array(
 			"title" 	=> "Scrolldier - Deck guides",
 			"page" 		=> "guide",
