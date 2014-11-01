@@ -63,6 +63,17 @@ class Deck extends Database {
 		
 	}
 	
+	public function vote_up($id) {
+		
+		
+		
+	}
+	
+	public function vote_down($id) {
+		
+		
+	}
+	
 	/**
 	 * Retrieves the faction of a scroll
 	 * @param array $scroll

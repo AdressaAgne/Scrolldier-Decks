@@ -261,9 +261,4 @@ $data = $deck->get_deck_data($base->get_var(1));
 		});
 		
 	});
-	
-	
-	
-
-	</script>
-<script src="js/min/chart-min.js"></script>
+</script>
