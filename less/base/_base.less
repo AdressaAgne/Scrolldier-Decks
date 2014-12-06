@@ -12,14 +12,13 @@ body{
 	font-family: 'open sans', sans-serif;
 	font-size: @font-size;
 	line-height: @font-line-height;
-	padding-top: 0px;
+	padding-top: 50px;
 }
 
 .container{
 	width: 100%;
 	margin: 0 auto;
 	padding: 5px @size * 2;
-	
 }
 
 h4.list-stats{
@@ -32,6 +31,10 @@ ul.list-stats li{
 	list-style: none;
 	margin-left: 20px;
 	width: 80%;
+}
+
+.news ul li{
+	margin-left: 20px;
 }
 
 .left{
@@ -66,44 +69,58 @@ a{
 	color: #80C000;
 	
 	&:hover{
-		color: #40C000;
+		color: @main;
 	}
 }
 
-@wallpaper-offset: -40px;
-
-.wallpaper{
-	height: 187px;
+.menu{
 	width: 100%;
-	/*background-position: center @wallpaper-offset;
-	background-repeat: no-repeat;
-	background-size: 100% auto;
-	background-attachment: fixed;*/
+	position: fixed;
+	top: 0px;
+	left: 0px;
+	background-color: @dark;
+	height: 50px;
+	border-bottom: 5px solid lighten(@dark, 5%);
+	z-index: 999999;
+	
 }
 
 .menu ul{
-	padding: 15px 10px;
-	/*background: url(../img/backgrounds/cover-1.jpg) center @wallpaper-offset;
-	background-repeat: no-repeat;
-	background-size: 100% auto;
-	background-color: @color;
-	background-attachment: fixed;*/
-	text-align: center;
-	width: 100%;
+	font-size: 18px;
+	display: inline-block;
 	
+	& a{
+		display: block;
+		&:hover{
+			color: @main;
+		}
+	}
 	& li{
+		margin: 0px 2px;
 		display: inline-block;
+		border-radius: 1px;
+
+		&.head{
+			width: 50px;
+			height: 38px;
+			margin-bottom: -14px;
+			background-image: url('../img/avatar/head_13.png');
+			background-size: cover;
+			
+		}
 	}
 }
 
 .menu-fixed{
 	position: fixed;
-	z-index: 99999999999;
+	z-index: 99999999;
 	width: 100%;
 	top: 0px;
 	background-color: @color;
 	
 }
+
+
 
 .hidden{
 	display: none;

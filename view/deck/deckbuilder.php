@@ -1,5 +1,5 @@
 <div class="container">
 	<div class="page-header">
-		<h2>Decks</h2>
+		<h2>DeckBuilder</h2>
 	</div>
 </div>

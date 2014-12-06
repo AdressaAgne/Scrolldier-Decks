@@ -31,6 +31,23 @@ class Deck extends Database {
 	       return $string ? implode(', ', $string) : 'just now';
 	 }
 	
+	public function setDeckImage($image, $deck) {
+		
+		$query = $this->_db->prepare("UPDATE decks SET image=:img WHERE id=:id");
+		$arr = array(
+		    'id' => $deck,
+		    'img' => $image
+		);
+		$this->arrayBinder($query, $arr);
+		
+		try {
+			return $query->execute();
+		} catch (PDOException $e) {
+			return $e;
+		}
+		
+	}
+	
 	public function totalDecks() {
 		
 		
@@ -154,6 +171,15 @@ class Deck extends Database {
 		$deck_data->vote_up      = $data['vote'];
 		$deck_data->vote_down    = $data['vote_down'];
 		
+		$deck_data->export['deck'] = $data['deck_title'];
+		$deck_data->export['author'] = $data['deck_author'];
+		
+		if (!empty($data['tags'])) {
+			$deck_data->tags 		 = explode(',',$data['tags']);
+		}
+		
+		
+		
 		// Parse scroll IDs
 		$scroll_ids = [];
 		$scrolls_count = [];
@@ -162,6 +188,8 @@ class Deck extends Database {
 			$scroll_ids[] = $scroll['id'];
 			$scrolls_count[$scroll['id']] = $scroll['c'];
 		}
+		
+		
 		
 		// Retrieve scrolls
 		$prepare = implode(',', array_fill(0, count($scroll_ids), '?'));
@@ -193,6 +221,8 @@ class Deck extends Database {
 			$deck_data->addRarity($scroll->rarity, $scroll->count);
 			$deck_data->addResource($faction, $scroll->count);
 			
+			$deck_data->addScrollToExport($scroll->id, $scroll->count);
+			
 			$types = explode(',',$scroll_data['types']);
 			foreach ($types as $type)
 			{
@@ -222,12 +252,31 @@ class Deck extends Database {
 			}
 		}
 		
-		// Set image from most used faction
+		
 		arsort($deck_data->percentage);
 		$most_used = array_keys($deck_data->percentage);
 		$rand      = rand(1,4);
+		$deckImage = $most_used[0] . "-$rand.jpg";
+		$deck_data->faction = $most_used[0];
 		
-		$deck_data->image = $most_used[0] . "-$rand.jpg";
+		if (empty($data['image'])) {
+			// Set image from most used faction		
+			if ($this->setDeckImage($deckImage, $id)) {
+				$deck_data->image = $deckImage;
+			} else {
+				$deck_data->image = "error.jpg";
+			}
+			
+		} else {
+			$deck_data->image = $data['image'];
+		}
+		
+		
+		
+		$deck_data->export = json_encode($deck_data->export);
+		
+		
+		
 		
 		return $deck_data;
 	}
@@ -240,122 +289,77 @@ class Deck extends Database {
  */
 class DeckData
 {
-	/**
-	 * The deck ID number
-	 * @var int
-	 */
 	public $id = 0;
-	/**
-	 * The name of the deck
-	 * @var string
-	 */
+
 	public $name = '';
-	/**
-	 * Author of the deck
-	 * @var string
-	 */
+
 	public $author = '';
-	/**
-	 * Description of the deck
-	 * @var string 
-	 */
+
 	public $text = '';
-	/**
-	 * The meta version of the deck
-	 * @var string
-	 */
+
 	public $meta_version = '';
-	/**
-	 * The filename of the cover image.<br>
-	 * Determined by most used faction and a random integer between 1 and 4.
-	 * @var string
-	 */
+
 	public $image = '';
-	/**
-	 * Creation time of the deck in human readable format
-	 * @var string
-	 */
+
 	public $time = '';
-	/**
-	 * Faction usage in percentages
-	 * @var int[] 
-	 */
+	
+	public $faction = '';
+
 	public $percentage = [];
 	
-	/**
-	 * The amount of scrolls in the deck
-	 * @var int
-	 */
 	public $scroll_count = 0;
-	/**
-	 * The total cost of the deck
-	 * @var int
-	 */
+
 	public $total_cost = 0;
-	/**
-	 * The number of upvotes
-	 * @var int
-	 */
+
 	public $vote_up = 0;
-	/**
-	 * The number of downvotes
-	 * @var int
-	 */
+
 	public $vote_down = 0;
 	
-	/**
-	 * The amount of each kind<br>
-	 * Possible kinds: CREATURE, ENCHANTMENT, SPELL, STRUCTURE
-	 * @var int[]
-	 */
+
 	public $kinds = array(
 	    'CREATURE'    => 0,
 	    'ENCHANTMENT' => 0,
 	    'SPELL'       => 0,
 	    'STRUCTURE'   => 0
 	);
-	/**
-	 * The amount of each type<br>
-	 * Examples: None, Artillery, Automation, Destruction, Human, Masked
-	 * @var int[]
-	 */
+
 	public $types = [];
-	/**
-	 * The amount of each rarity
-	 * @var int[] 
-	 */
+
 	public $rarities = array(
 	    0 => 0,
 	    1 => 0,
 	    2 => 0
 	);
-	/**
-	 * The amount of each resource
-	 * @var int[]
-	 */
+
 	public $resources = [];
-	/**
-	 * The curve for each faction
-	 * @var array[]
-	 */
+	
+	
+	public $tags = [];
+	
 	public $curve = array(
 	    'growth' => [],
 	    'order'  => [],
 	    'energy' => [],
 	    'decay'  => []
 	);
-	
-	/**
-	 * An array of scrolls
-	 * @var Scroll[]
-	 */
+
 	public $scrolls = [];
 	
-	/**
-	 * 
-	 * @param string $type
-	 * @param int $count
-	 */
+	
+	public $export = [
+		'deck' => '',
+		'author' => '',
+		'types' => []
+	];
+	
+	
+	public function addScrollToExport($id, $count)
+	{
+		for ($i = 0; $i < $count; $i++) {
+			array_push($this->export['types'], $id);
+		}
+	}
+	
 	public function addType($type, $count)
 	{
 		if( ! isset($this->types[$type]) )
@@ -364,12 +368,7 @@ class DeckData
 		}
 		$this->types[$type] += $count;
 	}
-	
-	/**
-	 * 
-	 * @param string $kind
-	 * @param int $count
-	 */
+
 	public function addKind($kind, $count)
 	{
 		if( ! isset($this->kinds[$kind]) )
@@ -379,11 +378,6 @@ class DeckData
 		$this->kinds[$kind] += $count;
 	}
 	
-	/**
-	 * 
-	 * @param string $rarity
-	 * @param int $count
-	 */
 	public function addRarity($rarity, $count)
 	{
 		if( ! isset($this->rarities[$rarity]) )
@@ -393,11 +387,6 @@ class DeckData
 		$this->rarities[$rarity] += $count;
 	}
 	
-	/**
-	 * 
-	 * @param string $resource
-	 * @param int $count
-	 */
 	public function addResource($resource, $count)
 	{
 		if( ! isset($this->resources[$resource]) )
@@ -406,12 +395,7 @@ class DeckData
 		}
 		$this->resources[$resource] += $count;
 	}
-	
-	/**
-	 * Make sure the curve for a kind is available to increment
-	 * @param string $faction
-	 * @param string $kind
-	 */
+
 	public function initCurve($faction, $kind)
 	{
 		if (isset($this->curve[$faction][$kind]))

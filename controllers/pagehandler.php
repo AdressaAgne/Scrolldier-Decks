@@ -7,23 +7,31 @@ class Base {
 			"title" 	=> "Scrolldier",	//title
 			"page" 		=> "main", 			//file name without .php
 			"menu" 		=> true, 			//if its included in the menu or not
-			"name" 		=> "Home", 			//name of the page
+			"name" 		=> "Scrolldier", 			//name of the page
 			"style" 	=> "" 				//additional styles
 		),
 	
 		"/decks" => array(
 			"title" 	=> "Scrolldier - Decks",
-			"page" 		=> "deck",
+			"page" 		=> "deck/deck",
 			"menu" 		=> true,
-			"name" 		=> "View Decks",
+			"name" 		=> "Decks",
 			"style" 	=> ""
 		),
 		
 		"/deck" => array(
 			"title" 	=> "Scrolldier - Deck",
-			"page" 		=> "view_deck",
+			"page" 		=> "deck/view_deck",
 			"menu" 		=> false,
 			"name" 		=> "Deck",
+			"style" 	=> ""
+		),
+		
+		"/post" => array(
+			"title" 	=> "Scrolldier - Blog",
+			"page" 		=> "post",
+			"menu" 		=> false,
+			"name" 		=> "Blog",
 			"style" 	=> ""
 		),
 		
@@ -43,11 +51,27 @@ class Base {
 			"style" 	=> ""
 		),
 		
+		"/atmaz" => array(
+			"title" 	=> "Scrolldier - The Atmaz Guessing game",
+			"page" 		=> "atmaz",
+			"menu" 		=> false,
+			"name" 		=> "The Atmaz Guessing Game",
+			"style" 	=> ""
+		),
+		
+		
 		"/new" => array(
 			"title" 	=> "Scrolldier - Deckbuilder",
-			"page" 		=> "deckbuilder",
-			"menu" 		=> true,
+			"page" 		=> "deck/new_deck",
+			"menu" 		=> false,
 			"name" 		=> "New Deck",
+			"style" 	=> ""
+		),
+		"/deckbuilder" => array(
+			"title" 	=> "Scrolldier - Deckbuilder",
+			"page" 		=> "deck/deckbuilder",
+			"menu" 		=> false,
+			"name" 		=> "DeckBuilder",
 			"style" 	=> ""
 		),
 		

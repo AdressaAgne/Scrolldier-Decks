@@ -1,0 +1,32 @@
+.thead{
+	font-weight: bold;
+	background-color: darken(@light, 5%);
+	color: @dark;
+	border-radius: 2px 2px 0px 0px;
+	border-bottom: 1px solid darken(@light, 15%);
+	
+	& div{
+		border-right: 1px solid darken(@light, 15%);
+	}
+	& div:last-of-type{
+		border-right: none;
+	}
+	
+}
+
+.tbody{	
+	& .trow{
+		border-bottom: 1px solid  darken(@light, 10%);
+		
+		background-color: darken(@light, 5%);
+		color: @dark;
+	}
+	
+	&:nth-of-type(odd) .trow{
+		background-color: darken(@light, 0%);
+	}
+	
+	&:hover .trow{
+		background-color: darken(@light, 8%);
+	}
+}
