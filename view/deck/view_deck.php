@@ -36,12 +36,14 @@ $data = $deck->get_deck_data($base->get_var(1));
 		
 		<div class="deck-head clearfix">
 			<div class="row">
+				<div class="col-12">
 				<button class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> JSON</button>
 				<button class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Text</button>
-				<button class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Image</button>
+				<a href="http://scrolldier.com/u/makeDeckImage.php?d=<?= $data->id ?>" download="<?= $data->name ?>.png" class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Image</a>
 			
 				<button class="btn <?= $data->faction ?> right"><i class="fa fa-edit"></i> Edit</button>
 				<button class="btn <?= $data->faction ?> right"><i class="fa fa-trash"></i> Delete</button>
+				</div>
 			</div>
 			
 			<div class="col-12">
@@ -53,7 +55,7 @@ $data = $deck->get_deck_data($base->get_var(1));
 								echo '<i class="icon-gold-'.$resource.' front-text"></i>';
 							}
 						?>
-						<?php echo(substr($data->name, 0, 35)) ?> <br />
+						<?php echo(substr($data->name, 0, 60)) ?> <br />
 							<small>Score: <?=($data->vote_up - $data->vote_down) ?> - by <?=$data->author ?> - <?=$data->time ?></small></h2>
 					</div>
 				</div>

@@ -1,11 +1,6 @@
-
-
-<div class="container">
-	<div class="page-header">
-		<h2>Top Decks for 0.133.0</h2>
-	</div>
+<div class="container clearfix" style="background:  url(/img/backgrounds/cover-5.jpg); background-size: cover;">
 	<div class="row">
-		
+
 		<?php 
 			
 			$query = $deck->_db->prepare("SELECT * FROM decks WHERE isHidden = 0 AND competative = 1
@@ -54,15 +49,12 @@
 			
 		<?php } ?>
 	</div>
+</div>	
 	
 	
-	
-	
+<div class="container">	
 	
 	<div class="row news">
-		<div class="page-header">
-			<h2>News &amp; Spoilers</h2>
-		</div>
 		<?php 
 			
 			$query = $deck->_db->prepare("SELECT * FROM scrolls ORDER BY time DESC LIMIT 10");
@@ -71,12 +63,16 @@
 ?>
 		<div class="col-8 col-offset-2 col-tab-10 col-tab-offset-1">
 			<div class="col-12">
-				<h3><a href="/post/<?=$row['id']?>"><?=$row['header']?></a><br />
+				<h2><a href="/post/<?=$row['id']?>"><?=$row['header']?></a><br />
 					<small>By: <?=$row['byName']?>, <?=$row['time']?></small>
-				</h3>
+				</h2>
 			</div>
 			<div class="col-12 news-front">
-				<?=$row['html']?>
+				<?php 
+					$html_text = $formating->removeText('<p>&nbsp;</p>', $row['html']);
+					$html_text = $formating->removeText('<p dir="ltr">&nbsp;</p>', $html_text);
+				 ?>
+				<?=$html_text?>
 			</div>
 			
 			
@@ -84,8 +80,6 @@
 		</div>
 		
 		<div class="post-devider"></div>
-		
 		<?php } ?>
-	
-</div>
+	</div>
 </div>

@@ -1,6 +1,6 @@
 @textbox-size: 6px;
 
-[type='text'], [type='password'], [type='email'], [type='search']{
+[type='text'], [type='password'], [type='email'], [type='search'], select{
 	font-family: 'open sans', sans-serif;
 	padding: @textbox-size @textbox-size*1.5;
 	margin: 2px;
@@ -97,6 +97,11 @@
 	}
 }
 
+select{
+	height: 30px;
+	margin-bottom: -2px;
+}
+
 [type='search']{
 	border-radius: 100px;
 }
@@ -109,7 +114,8 @@
 	border: 1px solid lighten(@color, 15%);
 	-moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
 	box-shadow: 0 0 2px rgba(0, 0, 0, 0.7);
-
+	
+	
 	&[disabled='']{
 		color: lighten(@color, 20%);
 	}
@@ -123,6 +129,11 @@
 		border: 1px solid lighten(#88b837, 5%);
 	}
 
+}
+a.tag:hover{
+	color: @light;
+	background-color: lighten(@color, 5%);
+	border: 1px solid lighten(@color, 10%);
 }
 
 .dialog{
@@ -153,6 +164,33 @@ ul.tags li{
 	list-style: none;
 	margin: 0px 5px;
 	font-size: 12px;
+	
+	
+}
+
+.form-element{
+	padding: 5px;
+	& [type='text'], & [type='password'], & [type='email'], & [type='search'], & label, & select{
+		width: 100%;
+	}
+	
+	
+	& label small{
+		color: darken(@light, 40%);
+		font-size: .7em;
+	}
+	
+	& label.icon input[type='checkbox']{
+		display: none;
+	}
+	
+	& label.icon input[type='checkbox']:checked + span{
+		opacity: .5;
+	}
+	& label.icon{
+		cursor: pointer;
+	}
+	
 }
 
 .close{

@@ -33,7 +33,12 @@ ul.list-stats li{
 	width: 80%;
 }
 
+.news p{
+	margin: 30px 0px;
+}
+
 .news ul li{
+	font-size: 14px;
 	margin-left: 20px;
 }
 
@@ -64,13 +69,16 @@ ul.list-stats li{
 	margin-top: 80px;
 }
 
+.hand{
+	cursor: pointer;
+}
+
 a{
 	text-decoration: none !important;
-	color: #80C000;
-	
-	&:hover{
-		color: @main;
-	}
+	color: @color-growth;
+}
+a:hover{
+	color: darken(@color-growth, 5%);
 }
 
 .menu{
@@ -82,7 +90,8 @@ a{
 	height: 50px;
 	border-bottom: 5px solid lighten(@dark, 5%);
 	z-index: 999999;
-	
+	-moz-box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
 }
 
 .menu ul{
@@ -91,9 +100,6 @@ a{
 	
 	& a{
 		display: block;
-		&:hover{
-			color: @main;
-		}
 	}
 	& li{
 		margin: 0px 2px;

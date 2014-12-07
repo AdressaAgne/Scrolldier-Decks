@@ -1,3 +1,13 @@
+var a=document.getElementsByTagName("a");
+for(var i=0;i<a.length;i++)
+{
+    a[i].onclick=function()
+    {
+        window.location=this.getAttribute("href");
+        return false
+    }
+}
+
 $(function(){
 	getAuthServerStatus();
 	getOnlinePlayers();
@@ -78,15 +88,40 @@ $(function(){
 	         }
 	     })
 	 }
-	function showSuccess(msg) {
-		$("#successMessage").text(msg);
-		$("#successcontainer").show();
-	}
-	function showError(msg) {
-		$("#errorMessage").text(msg);
-		$("#errorcontainer").show();
-	}
-	 
 	
+	
+	
+	
+//	#autoScroll
+//        var scrollFrom = 0; 
+//        $('a[href*=#]').click(function(e){
+//            scrollFrom = $(window).scrollTop();
+//            $(window).scrollTop(scrollFrom);
+//            var target = '#' + $(this).attr("href").replace(/#/,'');
+//            if ($(this).attr("href") != "#myCarousel") {
+//        	    $('html,body').animate({
+//        	        scrollTop: $(target).offset().top  modification
+//        	    },{
+//        	     duration: 1000,
+//        	     easing: 'swing'
+//        	    });
+//        	     return false; 	
+//            }
+//        });
+	 $("#close_login").click(function() {
+	 	$("#login_box").slideUp();
+	 });
+	$("#login_btn").click(function() {
+		$('html,body').animate({
+		    scrollTop: 0 // modification
+		},{
+		 duration: 600,
+		 easing: 'swing'
+		});
+		
+		$("#login_box").slideDown();
+		
+		return false;
+	});
 });
 

@@ -14,9 +14,9 @@
 ?>
 		<div class="col-8 col-offset-2 col-t-10 col-t-offset-1">
 			<div class="col-12">
-				<h3><a href="/post/<?=$row['id']?>"><?=$row['header']?></a><br />
+				<h2><?=$row['header']?><br />
 					<small>By: <?=$row['byName']?>, <?=$row['time']?></small>
-				</h3>
+				</h2>
 			</div>
 			
 			<div class="col-12">

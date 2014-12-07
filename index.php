@@ -10,9 +10,11 @@
 	//pages
 	require_once("controllers/pagehandler.php");
 	require_once("controllers/structure.php");
+	require_once("controllers/texthandler.php");
 	
 	$deck = new Deck();
 	$base = new Structure();
+	$formating = new TextHandler();
 	
 	//$_GET['error'] = "Your account is not yet verified, please do so.";
 	//$_GET['success'] = "you did something right, congratulations!";
@@ -25,6 +27,11 @@
 	<meta name="author" content="Agne Ødegaard" />
 	<meta name="description" content="" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<!-- Apple Device: App-->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+	
+	<!-- Apple Device: Remove Status bar-->
+	<meta name="apple-mobile-web-app-status-bar-style" content=“black”>
 	
 	<!--	Getting page title-->
 	<title><?php echo($base->get_title()); ?></title>
@@ -32,11 +39,23 @@
 	<!--Main css-->
 	<link rel="stylesheet" href="/css/main.css" />
 	
+	<!--Favicon-->
+	<!--[if IE]>
+		<link rel="shortcut icon" href="/img/ico/iconX32.ico">
+	<![endif]-->
+	<link rel="icon" href="/img/ico/iconX96.png" />
+	
 	<!--Font Awesome-->
 	<link rel="stylesheet" href="/css/font-awesome.min.css" />
 	
+	<!-- Apple Device: Home Screen icon-->
+	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple/iconX76_bg.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="/img/apple/iconX120_bg.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="/img/apple/iconX152_bg.png" />
+	
+	
 	<!--[if lt IE 9]>
-	<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
 	<![endif]-->
 	
 	<!--Chart.js-->
@@ -55,7 +74,7 @@
 <div class="menu clearfix">
 	<div class="container">
 		<ul class="">
-		<li class="head"></li>
+			<li class="head"></li>
 		<?php //fetching each page to display on the menu
 			foreach ($base->pagestructure as $key => $value) {
 				if (isset($value['menu']) && $value['menu'] == true) {
@@ -64,15 +83,86 @@
 			} ?>
 		</ul>
 		<ul class="right">
-			<!--<li><a class='tag' href='/login'>Login</a></li>
-			<li><a class='tag' href='/registarte'>Registarte</a></li>-->
+			<li><a class='tag' href='#login_box' id="login_btn">Login</a></li>
+			<li><a class='tag' href='#' id="registarte_btn">Registarte</a></li>
 			
-			<li><a class='tag' href='/profile'>Orangee</a></li>
-			<li><a class='tag' href='/logout<?= $base->get_page() ?>'>Logout</a></li>
+			<!--<li><a class='tag' href='/profile'>Orangee</a></li>
+			<li><a class='tag' href='/logout<?= $base->get_page() ?>'>Logout</a></li>-->
 		</ul>
 	</div>
 </div>
 <!--	end Menu	-->	
+	
+<!-- Login Box-->	
+	<div class="tag clearfix hidden" id="login_box">
+		<div class="container">
+			<div class="row">
+				<div class="col-8 col-offset-2 col-tab-10 col-tab-offset-1 col-phone-12">
+					<div class="form-element">
+						<h2><i class="fa fa-unlock"></i> Login to Scrolldier <small class="right hand" id="close_login"><i class="fa fa-times"></i></small></h2>
+					</div>
+					<div class="col-6">
+						<div class="form-element">
+							<label for="username">In Game Name</label>
+							<input id="username" type="text" name="" value="" placeholder="In Game Name"/>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-element">
+							<label for="password">Password</label>
+							<input id="password" type="password" name="" value="" placeholder="Password" />
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-element">
+							<label>
+								<input type="checkbox" name="save_pw" value="save" /> Remember me <small>Using Cookies</small>
+							</label>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-element">
+							<label>
+								<small><a href="/terms" target="_blank">Terms & Conditions</a></small>
+							</label>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form-element">
+							<button type="submit" class="btn" name=""><i class="fa fa-check"></i> Login</button>
+							<button type="submit" class="btn right success" name="">Registarte</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- end Login Box-->	
+	
+<!--	Content	-->
+		<?php include($base->get_content()); ?>
+<!--	end content	-->
+
+		
+
+<!--	Footer of the page	-->
+		<div class="container clearfix">
+			<div class="row">
+				<div class="col-12 align-center">
+					<div class="col-4">
+						<div class="col-12 tag" id="authserverstatus"></div>
+					</div>
+					<div class="col-4" id="">
+						<div class="col-12 tag" id="scrollsingame"></div>
+					</div>
+					<div class="col-4" id="">
+						<div class="col-12 tag" id="scrollstoday"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+<!--	end Footer	-->		
+
 
 <!-- Dialog box -->
 	<div class="container hidden dialog" id="errorcontainer">
@@ -99,32 +189,5 @@
 		</div>
 	</div>
 <!--end Dialog Box-->	
-
-	
-	
-	
-<!--	Content	-->
-		<?php include($base->get_content()); ?>
-<!--	end content	-->
-
-		
-
-<!--	Footer of the page	-->
-		<div class="container clearfix">
-			<div class="row">
-				<div class="col-12 align-center">
-					<div class="col-4">
-						<div class="col-12 tag" id="authserverstatus"></div>
-					</div>
-					<div class="col-4" id="">
-						<div class="col-12 tag" id="scrollsingame"></div>
-					</div>
-					<div class="col-4" id="">
-						<div class="col-12 tag" id="scrollstoday"></div>
-					</div>
-				</div>
-			</div>
-		</div>
-<!--	end Footer	-->		
 	</body>
 </html>

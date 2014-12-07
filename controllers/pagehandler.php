@@ -59,6 +59,14 @@ class Base {
 			"style" 	=> ""
 		),
 		
+		"/terms" => array(
+			"title" 	=> "Scrolldier - Terms and Conditions",
+			"page" 		=> "info/terms_and_conditions",
+			"menu" 		=> false,
+			"name" 		=> "Terms and Conditions",
+			"style" 	=> ""
+		),
+		
 		
 		"/new" => array(
 			"title" 	=> "Scrolldier - Deckbuilder",
