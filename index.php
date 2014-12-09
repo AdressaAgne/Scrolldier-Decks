@@ -26,6 +26,9 @@
 	<meta charset="utf-8">
 	<meta name="author" content="Agne Ødegaard" />
 	<meta name="description" content="" />
+	<meta name="application-name" content="Scrolldier" />
+	
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Apple Device: App-->
 	<meta name="apple-mobile-web-app-capable" content="yes" />

@@ -275,9 +275,6 @@ class Deck extends Database {
 		
 		$deck_data->export = json_encode($deck_data->export);
 		
-		
-		
-		
 		return $deck_data;
 	}
 	
