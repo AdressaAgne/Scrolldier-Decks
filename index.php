@@ -19,7 +19,6 @@
 	//$_GET['error'] = "Your account is not yet verified, please do so.";
 	//$_GET['success'] = "you did something right, congratulations!";
  ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -69,6 +68,9 @@
 	
 	<!--Main Javascript-->
 	<script src="/js/min/main-min.js" type="text/javascript"></script>
+	
+	<!--Typeahead-->
+	<script src="/js/min/typeahead-min.js" type="text/javascript"></script>
 </head>
 	<body>
 		

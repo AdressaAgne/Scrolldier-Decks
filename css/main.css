@@ -921,7 +921,7 @@ select.small {
 [type='search']:focus,
 select:focus {
   color: #222222;
-  background-color: #f8f8f8;
+  background-color: #f8f8f8 !important;
 }
 [type='text'].success,
 [type='password'].success,
@@ -1168,4 +1168,32 @@ table thead {
   background-color: #222222;
   color: #f8f8f8;
   border: 1px solid #2f2f2f;
+}
+.twitter-typeahead {
+  width: 100%;
+}
+.typeahead,
+.tt-input {
+  border-radius: 3px 3px 0px 0px;
+}
+.tt-dropdown-menu {
+  width: 100%;
+  border: 2px solid #f8f8f8;
+  border-top: 0;
+  padding: 0px;
+  border-radius: 0px 0px 3px 3px;
+  margin-left: 2px;
+  margin-top: -2px;
+  background-color: #121314;
+}
+.tt-suggestion {
+  padding: 1px 10px;
+  cursor: pointer;
+}
+.tt-suggestion:hover {
+  background-color: #f8f8f8;
+  color: #222222;
+}
+.tt-hint {
+  color: #ff8800;
 }

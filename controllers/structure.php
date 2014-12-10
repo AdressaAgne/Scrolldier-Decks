@@ -76,6 +76,15 @@ class Structure extends Base{
 		
 	}
 	
+	public function get_frame() {
+		//echo
+		
+		$page = $this->_checkPage($this->_page);
+		
+		return $this->pagestructure[$page]['frame'];
+		
+	}
+	
 	//gets additional styles to link up
 	public function get_page() {
 		//echo
