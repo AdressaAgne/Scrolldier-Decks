@@ -1,4 +1,9 @@
-<div class="container clearfix" style="background:  url(/img/backgrounds/cover-5.jpg); background-size: cover;">
+<video class="front-video" preload="auto" autoplay="autoplay" loop="loop" muted="muted" poster="none">
+	<source src="video/scrolls.mp4" type="video/mp4">
+	Video Tag!
+</video>
+<div class="container clearfix">
+	
 	<div class="row">
 
 		<?php 

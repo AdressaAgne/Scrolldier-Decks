@@ -71,6 +71,9 @@
 	
 	<!--Typeahead-->
 	<script src="/js/min/typeahead-min.js" type="text/javascript"></script>
+	
+	<!--Blur-->
+	<!--<script src="/js/min/blur.min.js" type="text/javascript"></script>-->
 </head>
 	<body>
 		
