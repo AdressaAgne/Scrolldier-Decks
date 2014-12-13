@@ -9,10 +9,18 @@
 
 
 .news{
-	&.news-front{
+	& .news-front{
 		max-height: 400px !important;
+		overflow: hidden;
 	}
 	& h3 a{
 		color: @light;
+	}
+	
+	.image{
+		text-align: center;
+		& img{
+			max-width: 100%;
+		}
 	}
 }

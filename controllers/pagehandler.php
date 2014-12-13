@@ -35,6 +35,14 @@ class Base {
 			"style" 	=> ""
 		),
 		
+		"/keywords" => array(
+			"title" 	=> "Scrolldier - In-game Keywords",
+			"page" 		=> "data/keywords",
+			"menu" 		=> false,
+			"name" 		=> "In-game Keywords",
+			"style" 	=> ""
+		),
+		
 		"/login" => array(
 			"title" 	=> "Scrolldier - Login",
 			"page" 		=> "login",

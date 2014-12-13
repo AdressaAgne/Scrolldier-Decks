@@ -50,20 +50,20 @@
 		<?php } ?>
 	</div>
 </div>	
-	
+
 	
 <div class="container">	
 	
 	<div class="row news">
 		<?php 
 			
-			$query = $deck->_db->prepare("SELECT * FROM scrolls ORDER BY time DESC LIMIT 10");
+			$query = $deck->_db->prepare("SELECT * FROM scrolls WHERE isHidden = 0 ORDER BY time DESC LIMIT 10");
 			$query->execute();
 			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 ?>
 		<div class="col-8 col-offset-2 col-tab-10 col-tab-offset-1">
-			<div class="col-12">
-				<h2><a href="/post/<?=$row['id']?>"><?=$row['header']?></a><br />
+			<div class="col-12 align-center">
+				<h2 class=""><a href="/post/<?=$row['id']?>"><?=$row['header']?></a><br />
 					<small>By: <?=$row['byName']?>, <?=$row['time']?></small>
 				</h2>
 			</div>
@@ -71,6 +71,7 @@
 				<?php 
 					$html_text = $formating->removeText('<p>&nbsp;</p>', $row['html']);
 					$html_text = $formating->removeText('<p dir="ltr">&nbsp;</p>', $html_text);
+					$html_text = $formating->surroundText('(<img src="(.*)">)', '<div class="image">$1</div>', $html_text);
 				 ?>
 				<?=$html_text?>
 			</div>

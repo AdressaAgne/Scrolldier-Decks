@@ -111,6 +111,12 @@ $(function(){
 	 $("#close_login").click(function() {
 	 	$("#login_box").slideUp();
 	 });
+	 
+	 $("#close_reg").click(function() {
+	 	$("#reg_box").slideUp();
+	 });
+	 
+	 
 	$("#login_btn").click(function() {
 		$('html,body').animate({
 		    scrollTop: 0 // modification
@@ -118,8 +124,24 @@ $(function(){
 		 duration: 600,
 		 easing: 'swing'
 		});
-		
+		$("#reg_box").slideUp();		
 		$("#login_box").slideDown();
+
+		
+		return false;
+	});
+	
+	$("#reg_box_btn, #registarte_btn").click(function() {
+		$('html,body').animate({
+		    scrollTop: 0 // modification
+		},{
+		 duration: 600,
+		 easing: 'swing'
+		});
+		
+		$("#login_box").slideUp();
+		
+		$("#reg_box").slideDown();
 		
 		return false;
 	});

@@ -37,12 +37,12 @@ $data = $deck->get_deck_data($base->get_var(1));
 		<div class="deck-head clearfix">
 			<div class="row">
 				<div class="col-12">
-				<button class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> JSON</button>
-				<button class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Text</button>
+				<a class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> JSON</a>
+				<a class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Text</a>
 				<a href="http://scrolldier.com/u/makeDeckImage.php?d=<?= $data->id ?>" download="<?= $data->name ?>.png" class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Image</a>
 			
-				<button class="btn <?= $data->faction ?> right"><i class="fa fa-edit"></i> Edit</button>
-				<button class="btn <?= $data->faction ?> right"><i class="fa fa-trash"></i> Delete</button>
+				<a class="btn <?= $data->faction ?> right"><i class="fa fa-edit"></i> Edit</a>
+				<a class="btn <?= $data->faction ?> right"><i class="fa fa-trash"></i> Delete</a>
 				</div>
 			</div>
 			

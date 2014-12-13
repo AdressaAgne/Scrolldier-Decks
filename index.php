@@ -89,7 +89,7 @@
 		</ul>
 		<ul class="right">
 			<li><a class='tag' href='#login_box' id="login_btn">Login</a></li>
-			<li><a class='tag' href='#' id="registarte_btn">Registarte</a></li>
+			<li><a class='tag' href='#login_box' id="registarte_btn">Register</a></li>
 			
 			<!--<li><a class='tag' href='/profile'>Orangee</a></li>
 			<li><a class='tag' href='/logout<?= $base->get_page() ?>'>Logout</a></li>-->
@@ -135,14 +135,64 @@
 					<div class="col-12">
 						<div class="form-element">
 							<button type="submit" class="btn" name=""><i class="fa fa-check"></i> Login</button>
-							<button type="submit" class="btn right success" name="">Registarte</button>
+							<button type="submit" class="btn right success" id="reg_box_btn" name="">Register</button>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-<!-- end Login Box-->	
+<!-- end Login Box-->
+<!-- Register Box-->	
+	<div class="tag clearfix hidden" id="reg_box">
+		<div class="container">
+			<div class="row">
+				<div class="col-8 col-offset-2 col-tab-10 col-tab-offset-1 col-phone-12">
+					<div class="form-element">
+						<h2><i class="fa fa-lock"></i> Register on Scrolldier <small class="right hand" id="close_reg"><i class="fa fa-times"></i></small></h2>
+					</div>
+					<div class="col-6">
+						<div class="form-element">
+							<label for="username">In Game Name</label>
+							<input id="username" type="text" name="" value="" placeholder="In Game Name"/>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-element">
+							<label for="password">Password</label>
+							<input id="password" type="password" name="" value="" placeholder="Password" />
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-element">
+							<label for="mail">E-mail</label>
+							<input id="mail" type="text" name="" value="" placeholder="E-mail"/>
+						</div>
+					</div>
+					<div class="col-6">
+						<div class="form-element">
+							<label for="password">Password Again</label>
+							<input id="password" type="password" name="" value="" placeholder="Password Agian" />
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form-element">
+							<label>
+								<input type="checkbox" name="save_pw" value="save" /> I accept the 
+								<a href="/terms" target="_blank">Terms & Conditions</a>
+							</label>
+						</div>
+					</div>
+					<div class="col-12">
+						<div class="form-element">
+							<button type="submit" class="btn success" name="" id="">Register</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+<!-- end Register Box-->		
 	
 <!--	Content	-->
 		<?php include($base->get_content()); ?>
@@ -154,13 +204,13 @@
 		<div class="container clearfix">
 			<div class="row">
 				<div class="col-12 align-center">
-					<div class="col-4">
+					<div class="col-4 col-tab-12">
 						<div class="col-12 tag" id="authserverstatus"></div>
 					</div>
-					<div class="col-4" id="">
+					<div class="col-4 col-tab-6 col-phone-12" id="">
 						<div class="col-12 tag" id="scrollsingame"></div>
 					</div>
-					<div class="col-4" id="">
+					<div class="col-4 col-tab-6 col-phone-12" id="">
 						<div class="col-12 tag" id="scrollstoday"></div>
 					</div>
 				</div>

@@ -13,14 +13,19 @@
 			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 ?>
 		<div class="col-8 col-offset-2 col-t-10 col-t-offset-1">
-			<div class="col-12">
+			<div class="col-12 align-center">
 				<h2><?=$row['header']?><br />
 					<small>By: <?=$row['byName']?>, <?=$row['time']?></small>
 				</h2>
 			</div>
 			
 			<div class="col-12">
-				<?=$row['html']?>
+				<?php 
+					$html_text = $formating->removeText('<p>&nbsp;</p>', $row['html']);
+					$html_text = $formating->removeText('<p dir="ltr">&nbsp;</p>', $html_text);
+					$html_text = $formating->surroundText('(<img src="(.*)">)', '<div class="image">$1</div>', $html_text);
+				 ?>
+				<?=$html_text?>
 			</div>
 		</div>
 		
