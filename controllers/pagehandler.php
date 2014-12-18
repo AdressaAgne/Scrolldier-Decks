@@ -27,6 +27,14 @@ class Base {
 			"style" 	=> ""
 		),
 		
+		"/deckcomp" => array(
+			"title" 	=> "Scrolldier - Deck Building Competition",
+			"page" 		=> "deck/submit_deck",
+			"menu" 		=> true,
+			"name" 		=> "Deck Building Competition",
+			"style" 	=> ""
+		),
+		
 		"/post" => array(
 			"title" 	=> "Scrolldier - Blog",
 			"page" 		=> "post",

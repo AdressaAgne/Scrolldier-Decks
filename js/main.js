@@ -32,7 +32,6 @@ $(function(){
  	});
  	$("#successCloseBtn").click(function() {
  		$("#successcontainer").hide();
- 		copyToClipboard("123");
  	});
  	
  	$("#jsonOutput").click(function() {

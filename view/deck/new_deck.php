@@ -33,7 +33,7 @@
 			<div class="col-6">
 				<div class="form-element">
 					<label for="text">Tags <small>comma separeted(,)</small></label>
-					<input id="text" type="text" class="" name="" value="" placeholder="Write a tag" />
+					<input id="text" type="text" class="typeahead" name="" value="" placeholder="Write a tag" />
 					<input type="hidden" id="hidden_tags" name="tags" value="" />
 				</div>
 				
@@ -46,13 +46,25 @@
 	</div>
 	
 </div>
+<?php 
 
+$arrayString = array();
+
+$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard");
+$query->execute();
+
+while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+	array_push($arrayString, $row['name']);
+}
+
+
+ ?>
 <script>
 	$(function() {
 		var tags = [];
 	
-		$("#text").keyup(function() {
-			if (($(this).val().slice(-1) == ",") && ($(this).val() != "" && $(this).val() != ",")) {
+		$("#text").keyup(function(e) {
+			if (($(this).val().slice(-1) == ",") && ($(this).val() != "" && $(this).val() != ",") || (e.keyCode == 13 && $(this).val() != "" && $(this).val() != ",")) {
 				tags.push($(this).val().replace(/,/,''));
 				$("#tags").append("<span class='tag' style='margin: 5px; display: inline-block;'>"+$(this).val().replace(/,/,'')+"</span>");
 				$(this).val("");
@@ -80,4 +92,43 @@
 			
 		}
 	});
+	
+		$(function() {
+			var substringMatcher = function(strs) {
+			  return function findMatches(q, cb) {
+			    var matches, substrRegex;
+			 
+			    // an array that will be populated with substring matches
+			    matches = [];
+			 
+			    // regex used to determine if a string contains the substring `q`
+			    substrRegex = new RegExp(q, 'i');
+			 
+			    // iterate through the pool of strings and for any string that
+			    // contains the substring `q`, add it to the `matches` array
+			    $.each(strs, function(i, str) {
+			      if (substrRegex.test(str)) {
+			        // the typeahead jQuery plugin expects suggestions to a
+			        // JavaScript object, refer to typeahead docs for more info
+			        matches.push({ value: str });
+			      }
+			    });
+			 
+			    cb(matches);
+			  };
+			};
+			 
+			var scrolls = <?php echo json_encode($arrayString) ?>;
+			 
+			$('#text').typeahead({
+			  hint: false,
+			  highlight: true,
+			  minLength: 1
+			},
+			{
+			  name: 'scrolls',
+			  displayKey: 'value',
+			  source: substringMatcher(scrolls)
+			});
+		});
 </script>

@@ -15,9 +15,24 @@
 	$deck = new Deck();
 	$base = new Structure();
 	$formating = new TextHandler();
+	$account = new AccountController();
 	
 	//$_GET['error'] = "Your account is not yet verified, please do so.";
 	//$_GET['success'] = "you did something right, congratulations!";
+	
+	if (isset($_POST['login']) && $_POST['login_form'] == "login_form") {
+		
+		if (isset($_POST['remember'])) {
+			$remember = true;
+		} else {
+			$remember = false;
+		}
+		$user = $account->login($_POST['username'], $_POST['password'], $remember, false);
+	}
+	
+	if (isset($user)) {
+		echo($user->username);
+	}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -104,7 +119,8 @@
 <!-- Login Box-->	
 	<div class="tag clearfix hidden" id="login_box">
 		<div class="container">
-			<div class="row">
+			<form method="post" action="">
+				<div class="row">
 				<div class="col-8 col-offset-2 col-tab-10 col-tab-offset-1 col-phone-12">
 					<div class="form-element">
 						<h2><i class="fa fa-unlock"></i> Login to Scrolldier <small class="right hand" id="close_login"><i class="fa fa-times"></i></small></h2>
@@ -112,13 +128,13 @@
 					<div class="col-6">
 						<div class="form-element">
 							<label for="username">In Game Name</label>
-							<input id="username" type="text" name="" value="" placeholder="In Game Name"/>
+							<input id="username" type="text" name="username" value="" placeholder="In Game Name"/>
 						</div>
 					</div>
 					<div class="col-6">
 						<div class="form-element">
 							<label for="password">Password</label>
-							<input id="password" type="password" name="" value="" placeholder="Password" />
+							<input id="password" type="password" name="password" value="" placeholder="Password" />
 						</div>
 					</div>
 					<div class="col-6">
@@ -138,11 +154,13 @@
 					<div class="col-12">
 						<div class="form-element">
 							<button type="submit" class="btn" name=""><i class="fa fa-check"></i> Login</button>
-							<button type="submit" class="btn right success" id="reg_box_btn" name="">Register</button>
+							<input type="hidden" name="login_form" value="login_form" />
+							<button type="" class="btn right success" id="reg_box_btn" name="">Register</button>
 						</div>
 					</div>
 				</div>
 			</div>
+			</form>
 		</div>
 	</div>
 <!-- end Login Box-->
