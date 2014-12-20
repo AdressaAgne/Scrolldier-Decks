@@ -3,4 +3,4 @@ Scrolldier-Decks
 
 Test Reposetory for Scrolldier
 
-Live preview @ dev.scrolldier.com
+Live preview @ http://dev.scrolldier.com
