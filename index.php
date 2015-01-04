@@ -6,7 +6,6 @@
 	require_once("controllers/deckController.php");
 	
 	
-	
 	//pages
 	require_once("controllers/pagehandler.php");
 	require_once("controllers/structure.php");
@@ -17,22 +16,26 @@
 	$formating = new TextHandler();
 	$account = new AccountController();
 	
+	session_start();
+	
 	//$_GET['error'] = "Your account is not yet verified, please do so.";
 	//$_GET['success'] = "you did something right, congratulations!";
 	
 	if (isset($_POST['login']) && $_POST['login_form'] == "login_form") {
-		
 		if (isset($_POST['remember'])) {
 			$remember = true;
 		} else {
 			$remember = false;
 		}
+		
 		$user = $account->login($_POST['username'], $_POST['password'], $remember, false);
+			$_GET['success'] = "logged in";
+		if (isset($user)) {
+			$_GET['success'] = $user->username;
+		}
 	}
 	
-	if (isset($user)) {
-		echo($user->username);
-	}
+	
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -79,7 +82,8 @@
 	<script src="/js/min/chart-min.js"></script>
 	
 	<!--jQuery-1.11.1.min-->
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
+	<script src="/js/min/jquery.js"></script>
 	
 	<!--Main Javascript-->
 	<script src="/js/min/main-min.js" type="text/javascript"></script>
@@ -106,11 +110,13 @@
 			} ?>
 		</ul>
 		<ul class="right">
+		<?php if (!isset($_SESSION['username'])) { ?>
 			<li><a class='tag' href='#login_box' id="login_btn">Login</a></li>
 			<li><a class='tag' href='#login_box' id="registarte_btn">Register</a></li>
-			
-			<!--<li><a class='tag' href='/profile'>Orangee</a></li>
-			<li><a class='tag' href='/logout<?= $base->get_page() ?>'>Logout</a></li>-->
+		<?php } else { ?>	
+			<li><a class='tag' href='/profile'>Orangee</a></li>
+			<li><a class='tag' href='/logout<?= $base->get_page() ?>'>Logout</a></li>
+		<?php } ?>
 		</ul>
 	</div>
 </div>
@@ -153,11 +159,12 @@
 					</div>
 					<div class="col-12">
 						<div class="form-element">
-							<button type="submit" class="btn" name=""><i class="fa fa-check"></i> Login</button>
+							<button type="submit" class="btn" name="login"><i class="fa fa-check"></i> Login</button>
 							<input type="hidden" name="login_form" value="login_form" />
 							<button type="" class="btn right success" id="reg_box_btn" name="">Register</button>
 						</div>
 					</div>
+					
 				</div>
 			</div>
 			</form>
@@ -241,7 +248,8 @@
 
 
 <!-- Dialog box -->
-	<div class="container hidden dialog" id="errorcontainer">
+<?php if (isset($_GET['error'])) { ?>
+	<div class="container dialog" id="errorcontainer">
 		<div class="row ">
 			<div class="col-12 tag error">
 				<div class="left"><p id="errorMessage"><?=$_GET['error']?></p></div>
@@ -249,7 +257,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="container hidden dialog" id="successcontainer">
+<?php } ?>
+<?php if (isset($_GET['success'])) { ?>
+	<div class="container dialog" id="successcontainer">
 		<div class="row">
 			<div class="col-12 tag success">
 				<div class="left"><p id="successMessage"><?=$_GET['success']?></p></div>
@@ -257,6 +267,8 @@
 			</div>
 		</div>
 	</div>
+<?php } ?>	
+
 	<div class="container hidden dialog" id="specialmessagecontainer">
 		<div class="row">
 			<div class="col-12">

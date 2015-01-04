@@ -5,14 +5,14 @@ class AccountController extends Database {
 	public function login($username, $password, $remember, $use_token = false) {
 		
 		if ($use_token) {
-			$query = $this->_db->prepare("SELECT * FROM accounts WHERE username = :username AND token = :token");
+			$query = $this->_db->prepare("SELECT * FROM accounts WHERE ign = :username AND token = :token");
 			$arr = array(
 			    'username' => $username,
 			    'token' => $password
 			);
 			$this->arrayBinder($query, $arr);
 		} else {
-			$query = $this->_db->prepare("SELECT * FROM accounts WHERE username = :username AND password = :password");
+			$query = $this->_db->prepare("SELECT * FROM accounts WHERE ign = :username AND password = :password");
 			$arr = array(
 			    'username' => $username,
 			    'password' => sha1($password)
@@ -26,13 +26,13 @@ class AccountController extends Database {
 			
 			$user = new Account();
 			
-			$user->username = $row['username'];
+			$user->username = $row['ign'];
 			$user->rank = $row['rank'];
-			$user->donor = $row['donor'];
+			$user->donor = $row['hasDonated'];
 			$user->mail = $row['mail'];
-			$user->main_confirmed = $row['main_confirmed'];
+			$user->main_confirmed = $row['mailConfirmed'];
 			
-			$_SESSION['username'] = $row['username'];
+			$_SESSION['username'] = $row['ign'];
 			
 			if ($remember) {
 				$expire=time()+60*60*24*30;
@@ -42,8 +42,9 @@ class AccountController extends Database {
 			}
 			
 			return $user;
+		} else {
+			return "error";
 		}
-		
 		
 	}
 	

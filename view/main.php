@@ -11,6 +11,7 @@
 			$query = $deck->_db->prepare("SELECT * FROM decks WHERE isHidden = 0 AND competative = 1
 								   ORDER BY meta DESC, vote DESC,
 								   time DESC LIMIT 6");
+								   
 			$query->execute();
 			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			

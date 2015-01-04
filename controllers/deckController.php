@@ -193,7 +193,7 @@ class Deck extends Database {
 		
 		// Retrieve scrolls
 		$prepare = implode(',', array_fill(0, count($scroll_ids), '?'));
-		$query = $this->_db->prepare("SELECT * FROM scrollsCard WHERE id IN ($prepare)");
+		$query = $this->_db->prepare("SELECT * FROM scrollsCard WHERE id IN ($prepare) ORDER BY costGrowth, costEnergy, costOrder,costDecay, name");
 		$query->execute($scroll_ids);
 		
 		// Populate deck with scrolls
@@ -212,6 +212,9 @@ class Deck extends Database {
 			$faction = $scroll->faction;
 			$cost = $scroll_data["cost$faction"];
 			$kind = $scroll_data['kind'];
+			
+			$scroll->cost   = $cost;
+			$scroll->kind   = $kind;
 			
 			$deck_data->scrolls[]     = $scroll;
 			$deck_data->scroll_count += $scroll->count;
@@ -463,5 +466,9 @@ class Scroll
 	 * @var string 
 	 */
 	public $image = '';
+	
+	public $cost = 0;
+	
+	public $kind = "";
 }
 

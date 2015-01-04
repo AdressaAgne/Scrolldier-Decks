@@ -30,6 +30,8 @@ $(function(){
  	$("#errorCloseBtn").click(function() {
  		$("#errorcontainer").hide();
  	});
+ 	
+ 	
  	$("#successCloseBtn").click(function() {
  		$("#successcontainer").hide();
  	});
@@ -115,6 +117,11 @@ $(function(){
 	 	$("#reg_box").slideUp();
 	 });
 	 
+	 $("#close_imgbox").click(function() {
+	 	$("#img_box").slideUp();
+	 });
+	 
+	 
 	 
 	$("#login_btn").click(function() {
 		$('html,body').animate({
@@ -125,10 +132,39 @@ $(function(){
 		});
 		$("#reg_box").slideUp();		
 		$("#login_box").slideDown();
+		$("#img_box").slideUp();
 
 		
 		return false;
 	});
+	
+	$("#imageOutput").click(function() {
+			$('html,body').animate({
+			    scrollTop: 0 // modification
+			},{
+			 duration: 600,
+			 easing: 'swing'
+			});
+					
+			$("#img_box").slideDown();
+			$("#json_box").slideUp();
+			
+			return false;
+		});
+	
+	$("#jsonOutput").click(function() {
+			$('html,body').animate({
+			    scrollTop: 0 // modification
+			},{
+			 duration: 600,
+			 easing: 'swing'
+			});
+					
+			$("#json_box").slideDown();
+			$("#img_box").slideUp();
+			
+			return false;
+		});
 	
 	$("#reg_box_btn, #registarte_btn").click(function() {
 		$('html,body').animate({
@@ -139,7 +175,7 @@ $(function(){
 		});
 		
 		$("#login_box").slideUp();
-		
+		$("#img_box").slideUp();
 		$("#reg_box").slideDown();
 		
 		return false;

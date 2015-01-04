@@ -17,8 +17,63 @@ $data = $deck->get_deck_data($base->get_var(1));
 	background-size: cover;
 }
 
+.deckImage{
+	overflow: hidden;
+	height: 200px;
+}
+
 
 </style>
+
+<!-- Deck as Image export Box-->	
+	<div class="tag clearfix hidden" id="img_box">
+		<div class="container">
+			
+			<div class="row" style="height: 200px;">
+				<div class="form-element">
+					<h2><i class="fa fa-image"></i> Save deck as Image <small class="right hand" id="close_imgbox"><i class="fa fa-times"></i></small></h2>
+				</div>
+				<p>Right click on the chosen image and save it</p>
+				<div class="col-3 deckImage">
+					<img src="http://api.scrolldier.com/view/php/api/bigdeckimage.php?id=<?=$base->get_var(1)?>&bg=bg1" alt="" />
+				</div>
+				<div class="col-3 deckImage">
+					<img src="http://api.scrolldier.com/view/php/api/bigdeckimage.php?id=<?=$base->get_var(1)?>&bg=bg2" alt="" />
+				</div>
+				<div class="col-3 deckImage">
+					<img src="http://api.scrolldier.com/view/php/api/bigdeckimage.php?id=<?=$base->get_var(1)?>&bg=bg3" alt="" />
+				</div>
+				<div class="col-3 deckImage">
+					<img src="http://api.scrolldier.com/view/php/api/bigdeckimage.php?id=<?=$base->get_var(1)?>&bg=bg4" alt="" />
+				</div>
+			</div>
+			
+		</div>
+	</div>
+<!-- end  Deck as Image export Box-->
+
+<!-- JSON export Box-->	
+	<div class="tag clearfix hidden" id="json_box">
+		<div class="container">
+			<div class="form-element">
+				<h2><i class="fa fa-share"></i> Export to JSON or text string <small class="right hand" id="close_imgbox"><i class="fa fa-times"></i></small></h2>
+			</div>
+			<div class="row">
+				
+				<div class="col-6">
+					<p>JSON Output</p>
+					<textarea class="col-12 well"  disabled="" rows="4"><?= $data->export ?></textarea>
+				</div>
+				<div class="col-6">
+					<p>Text Output</p>
+					<textarea class="col-12 well"  disabled="" rows="4"></textarea>
+				</div>
+			</div>
+			
+		</div>
+	</div>
+<!-- end JSON export Box-->
+
 <div class="deck-bar">
 	<?php
 	foreach ($data->percentage as $faction => $percent) {
@@ -27,19 +82,18 @@ $data = $deck->get_deck_data($base->get_var(1));
 	?>
 </div>
 <!--style="background-image: url(/img/decks/);"-->
+
+
 <div class="deck-head-container" > 
 	
 	<div class="container">
-		<div class="export hidden" id="jsonoutputcontainer">
-			<textarea class="col-12 well"  disabled="" rows="4"><?= $data->export ?></textarea>
-		</div>
+		
 		
 		<div class="deck-head clearfix">
 			<div class="row">
 				<div class="col-12">
-				<a class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> JSON</a>
-				<a class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Text</a>
-				<a href="http://scrolldier.com/u/makeDeckImage.php?d=<?= $data->id ?>" download="<?= $data->name ?>.png" class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Image</a>
+				<a class="btn <?= $data->faction ?>" id="jsonOutput"><i class="fa fa-share"></i> Export</a>
+				<a class="btn <?= $data->faction ?>" id="imageOutput"><i class="fa fa-share"></i> Image</a>
 			
 				<a class="btn <?= $data->faction ?> right"><i class="fa fa-edit"></i> Edit</a>
 				<a class="btn <?= $data->faction ?> right"><i class="fa fa-trash"></i> Delete</a>

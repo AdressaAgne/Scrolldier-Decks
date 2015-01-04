@@ -2,7 +2,11 @@
 
 	<div class="row">
 		<div class="page-header">
-			<h2>Deck Building Competition</h2>
+			<h2>Deck Building Competition 
+			
+			<i class="icon-growth add-icon-order"></i>
+			
+			</h2>
 		</div>
 	
 		<div class="row">

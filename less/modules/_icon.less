@@ -1,5 +1,6 @@
 @icon-size: 24px;
-i[class^='icon-'] {
+
+i[class*='icon-'] {
 	display: inline-block;
 	width: @icon-size;
 	height: @icon-size;
@@ -39,6 +40,55 @@ i[class^='icon-'] {
 	&.front-text{
 		margin-bottom: -4px;
 	}
+	
+	&.big{
+		width: @icon-size*2;
+		height: @icon-size*2;
+		background-size: @icon-size*2 @icon-size*2;
+	}
+}
+
+i[class*='add-icon-']:after{
+	display: inline-block;
+	position: absolute;
+	margin-left: @icon-size / 3;
+	margin-top: -@icon-size / 3;
+	content: ' ';
+	
+	width: @icon-size;
+	height: @icon-size;
+	background-size: @icon-size @icon-size;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
+i.add-icon-decay:after{
+	background-image: url(../img/factions/decay.png);
+}
+i.add-icon-order:after{
+	background-image: url(../img/factions/order.png);
+}
+i.add-icon-growth:after{
+	background-image: url(../img/factions/growth.png);
+}
+i.add-icon-energy:after{
+	background-image: url(../img/factions/energy.png);
+}
+i.add-icon-wild:after{
+	background-image: url(../img/factions/wild.png);
+}
+
+i.add-icon-gold-decay:after{
+	background-image: url(../img/factions/gold_decay.png);
+}
+i.add-icon-gold-order:after{
+	background-image: url(../img/factions/gold_order.png);
+}
+i.add-icon-gold-growth:after{
+	background-image: url(../img/factions/gold_growth.png);
+}
+i.add-icon-gold-energy:after{
+	background-image: url(../img/factions/gold_energy.png);
 }
 
 

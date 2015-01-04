@@ -26,14 +26,14 @@ class Base {
 			"name" 		=> "Deck",
 			"style" 	=> ""
 		),
-		
-		"/deckcomp" => array(
-			"title" 	=> "Scrolldier - Deck Building Competition",
-			"page" 		=> "deck/submit_deck",
+		"/designer" => array(
+			"title" 	=> "Scrolldier - Scroll Designer",
+			"page" 		=> "designer/make",
 			"menu" 		=> true,
-			"name" 		=> "Deck Building Competition",
+			"name" 		=> "Scroll Designer",
 			"style" 	=> ""
 		),
+		
 		
 		"/post" => array(
 			"title" 	=> "Scrolldier - Blog",

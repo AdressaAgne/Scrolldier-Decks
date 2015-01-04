@@ -1,0 +1,76 @@
+i[class^='icon-'] {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+i[class^='icon-'].icon-decay {
+  background-image: url(../img/factions/decay.png);
+}
+i[class^='icon-'].icon-order {
+  background-image: url(../img/factions/order.png);
+}
+i[class^='icon-'].icon-growth {
+  background-image: url(../img/factions/growth.png);
+}
+i[class^='icon-'].icon-energy {
+  background-image: url(../img/factions/energy.png);
+}
+i[class^='icon-'].icon-wild {
+  background-image: url(../img/factions/wild.png);
+}
+i[class^='icon-'].icon-gold-decay {
+  background-image: url(../img/factions/gold_decay.png);
+}
+i[class^='icon-'].icon-gold-order {
+  background-image: url(../img/factions/gold_order.png);
+}
+i[class^='icon-'].icon-gold-growth {
+  background-image: url(../img/factions/gold_growth.png);
+}
+i[class^='icon-'].icon-gold-energy {
+  background-image: url(../img/factions/gold_energy.png);
+}
+i[class^='icon-'].front-text {
+  margin-bottom: -4px;
+}
+i[class^='icon-'][class^='add-energy']:afterc {
+  display: block;
+  width: 24px;
+  height: 24px;
+  background-size: 24px 24px;
+  background-repeat: no-repeat;
+  background-position: center center;
+  content: '';
+  background-image: url(../img/factions/gold_energy.png);
+}
+i[class^='ball-'] {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border-radius: 6px;
+  margin: 0px 4px 0px 2px;
+}
+i[class^='ball-'].ball-CREATURE {
+  background-color: #e2d5af;
+}
+i[class^='ball-'].ball-STRUCTURE {
+  background-color: #b7ac83;
+}
+i[class^='ball-'].ball-SPELL {
+  background-color: #bad6d8;
+}
+i[class^='ball-'].ball-ENCHANTMENT {
+  background-color: #90b1a6;
+}
+i[class^='ball-'].ball-red {
+  background-color: #CE0000;
+}
+i[class^='ball-'].ball-green {
+  background-color: #00CE00;
+}
+i[class^='ball-'].ball-yellow {
+  background-color: #CECE00;
+}

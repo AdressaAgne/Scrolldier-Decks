@@ -1,4 +1,56 @@
-<div class="container">
+<?php 
+
+$sql = "SELECT * FROM decks WHERE isHidden = 0";
+$keyword = $base->get_var(1);
+$sort = $base->get_var(2);
+
+if ($keyword == 'vote') {
+    $sql .= " ORDER BY vote";
+    
+} elseif ($keyword == 'title') {
+    
+    $sql .= " ORDER BY deck_title";
+    
+} elseif ($keyword == 'scrolls') {
+    
+    $sql .= " ORDER BY scrolls";
+ 
+} elseif ($keyword == 'resources') {
+    
+    $sql .= " ORDER BY tOrder, decay, growth, energy";
+
+} elseif ($keyword == 'meta') {
+    
+    $sql .= " ORDER BY meta";
+    
+    
+} elseif($keyword == 'user') {
+
+    $sql .= " ORDER BY deck_author";
+    
+} else {
+
+	$sql .= " ORDER BY meta desc, vote desc, time DESC";
+}
+
+$sort_opt = "";
+
+if (!empty($keyword)) {
+	if ($sort == "desc" ) {
+		 $sql .= " DESC LIMIT 30";
+	} else {
+		$sql .= " LIMIT 30";
+	}
+	
+	$sort_opt = "/desc";
+	
+	if ($sort == "desc") {
+		$sort_opt = "";
+	}
+}
+
+ ?>
+ <div class="container">
 	<div class="row">
 		<div class="col-12">
 			<form method="post" action="">
@@ -68,11 +120,12 @@
 	<table class="even divider hover border">
 		<thead class="">
 			<tr class="">
-				<td class=""><i class="fa fa-star"></i></td>
-				<td class="">Title</td>
-				<td class="">Scrolls</td>
-				<td class="">Ressources</td>
-				<td class=""><i class="fa fa-user"></i></td>
+				<td class="align-center" width="20px"><a href="/decks/vote<?=$sort_opt?>"><i class="fa fa-star"></i></a></td>
+				<td class=""><a href="/decks/title<?=$sort_opt?>">Title</a></td>
+				<td class="align-center" width="50px"><a href="/decks/scrolls<?=$sort_opt?>">Scrolls</a></td>
+				<td class="align-center"><a href="/decks/resources<?=$sort_opt?>">Resources</a></td>
+				<td class="align-center"><a href="/decks/meta<?=$sort_opt?>">Meta</a></td>
+				<td class="align-center"><a href="/decks/user<?=$sort_opt?>">Player</a></td>
 			</tr>
 		</thead>
 		
@@ -80,7 +133,8 @@
 		
 		<tbody id="table_content">
 		<?php 	
-			$query = $deck->_db->prepare("SELECT * FROM decks WHERE isHidden = 0 ORDER BY meta desc, vote desc, time DESC LIMIT 30");
+			$query = $deck->_db->prepare($sql);
+			
 			$query->execute();
 			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			
@@ -88,10 +142,10 @@
 	
 		
 			<tr class="">
-				<td class=""><?= $row['vote'] ?></td>
+				<td class="align-center"><?= $row['vote'] ?></td>
 				<td class=""><a href="/deck/<?= $row['id'] ?>" class=""><?= $row['deck_title'] ?></a></td>
-				<td class=""><?= $row['scrolls'] ?></td>
-				<td class="">
+				<td class="align-center"><?= $row['scrolls'] ?></td>
+				<td class="align-center">
 					<?php 
 						if (!empty($row['tOrder'])) {
 							echo("<i class='icon-order'></i> ");
@@ -110,6 +164,7 @@
 						}
 					 ?>
 				</td>
+				<td class=""><?= $row['meta'] ?></td>
 				<td class=""><?= $row['deck_author'] ?></td>
 			</tr>
 				
@@ -128,7 +183,7 @@ $query = $deck->_db->prepare("SELECT name, id FROM scrollsCard");
 $query->execute();
 
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
-	array_push($arrayString, $row['name']);
+	array_push($arrayString, $row['name']." (id: ".$row['id'].")");
 }
 
 
