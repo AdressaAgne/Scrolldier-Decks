@@ -4,36 +4,23 @@ $sql = "SELECT * FROM decks WHERE isHidden = 0";
 $keyword = $base->get_var(1);
 $sort = $base->get_var(2);
 
-if ($keyword == 'vote') {
-    $sql .= " ORDER BY vote";
-    
-} elseif ($keyword == 'title') {
-    
-    $sql .= " ORDER BY deck_title";
-    
-} elseif ($keyword == 'scrolls') {
-    
-    $sql .= " ORDER BY scrolls";
- 
-} elseif ($keyword == 'resources') {
-    
-    $sql .= " ORDER BY tOrder, decay, growth, energy";
-
-} elseif ($keyword == 'meta') {
-    
-    $sql .= " ORDER BY meta";
-    
-    
-} elseif($keyword == 'user') {
-
-    $sql .= " ORDER BY deck_author";
-    
-} else {
-
-	$sql .= " ORDER BY meta desc, vote desc, time DESC";
+function getSQL($i) {
+	$array = array(
+		0 => " ORDER BY meta desc, vote desc, time DESC",
+		'vote' => " ORDER BY vote",
+		'title' => " ORDER BY deck_title",
+		'scrolls' => " ORDER BY scrolls",
+		'resources' => " ORDER BY tOrder, decay, growth, energy",
+		'meta' => " ORDER BY meta",
+		'user' => " ORDER BY deck_author"	
+	);
+	
+	return $array[$i];
 }
 
 $sort_opt = "";
+$sort_res = "";
+$sql .= getSQL($keyword);
 
 if (!empty($keyword)) {
 	if ($sort == "desc" ) {
@@ -44,9 +31,7 @@ if (!empty($keyword)) {
 	
 	$sort_opt = "/desc";
 	
-	if ($sort == "desc") {
-		$sort_opt = "";
-	}
+	if ($sort == "desc") $sort_opt = "";
 }
 
  ?>
@@ -84,14 +69,14 @@ if (!empty($keyword)) {
 							</div>
 						</div>
 					</div>
-					
+
 					<div class="col-4 col-tab-6">
 						<div class="form-element">
 							<label for="contains_scroll">Contains Scroll <small>3+ chars for suggestion</small></label>
 							<input id="contains_scroll" class="typeahead" type="text" name="contains_scroll" value="" placeholder="Scroll Name" />
 						</div>
 					</div>
-					<div class="col-6 col-tab-6">
+					<!--<div class="col-6 col-tab-6">
 						<div class="form-element">
 							<label>Server <small>Test or Live</small></label>
 							<div class="row">
@@ -103,7 +88,7 @@ if (!empty($keyword)) {
 								</label>
 							</div>
 						</div>
-					</div>
+					</div>-->
 				</div>
 				<div class="row">
 					<div class="col-6 col-tab-12">
@@ -123,7 +108,7 @@ if (!empty($keyword)) {
 				<td class="align-center" width="20px"><a href="/decks/vote<?=$sort_opt?>"><i class="fa fa-star"></i></a></td>
 				<td class=""><a href="/decks/title<?=$sort_opt?>">Title</a></td>
 				<td class="align-center" width="50px"><a href="/decks/scrolls<?=$sort_opt?>">Scrolls</a></td>
-				<td class="align-center"><a href="/decks/resources<?=$sort_opt?>">Resources</a></td>
+				<td class="align-center"><a href="/decks/resources<?=$sort_res?>">Resources</a></td>
 				<td class="align-center"><a href="/decks/meta<?=$sort_opt?>">Meta</a></td>
 				<td class="align-center"><a href="/decks/user<?=$sort_opt?>">Player</a></td>
 			</tr>

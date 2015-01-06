@@ -1,6 +1,6 @@
 @icon-size: 24px;
 
-i[class*='icon-'] {
+i[class*='icon-'], i[class*='number-'] {
 	display: inline-block;
 	width: @icon-size;
 	height: @icon-size;
@@ -37,6 +37,19 @@ i[class*='icon-'] {
 		background-image: url(../img/factions/gold_energy.png);
 	}
 	
+	&.icon-1{
+		background-image: url(../img/rank/admin.png);
+	}
+	&.icon-2{
+		background-image: url(../img/rank/mod.png);
+	}
+	&.icon-3{
+		background-image: url(../img/rank/mojang.png);
+	}
+	&.icon-donor{
+		background-image: url(../img/rank/donor.png);
+	}
+	
 	&.front-text{
 		margin-bottom: -4px;
 	}
@@ -45,6 +58,41 @@ i[class*='icon-'] {
 		width: @icon-size*2;
 		height: @icon-size*2;
 		background-size: @icon-size*2 @icon-size*2;
+	}
+	&.small{
+		margin-bottom: -6px;
+	}
+}
+i[class*='number-']{
+	&.number-0{
+		background-image: url(../img/numbers/scroll_numbers__0_result.png);
+	}
+	&.number-1{
+		background-image: url(../img/numbers/scroll_numbers__1_result.png);
+	}
+	&.number-2{
+		background-image: url(../img/numbers/scroll_numbers__2_result.png);
+	}
+	&.number-3{
+		background-image: url(../img/numbers/scroll_numbers__3_result.png);
+	}
+	&.number-4{
+		background-image: url(../img/numbers/scroll_numbers__4_result.png);
+	}
+	&.number-5{
+		background-image: url(../img/numbers/scroll_numbers__5_result.png);
+	}
+	&.number-6{
+		background-image: url(../img/numbers/scroll_numbers__6_result.png);
+	}
+	&.number-7{
+		background-image: url(../img/numbers/scroll_numbers__7_result.png);
+	}
+	&.number-8{
+		background-image: url(../img/numbers/scroll_numbers__8_result.png);
+	}
+	&.number-9{
+		background-image: url(../img/numbers/scroll_numbers__9_result.png);
 	}
 }
 
@@ -121,3 +169,5 @@ i[class^='ball-'] {
 		background-color: #CECE00;
 	}
 }
+
+

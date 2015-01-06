@@ -9,7 +9,6 @@
 	background: none;
 	color: @light;
 	font-size: @font-size / 1.5;
-	
 	-webkit-transition: all .2s;
 	-moz-transition: all .2s;
 	-o-transition: all .2s;
@@ -91,8 +90,23 @@
 		
 		&:focus{
 			color: @light;
-			background-color: @dark;
+			background-color: @dark !important;
 			text-shadow: 0 1px @dark;
+		}
+		
+		&::-webkit-input-placeholder { /* WebKit browsers */
+		    color:    @dark;
+		}
+		&:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		   color:    @dark;
+		   opacity:  1;
+		}
+		&::-moz-placeholder { /* Mozilla Firefox 19+ */
+		   color:    @dark;
+		   opacity:  1;
+		}
+		&:-ms-input-placeholder { /* Internet Explorer 10+ */
+		   color:    @dark;
 		}
 	}
 }
@@ -172,6 +186,14 @@ ul.tags li{
 	padding: 5px;
 	& [type='text'], & [type='password'], & [type='email'], & [type='search'], & label, & select, & textarea{
 		width: 100%;
+		
+	}
+	
+	&.inline{
+		display: inline-block;
+		& [type='text'], & [type='password'], & [type='email'], & [type='search'], & label, & select, & textarea{
+			width: auto;
+		}
 	}
 	
 	
@@ -180,16 +202,12 @@ ul.tags li{
 		font-size: .7em;
 	}
 	
-	& label.icon input[type='checkbox']{
+	& label.icon input[type='checkbox'], & label.icon input[type='radio']{
 		display: none;
 	}
 	
 	& label.icon input[type='checkbox']:checked + span{
 		opacity: .5;
-	}
-	
-	& label.icon input[type='radio']{
-		display: none;
 	}
 	
 	& label.icon input[type='radio'] + span{

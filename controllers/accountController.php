@@ -1,6 +1,36 @@
 <?php 
 class AccountController extends Database {
-	
+
+	function page_setup($base) {
+		
+		$query = $this->_db->prepare("SELECT * FROM pages");
+		
+		if ($query->execute()) {
+			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+				$new_page = array(
+					"id" => $row['id'],
+					"title" => $row['title'],
+					"name" => $row['name'],
+					"page" => $row['file'],
+					"menu" => $row['menu'],
+					"tool" => $row['tool'],
+					"image" => $row['image'],
+					"restricted" => $row['restricted'],
+					"grade" => $row['grade']
+					
+				);
+				if (isset($base->pagestructure[$row['url']])) {
+					$base->pagestructure[uniqid("error_")] = $new_page;
+				} else {
+					$base->pagestructure[$row['url']] = $new_page;
+				}
+				
+			}
+		}
+		
+		
+		
+	}
 	
 	public function login($username, $password, $remember, $use_token = false) {
 		
@@ -24,15 +54,12 @@ class AccountController extends Database {
 		if ($query->execute()) {
 			$row = $query->fetch(PDO::FETCH_ASSOC);
 			
-			$user = new Account();
-			
-			$user->username = $row['ign'];
-			$user->rank = $row['rank'];
-			$user->donor = $row['hasDonated'];
-			$user->mail = $row['mail'];
-			$user->main_confirmed = $row['mailConfirmed'];
-			
-			$_SESSION['username'] = $row['ign'];
+			$_SESSION['ign'] = $row['ign'];
+			$_SESSION['rank'] = $row['rank'];
+			$_SESSION['hasDonated'] = $row['hasDonated'];
+			$_SESSION['mail'] = $row['mail'];
+			$_SESSION['mailConfirmed'] = $row['mailConfirmed'];
+
 			
 			if ($remember) {
 				$expire=time()+60*60*24*30;
@@ -41,15 +68,19 @@ class AccountController extends Database {
 				setcookie("scrolldier_token", $row['token'], $expire);
 			}
 			
-			return $user;
+			return true;
 		} else {
-			return "error";
+			return false;
 		}
 		
 	}
 	
 	public function logout() {
-		unset($_SESSION['username']);
+		unset($_SESSION['ign']);
+		unset($_SESSION['rank']);
+		unset($_SESSION['hasDonated']);
+		unset($_SESSION['mail']);
+		unset($_SESSION['mailConfirmed']);
 		
 		setcookie('scrolldier_usernmae', null, -1, '/');
 		setcookie('scrolldier_token', null, -1, '/');

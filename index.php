@@ -4,10 +4,11 @@
 	require_once("controllers/pdo.php");
 	require_once("controllers/accountController.php");
 	require_once("controllers/deckController.php");
-	
+	require_once("controllers/scrollController.php");
 	
 	//pages
 	require_once("controllers/pagehandler.php");
+	
 	require_once("controllers/structure.php");
 	require_once("controllers/texthandler.php");
 	
@@ -15,12 +16,17 @@
 	$base = new Structure();
 	$formating = new TextHandler();
 	$account = new AccountController();
+	$ScrollController = new ScrollController();
 	
 	session_start();
-	
-	//$_GET['error'] = "Your account is not yet verified, please do so.";
-	//$_GET['success'] = "you did something right, congratulations!";
-	
+	$account->page_setup($base);
+	//logout
+	if ($base->get_var(0) == "logout") {
+		$account->logout();
+		header('location: /');
+	}
+
+	//login
 	if (isset($_POST['login']) && $_POST['login_form'] == "login_form") {
 		if (isset($_POST['remember'])) {
 			$remember = true;
@@ -28,13 +34,47 @@
 			$remember = false;
 		}
 		
-		$user = $account->login($_POST['username'], $_POST['password'], $remember, false);
-			$_GET['success'] = "logged in";
-		if (isset($user)) {
-			$_GET['success'] = $user->username;
+		if ($account->login($_POST['username'], $_POST['password'], $remember, false)) {
+		} else {
+			$_GET['error'] = "Wrong password or username";
 		}
+		
 	}
 	
+	
+	if ($base->get_restriction()) {
+	
+		if (isset($_SESSION['rank']) && ($_SESSION['rank'] < $base->get_grade())) {
+			
+		} else {
+			header("location: /forbidden");
+		}
+	
+	
+	}
+	
+//	foreach ($base->pagestructure as $key => $value) {
+//	
+//	$query = $deck->_db->prepare("INSERT INTO pages (url, title, name, menu, tool, restricted, grade, image, file) VALUES (:url, :title, :name, :menu, :tool, :res, :grade, :image, :file)");
+//	$arr = array(
+//			'url' => $key,
+//			'title' => $value['title'],
+//			'name' => $value['name'],
+//			'menu' => $value['menu'],
+//			'tool' => $value['tool'],
+//			'res' => $value['restricted'],
+//			'grade' => $value['grade'],
+//			'image' => $value['image'],
+//			'file' => $value['page']
+//		);
+//	
+//	$deck->arrayBinder($query, $arr);
+//		if ($query->execute()) {
+//			$_GET['success'] = "yay!";
+//		}
+//	
+//	
+//	}
 	
  ?>
 <!DOCTYPE html>
@@ -110,12 +150,15 @@
 			} ?>
 		</ul>
 		<ul class="right">
-		<?php if (!isset($_SESSION['username'])) { ?>
+		<?php if (!isset($_SESSION['ign'])) { ?>
 			<li><a class='tag' href='#login_box' id="login_btn">Login</a></li>
 			<li><a class='tag' href='#login_box' id="registarte_btn">Register</a></li>
 		<?php } else { ?>	
-			<li><a class='tag' href='/profile'>Orangee</a></li>
-			<li><a class='tag' href='/logout<?= $base->get_page() ?>'>Logout</a></li>
+			<?php if ($_SESSION['rank'] < 3) {
+				echo("<li><a class='tag' href='/admin'><i class='icon-".$_SESSION['rank']." small'></i></a></li>");
+			} ?>
+			<li><a class='tag' href='/user'><?= $_SESSION['ign'] ?></a></li>
+			<li><a class='tag' href='/logout'>Logout</a></li>
 		<?php } ?>
 		</ul>
 	</div>

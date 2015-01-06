@@ -20,6 +20,11 @@ body{
 	margin: 0 auto;
 	padding: 5px @size * 2;
 }
+.container-big{
+	width: 100%;
+	margin: 0 auto;
+	padding: 5px @size;
+}
 
 h4.list-stats{
 	margin-left: 20px;
@@ -145,7 +150,7 @@ a:hover{
 }
 
 @media (max-width: 768px) {
-	.container{
+	.container, .container-big{
 		padding: 5px 0px;
 		font-size: 12px;
 	}	

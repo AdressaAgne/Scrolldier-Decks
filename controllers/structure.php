@@ -16,7 +16,12 @@ class Structure extends Base{
 		$this->_vars = explode("/", $path);
 		$this->_page = $this->variableDevider.$this->_vars[1];
 		$this->_host = $_SERVER['HTTP_HOST'];
+		
+		//$this->page_setup();
+
 	}
+	
+	
 	
 	// completes the page/file url
 	private function _completeUrl($page) {
@@ -82,6 +87,28 @@ class Structure extends Base{
 		$page = $this->_checkPage($this->_page);
 		
 		return $this->pagestructure[$page]['frame'];
+		
+	}
+	
+	public function get_restriction() {
+		$page = $this->_checkPage($this->_page);
+		//echo
+		if (isset($this->pagestructure[$page]['restricted'])) {
+			return $this->pagestructure[$page]['restricted'];
+		} else {
+			return false;
+		}
+		
+	}
+	
+	public function get_grade() {
+		$page = $this->_checkPage($this->_page);
+		//echo
+		if (isset($this->pagestructure[$page]['grade'])) {
+			return $this->pagestructure[$page]['grade'];
+		} else {
+			return 4;
+		}
 		
 	}
 	
