@@ -1,7 +1,4 @@
-<video class="front-video" preload="auto" autoplay="autoplay" loop="loop" muted="muted" poster="none">
-	<source src="video/scrolls.mp4" type="video/mp4">
-	Video Tag!
-</video>
+
 <div class="container clearfix">
 	
 	<div class="row">
@@ -13,6 +10,9 @@
 								   time DESC LIMIT 6");
 								   
 			$query->execute();
+			
+		
+			
 			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			
 			$deckData = $deck->get_deck_data($row['id']);
@@ -20,19 +20,19 @@
 		
 			<div class="col-4 col-tab-6" >
 			<a href="/deck/<?php echo($row['id']) ?>">
-				<div class="deck-thumbnail">
-					<div class="deck-header" style="background-image: url(img/decks/small-<?=$deckData->image ?>);">
-						
-						<?php 
-							foreach ($deckData->resources as $resource => $count) {
-								echo '<i class="icon-gold-'.$resource.'"></i>';
-							}
-						?>
-					</div>
+				<div class="deck-thumbnail <?= $deckData->faction ?>">
 					<div class="deck-bar">
 						<?php foreach ($deckData->percentage as $faction => $percentage) {
 							echo '<div class="bar bar-'.$faction.'" style="width: '.$percentage.'%;"></div>';
 						} ?>
+					</div>
+					<div class="deck-header" style="background-image: url(img/decks/small-<?=$deckData->image ?>);">
+						<span><?php 
+							foreach ($deckData->resources as $resource => $count) {
+								echo '<i class="icon-gold-'.$resource.'"></i>';
+							}
+						?></span>
+						<span class="right"><?=($deckData->vote_up - $deckData->vote_down) ?></span>
 					</div>
 					<div class="deck-content" >
 						<h3><?=substr($row['deck_title'],0,30) ?></h3>
@@ -43,10 +43,7 @@
 							<li><?=$deckData->kinds['STRUCTURE'] ?> Structures</li>
 							<li><?=$deckData->kinds['SPELL'] ?> Spells</li>
 						</ul>
-						<ul class="scroll-content">
-							<li></li>
-							<li><?=($deckData->vote_up - $deckData->vote_down) ?> Stars</li>
-						</ul>
+
 					</div>
 				</div>
 			</a>

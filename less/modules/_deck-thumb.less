@@ -8,7 +8,6 @@
 
 a .deck-thumbnail{
 	width: 100%;
-	border-radius: 3px;
 	background-color: lighten(@deck-main, 10%);
 	color: @light;
 	overflow: hidden;
@@ -20,6 +19,23 @@ a .deck-thumbnail{
 	
 	&:visited{
 		text-decoration: none;
+	}
+	
+	&.energy{
+		border: 2px solid @color-energy;
+		border-top-width: 0px;
+	}
+	&.order{
+		border: 2px solid @color-order;
+		border-top-width: 0px;
+	}
+	&.decay{
+		border: 2px solid @color-decay;
+		border-top-width: 0px;
+	}
+	&.growth{
+		border: 2px solid @color-growth;
+		border-top-width: 0px;
 	}
 	
 	
@@ -35,7 +51,6 @@ a .deck-thumbnail{
 		height: 100px;
 		-moz-box-shadow: inset 0 1px rgba(255, 255, 255, 0.2);
 		box-shadow: inset 0 1px rgba(255, 255, 255, 0.2);
-		border-radius: 2px 2px 0px 0px;
 }
 	
 	& h3{
