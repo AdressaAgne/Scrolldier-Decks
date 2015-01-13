@@ -1,6 +1,5 @@
 
 <div class="container clearfix">
-	
 	<div class="row">
 
 		<?php 

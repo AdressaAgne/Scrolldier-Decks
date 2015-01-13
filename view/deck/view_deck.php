@@ -176,7 +176,9 @@ $data = $deck->get_deck_data($base->get_var(1));
 							<ul class="list-stats">
 								<li><span>Author</span> <span class="right"><?=$data->author ?></span></li>
 								<li><span>Scrolls</span> <span class="right"><?=$data->scroll_count ?></span></li>
-								<li><span>Gold Cost</span> <span class="right"><?=$data->total_cost ?>g</span></li>
+								<li><span>Hard Gold Cost</span> <span class="right"><?=$data->total_cost ?> <i class="icon-gold small"></i></span></li>
+								<li><span>BM Gold Cost</span> <span class="right"><?=$data->black_market_cost ?> <i class="icon-gold small"></i></span></li>
+								<li><span>Shards</span> <span class="right"><?=$data->shards ?> <i class="icon-shard small"></i></span></li>
 								<li><span>Version</span> <span class="right"><?=$data->meta_version ?></span></li>
 							</ul>
 						</div>
@@ -268,12 +270,6 @@ $data = $deck->get_deck_data($base->get_var(1));
 <script>
 	$(function() {
 
-	$("#vote_up").click(function() {
-		 showSuccess('This function do not work yet');
-	});
-	$("#vote_down").click(function() {
-		 showError('This function do not work yet');
-	});
 
 	var decay = "#AD7FCC";
 	var dark_decay = "#965bbd";

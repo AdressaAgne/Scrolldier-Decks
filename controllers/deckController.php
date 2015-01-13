@@ -135,6 +135,29 @@ class Deck extends Database {
 		return $cost * $scroll->count;
 	}
 	
+	function getShardCost($scroll)
+	{
+		$cost = 25;
+		if ($scroll->rarity == 1)
+		{
+			$cost = 60;
+		}
+		elseif ($scroll->rarity == 2)
+		{
+			$cost = 120;
+		}
+		return $cost * $scroll->count;
+	}
+	
+	public function get_Gold() {
+		
+		
+		if (ini_get('allow_url_fopen') == 1) {
+		    return json_decode(file_get_contents("http://scrolls.kodered.de/api/scrolldier"), TRUE);
+		} else {
+		    return '<p style="color: #A00;">fopen is not allowed on this host.</p>';
+		}
+	}
 	
 	/**
 	 * Retrieves a deck
@@ -157,6 +180,10 @@ class Deck extends Database {
 		{
 			return FALSE;
 		}
+		
+		//
+		$BMJSON = $this->get_Gold();
+		
 		
 		$json = json_decode($data['JSON'], TRUE);
 		
@@ -219,6 +246,11 @@ class Deck extends Database {
 			$deck_data->scrolls[]     = $scroll;
 			$deck_data->scroll_count += $scroll->count;
 			$deck_data->total_cost   += $this->getStackCost($scroll);
+			$deck_data->shards += $this->getShardCost($scroll);
+			
+			
+			
+			$deck_data->black_market_cost += ($BMJSON[$scroll->id]['avg'] * $scroll->count);
 			
 			$deck_data->addKind($kind, $scroll->count);
 			$deck_data->addRarity($scroll->rarity, $scroll->count);
@@ -310,6 +342,10 @@ class DeckData
 	public $scroll_count = 0;
 
 	public $total_cost = 0;
+	
+	public $shards = 0;
+	
+	public $black_market_cost = 0;
 
 	public $vote_up = 0;
 

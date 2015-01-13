@@ -1,5 +1,9 @@
 <?php 
 
+	//error_reporting(~0);
+	//ini_set('display_errors', 1);
+	
+	
 	//databases
 	require_once("controllers/pdo.php");
 	require_once("controllers/accountController.php");
