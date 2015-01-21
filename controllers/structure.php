@@ -90,6 +90,15 @@ class Structure extends Base{
 		
 	}
 	
+	public function get_footer() {
+		//echo
+		
+		$page = $this->_checkPage($this->_page);
+		
+		return $this->pagestructure[$page]['footer'];
+		
+	}
+	
 	public function get_restriction() {
 		$page = $this->_checkPage($this->_page);
 		//echo

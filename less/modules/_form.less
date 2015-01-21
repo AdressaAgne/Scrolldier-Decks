@@ -215,11 +215,11 @@ ul.tags li{
 	
 	
 	& label.icon input[type='radio'] + span{
-		opacity: 1;
+		opacity: .5;
 	}
 	
 	& label.icon input[type='radio']:checked + span{
-		opacity: .5;
+		opacity: 1;
 	}
 	
 	& label.icon{
@@ -250,11 +250,19 @@ ul.tags li{
 .progress_inner{
 	width: 100%;
 	padding: 2px;
-	background-color: @color-growth;
+	
 	color: @dark;
 	text-align: center;
-	-moz-box-shadow: inset 0 1px 0 lighten(@color-growth, 5%), inset 0 -1px 0 darken(@color-growth, 5%);
-	box-shadow: inset 0 1px 0 lighten(@color-growth, 5%), inset 0 -1px 0 darken(@color-growth, 5%);
+	
+	
+	&.blueprint{
+		background-color: @light;
+	}
+	&.growth{
+		background-color: @color-growth;
+		-moz-box-shadow: inset 0 1px 0 lighten(@color-growth, 5%), inset 0 -1px 0 darken(@color-growth, 5%);
+		box-shadow: inset 0 1px 0 lighten(@color-growth, 5%), inset 0 -1px 0 darken(@color-growth, 5%);
+	}
 }
 .progress_outer{
 	width: 100%;

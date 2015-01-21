@@ -56,30 +56,7 @@
 	
 	
 	}
-	
-//	foreach ($base->pagestructure as $key => $value) {
-//	
-//	$query = $deck->_db->prepare("INSERT INTO pages (url, title, name, menu, tool, restricted, grade, image, file) VALUES (:url, :title, :name, :menu, :tool, :res, :grade, :image, :file)");
-//	$arr = array(
-//			'url' => $key,
-//			'title' => $value['title'],
-//			'name' => $value['name'],
-//			'menu' => $value['menu'],
-//			'tool' => $value['tool'],
-//			'res' => $value['restricted'],
-//			'grade' => $value['grade'],
-//			'image' => $value['image'],
-//			'file' => $value['page']
-//		);
-//	
-//	$deck->arrayBinder($query, $arr);
-//		if ($query->execute()) {
-//			$_GET['success'] = "yay!";
-//		}
-//	
-//	
-//	}
-	
+		
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -111,6 +88,11 @@
 	
 	<!--Font Awesome-->
 	<link rel="stylesheet" href="/css/font-awesome.min.css" />
+	
+	<?php if (!empty($base->get_styles())) { ?>
+		<!-- Alternative Style -->
+		<link rel="stylesheet" href="<?= $base->get_styles()?>" />
+	<?php } ?>
 	
 	<!-- Apple Device: Home Screen icon-->
 	<link rel="apple-touch-icon" sizes="76x76" href="/img/apple/iconX76_bg.png" />
@@ -274,7 +256,7 @@
 <!--	end content	-->
 
 		
-
+<?php if ($base->get_footer()) { ?>
 <!--	Footer of the page	-->
 		<div class="container clearfix">
 			<div class="row">
@@ -292,7 +274,7 @@
 			</div>
 		</div>
 <!--	end Footer	-->		
-
+<?php } ?>
 
 <!-- Dialog box -->
 <?php if (isset($_GET['error'])) { ?>
