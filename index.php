@@ -31,6 +31,10 @@
 	}
 
 	//login
+	if (isset($_COOKIE['remember_user'])) {
+		$account->login($_COOKIE['scrolldier_username'], $_POST['scrolldier_token'], true, true);
+	}
+	
 	if (isset($_POST['login']) && $_POST['login_form'] == "login_form") {
 		if (isset($_POST['remember'])) {
 			$remember = true;

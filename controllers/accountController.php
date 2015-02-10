@@ -66,7 +66,7 @@ class AccountController extends Database {
 			if ($remember) {
 				$expire=time()+60*60*24*30;
 				setcookie("remember_user", true, $expire);
-				setcookie("scrolldier_usernmae", $row['username'], $expire);
+				setcookie("scrolldier_username", $row['username'], $expire);
 				setcookie("scrolldier_token", $row['token'], $expire);
 			}
 			
@@ -84,10 +84,10 @@ class AccountController extends Database {
 		unset($_SESSION['mail']);
 		unset($_SESSION['mailConfirmed']);
 		
-		setcookie('scrolldier_usernmae', null, -1, '/');
+		setcookie('scrolldier_username', null, -1, '/');
 		setcookie('scrolldier_token', null, -1, '/');
 		
-		unset($_COOKIE['scrolldier_usernmae']);
+		unset($_COOKIE['scrolldier_username']);
 		unset($_COOKIE['scrolldier_token']);
 		
 		session_destroy();
