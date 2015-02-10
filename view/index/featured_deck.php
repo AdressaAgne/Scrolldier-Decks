@@ -59,7 +59,7 @@
 		</div>
 		
 		<div class="col-8 col-t-12">
-			<h3><?=substr($deckData->name,0,30) ?> <small>By: <?=$deckData->author ?> - <?=$deckData->time ?></small></h3>
+			<h3 style="overflow-x:hidden;"><?=substr($deckData->name,0,30) ?> <small>By: <?=$deckData->author ?> - <?=$deckData->time ?></small></h3>
 			<p class="col-12 col-t-10 col-t-offset-1">
 				<?=$deckData->text ?>
 			</p>
