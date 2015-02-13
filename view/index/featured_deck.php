@@ -1,6 +1,6 @@
 	<?php 
 		//834
-		$deckData = $deck->get_deck_data(5);
+		$deckData = $deck->get_deck_data(1765);
 		
 		if ($deckData !== FALSE) {
 	 ?>

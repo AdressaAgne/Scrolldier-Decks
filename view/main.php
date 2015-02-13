@@ -1,3 +1,13 @@
+<div class="container">
+
+	<div class="row news">
+	
+		<?php include("index/featured_deck.php") ?>
+	
+	</div>
+
+</div>
+
 <div class="container">	
 	
 	<div class="row news">
