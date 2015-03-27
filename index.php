@@ -110,6 +110,8 @@
 	
 	<!--Chart.js-->
 	<script src="/js/min/chart-min.js"></script>
+        
+        <script src="/js/min/chartstackedbar-min.js"></script>
 	
 	<!--jQuery-1.11.1.min-->
 	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
