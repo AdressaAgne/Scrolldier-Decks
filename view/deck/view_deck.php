@@ -315,7 +315,7 @@ $data = $deck->get_deck_data($base->get_var(1));
 		foreach ($data->curve as $faction => $kind) {
 			foreach ($kind as $name => $cost) { ?>
 				
-				if(!barCharData<?=$name ?>) {
+				if(typeof barCharData<?=$name ?> === 'undefined') {
 					var barCharData<?=$name ?> = {
 						labels : [1,2,3,4,5,6,7,8,9],
 						datasets : []
