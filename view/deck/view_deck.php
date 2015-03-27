@@ -313,19 +313,22 @@ $data = $deck->get_deck_data($base->get_var(1));
 		foreach ($data->curve as $faction => $kind) {
 			foreach ($kind as $name => $cost) { ?>
 				
-				var barChartData<?=$name ?> = {
-					labels : [1,2,3,4,5,6,7,8,9],
-					datasets : [
-						{
-							label : "<?="$faction $name" ?>",
-							fillColor : <?=$faction ?>,
-							highlightFill: dark_<?=$faction ?>,
-							data : [
-								<?=implode(',',$cost) ?>
-							]
-						},
-						],
-					}
+				if(!barCharData<?=$name ?>) {
+					var barCharData<?=$name ?> = {
+						labels : [1,2,3,4,5,6,7,8,9],
+						datasets : []
+					};
+				}
+				
+				barChartData<?=$name ?>.datasets.push(
+					{
+						label : "<?="$faction $name" ?>",
+						fillColor : <?=$faction ?>,
+						highlightFill: dark_<?=$faction ?>,
+						data : [
+							<?=implode(',',$cost) ?>
+						]
+					});
 			<?php }
 		}
 	?>
