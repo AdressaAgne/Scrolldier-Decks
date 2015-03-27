@@ -116,12 +116,14 @@ $data = $deck->get_deck_data($base->get_var(1));
 			</div>
 			
 			
-			
+			<?php if (isset($_SESSION['ign'])) { ?>
 			<div class="col-12 align-center">
 				<button class="btn big success" id="vote_up"><i class="fa fa-thumbs-up"></i> Vote Up</button>
 				<button class="btn big danger" id="vote_down"><i class="fa fa-thumbs-down"></i> Vote Down</button>
 			</div>
-		
+			<?php } ?>
+			
+			
 			<div class="row">
 				<div class="row">
 					<div class="col-12 deck-scrolls">
