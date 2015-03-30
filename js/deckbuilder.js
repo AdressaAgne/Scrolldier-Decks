@@ -30,23 +30,23 @@ $(function() {
 	}
 	
 	function getHTML(id, image, faction, name, count) {
-		return '<div class="col-2 col-phone-6 col-tab-3 hand scrolls" data-name="'+name+'" data-id="'+id+'" data-count="'+count+'" data-faction="'+faction+'" data-image="'+image+'">
-				<div class="col-12 scroll scroll-stack-'+count+'" style="background-image: url(/img/scrolls/'+image+'.png)">
-					<i class="icon-'+faction+'"></i>
-				</div>
-				<div class="col-12 scroll-content">
-					<span id="count">'+count+'x</span> <span id="name">'+name+'</span>
-				</div>
-			</div>';
+		return '<div class="col-2 col-phone-6 col-tab-3 hand scrolls" data-name="'+name+'" data-id="'+id+'" data-count="'+count+'" data-faction="'+faction+'" data-image="'+image+'">' +
+				'<div class="col-12 scroll scroll-stack-'+count+'" style="background-image: url(/img/scrolls/'+image+'.png)">' +
+					'<i class="icon-'+faction+'"></i>' +
+				'</div>' +
+				'<div class="col-12 scroll-content">' +
+					'<span id="count">'+count+'x</span> <span id="name">'+name+'</span>' +
+				'</div>' +
+			'</div>';
 	}
 	
 	function getInnerHTML(id, image, faction, name, count) {
-		return '<div class="col-12 scroll scroll-stack-'+count+'" style="background-image: url(/img/scrolls/'+image+'.png)">
-					<i class="icon-'+faction+'"></i>
-				</div>
-				<div class="col-12 scroll-content">
-					<span id="count">'+count+'x</span> <span id="name">'+name+'</span>
-				</div>';
+		return '<div class="col-12 scroll scroll-stack-'+count+'" style="background-image: url(/img/scrolls/'+image+'.png)">' +
+					'<i class="icon-'+faction+'"></i>' +
+				'</div>' +
+				'<div class="col-12 scroll-content">' +
+					'<span id="count">'+count+'x</span> <span id="name">'+name+'</span>' +
+				'</div>';
 	}
 	
 	function addScroll(id, image, faction, name) {

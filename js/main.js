@@ -60,8 +60,8 @@ $(function(){
 	            $("#specialmessagecontainer").show();
 	          //<div class="col-12"><h2>header</h2></div>
 	          //<div class="col-12"><p>text</p></div>
-	             $("#specialmessage").html("<div class='col-12'><h3>" + data.headline + "</h3></div>
-	             							<div class='col-12'><p>"+data.message+"</p></div>");
+	             $("#specialmessage").html("<div class='col-12'><h3>" + data.headline + "</h3></div>" +
+	             							"<div class='col-12'><p>"+data.message+"</p></div>");
 	        }
 	
 	    })
