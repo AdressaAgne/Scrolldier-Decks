@@ -11,8 +11,17 @@
 <div class="container">	
 	
 	<div class="row news">
+            
+            <?php
+            if($twitch['value_int'] == 1) {
+            ?>
+                <div class="col-8 col-offset-2 col-tab-10 col-tab-offset-1">
+                    <div class="col-12 align-center">
+                        <iframe src="http://www.twitch.tv/<?=$twitch['value_var'];?>/embed" frameborder="0" scrolling="no" height="378" width="620"></iframe>
+                    </div>
+                </div>
 		<?php 
-			
+            }
 			$query = $deck->_db->prepare("SELECT * FROM scrolls WHERE isHidden = 0 ORDER BY time DESC LIMIT 10");
 			$query->execute();
 			while ($row = $query->fetch(PDO::FETCH_ASSOC)) {

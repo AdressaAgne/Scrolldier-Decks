@@ -149,15 +149,16 @@ $data = $deck->get_deck_data($base->get_var(1));
 		
 					<div class="col-12">
 					<div class="col-12">
-		
+                                        
+                                            <label class="btn small">
+                                                <input type="radio" name="curve" value="barChartDataall" data="all" /> All
+                                            </label>
 					<?php 
-						foreach ($data->curve as $faction => $kind) {
-							foreach ($kind as $name => $cost) { ?>
+						foreach ($data->kinds as $kind => $count) { ?>
 								<label class="btn small">
-									<input type="radio" name="curve" value="barChartData<?=$name ?>" data="<?=$name ?>" /> <?=ucfirst(strtolower($name)) ?>
+									<input type="radio" name="curve" value="barChartData<?=$kind ?>" data="<?=$kind ?>" /> <?=ucfirst(strtolower($kind)) ?>
 								</label>
-							<?php }
-						} 
+					<?php   }
 					?>
 					</div>
 		
@@ -359,7 +360,7 @@ $data = $deck->get_deck_data($base->get_var(1));
 	
 	function loadGraph(id,barChart) {
 		var ctx = document.getElementById(id).getContext("2d");
-		window.myBar = new Chart(ctx).Bar(barChart, {
+		window.myBar = new Chart(ctx).StackedBar(barChart, {
 			responsive : true
 		});
 	}

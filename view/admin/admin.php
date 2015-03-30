@@ -2,6 +2,16 @@
 	<div class="page-header">
 		<h2>Admin</h2>
 	</div>
+    
+    <div class="row">
+        <div class="col-12">
+            <p>Twitch-Stream</p>
+                <input type="checkbox" name="twitchactive" <?= $twitch['value_int'] == 1? 'checked' : ''; ?>/>
+                <input type="text" name="hosted" value="<?= $twitch['value_var']; ?>"/>
+                <button class="btn" id="updatestream">Change</button>
+        </div>
+        
+    </div>
 	
 	<div class="row">
 		<div class="col-12">
@@ -180,6 +190,10 @@
 			});
 		});
 		
+                $("#updatestream").click(function() {
+                    var 
+    
+                });
 		
 	});
 </script>

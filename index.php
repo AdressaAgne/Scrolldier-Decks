@@ -9,6 +9,7 @@
 	require_once("controllers/accountController.php");
 	require_once("controllers/deckController.php");
 	require_once("controllers/scrollController.php");
+        require_once("controllers/settingsController.php");
 	
 	//pages
 	require_once("controllers/pagehandler.php");
@@ -21,6 +22,8 @@
 	$formating = new TextHandler();
 	$account = new AccountController();
 	$ScrollController = new ScrollController();
+        $SettingsController = new settingsController();
+        $twitch = $SettingsController->getSettingsByType(2);
 	
 	session_start();
 	$account->page_setup($base);
@@ -110,6 +113,8 @@
 	
 	<!--Chart.js-->
 	<script src="/js/min/chart-min.js"></script>
+        
+        <script src="/js/min/chartstackedbar-min.js"></script>
 	
 	<!--jQuery-1.11.1.min-->
 	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
