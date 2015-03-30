@@ -28,7 +28,18 @@
 					<label for="text">Cover Image</label>
 					
 				</div>
-				
+				<div class="form-element">
+					<label>
+						<input type="checkbox" name="" value="" /> Make Deck Hidden
+					</label>
+					
+				</div>
+				<div class="form-element">
+					<label>
+						<input type="checkbox" name="" value="" /> Deck is Made for Competitive play
+					</label>
+					
+				</div>
 			</div>
 			<div class="col-6">
 				<div class="form-element">

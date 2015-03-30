@@ -260,6 +260,7 @@ if (!empty($_POST['contains_scroll'])) {
 					<div class="col-6 col-tab-12">
 						<div class="form-element">
 							<button type="submit" name="search" class="btn"><i class="fa fa-search"></i> Search</button>
+							<a href="/new">New Deck</a>
 						</div>
 					</div>
 				</div>
