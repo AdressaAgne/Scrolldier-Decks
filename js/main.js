@@ -180,5 +180,10 @@ $(function(){
 		
 		return false;
 	});
+        
+        $(".toggle").click(function() {
+                var name = $(this).attr("id");
+                $("[name='" + name + "']").toggle(600,"swing");
+        });
 });
 
