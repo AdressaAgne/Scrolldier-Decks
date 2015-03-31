@@ -170,17 +170,17 @@
 			  if(tool == 1) {  tool = "<i class='ball-green'></i>" }else{  tool = "<i class='ball-red'></i>" };
 			  if(restriction == 1) {  restriction = "<i class='ball-green'></i>" }else{  restriction = "<i class='ball-red'></i>" };
 			   
-			   $("#page_table").prepend("<tr class='page_tr'>\
-			   	<td><a href='"+url+"'>"+url+"</a></td>\
-			   	<td>"+title+"</td>\
-			   	<td>"+name+"</td>\
-			   	<td>"+menu+"</td>\
-			   	<td>"+tool+"</td>\
-			   	<td>"+restriction+"</td>\
-			   	<td>"+grade+"</td>\
-			   	<td>"+file+"</td>\
-			   	<td colspan='2'>"+image+"</td>\
-			   </tr>");
+			   $("#page_table").prepend("<tr class='page_tr'>" +
+			   	"<td><a href='"+url+"'>"+url+"</a></td>" +
+			   	"<td>"+title+"</td>" +
+			   	"<td>"+name+"</td>" +
+			   	"<td>"+menu+"</td>" +
+			   	"<td>"+tool+"</td>" +
+			   	"<td>"+restriction+"</td>" +
+			   	"<td>"+grade+"</td>" +
+			   	"<td>"+file+"</td>" +
+			   	"<td colspan='2'>"+image+"</td>" +
+			   "</tr>");
 			  })
 			  .fail(function() {
 			    console.log("Failed while adding page, with error: "+data);
@@ -191,8 +191,24 @@
 		});
 		
                 $("#updatestream").click(function() {
-                    var 
-    
+                    var twitchactive = $("[name='twitchactive']").is(":checked")? 1 : 0;
+                    var hosted = $("[name='hosted']").val();
+                    
+                    $.ajax( {
+                        type: "POST",
+                        url: "/view/admin/ajax/update_stream.php",
+                        data: {
+                            twitchactive : twitchactive,
+                            hosted : hosted
+                        }
+                    }).done(function(data) {
+                        
+                        if (data) {
+			    console.log("Updated Stream");
+			} else {
+			    console.log("Error: " + data);
+			}
+                    });
                 });
 		
 	});
