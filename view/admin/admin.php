@@ -19,6 +19,8 @@
 			<div class="row align-center hidden" id="loading">
 				<span><i class="fa fa-refresh fa-spin"></i></span>
 			</div>
+                        <button class="btn toggle" id="pages">Toggle</button>
+                        <div name="pages" hidden>
 			<table class="even divider hover border" id="page_table">
 				<thead>
 					<tr>
@@ -98,7 +100,7 @@
 				</tbody>
 	
 			</table>
-		
+                        </div>
 		</div>
 		<!--<div class="col-6">
 			<pre><?php print_r($base->pagestructure) ?></pre>
