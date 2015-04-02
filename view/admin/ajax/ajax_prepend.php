@@ -1,4 +1,5 @@
 <?php 
+session_start();
 $prepend = "../../../";
 require_once($prepend."controllers/pdo.php");
 require_once($prepend."controllers/accountController.php");
