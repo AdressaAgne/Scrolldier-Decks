@@ -31,7 +31,6 @@ class settingsController extends Database {
     }
     
     function getSettingsAdvanced($query) {
-        $query = $this->_db->perpare("SELECT * FROM scrolldier_settings WHERE".$query."ORDER BY id DESC");
         
         $settings = $this->getResultArray($query);
         
@@ -69,11 +68,11 @@ class settingsController extends Database {
     
     function updateSetting($id, $name, $value_int, $value_var, $type) {
         
-        $query = $this->_db->prepare("UPDATE scrollder_settings SET"
+        $query = $this->_db->prepare("UPDATE scrolldier_settings SET "
                 . "name=:name, "
                 . "value_int=:value_int, "
                 . "value_var=:value_var, "
-                . "type=:type"
+                . "type=:type "
                 . "WHERE id=:id");
         
         $params = array(
