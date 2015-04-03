@@ -55,7 +55,9 @@
 		</div>
 	
 	</div>
-	
+	<div class="col-12">
+		hello
+	</div>
 </div>
 <?php 
 

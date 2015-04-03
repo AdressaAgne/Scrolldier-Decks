@@ -1,3 +1,28 @@
+.radio-col{
+	position: relative;
+}
+
+.btn-radio{
+	width: 35px !important;
+	height: 35px !important;
+	border-radius: 20px !important;
+	padding: 0px 0px !important;
+	position: relative;
+	&.success:after{
+		content: '✔︎';		
+	}
+}
+
+.btn-checkbox{
+	width: 35px !important;
+	height: 35px !important;
+	padding: 0px 0px !important;
+
+	position: relative;
+	&.success:after{
+		content: '✔︎';	
+	}
+}
 .btn, .dropdown{
 	padding: 5px 15px;
 	border: 2px solid @light;
@@ -22,7 +47,6 @@
 		color: @color;
 		background-color: @light;
 	}
-	
 	
 	&.small{
 		font-size: 11px;
