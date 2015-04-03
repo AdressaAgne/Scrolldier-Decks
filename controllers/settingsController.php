@@ -31,6 +31,7 @@ class settingsController extends Database {
     }
     
     function getSettingsAdvanced($query) {
+        $query = $this->_db->perpare("SELECT * FROM scrolldier_settings WHERE ".$query." ORDER BY id DESC");
         
         $settings = $this->getResultArray($query);
         
