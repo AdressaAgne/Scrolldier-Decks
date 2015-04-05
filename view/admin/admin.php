@@ -190,10 +190,10 @@
 			});
 		});
 		
-                $("#updatestream").click(function() {
+        $("#updatestream").click(function() {
 
-    
-                });
+
+        });
 		
 	});
 </script>
