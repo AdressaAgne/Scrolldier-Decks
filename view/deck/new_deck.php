@@ -1,3 +1,18 @@
+<?php 
+	//cover_image, tags, name(title), json_string, competetive, isHidden
+
+	if (isset($_POST['submit'])) {
+		$isHidden = isset($_POST['isHidden']) ? 1 : 0;
+		$comp = isset($_POST['competetive']) ? 1 : 0;
+		
+		 
+			$id = $deck->insertDeck($comp, $isHidden, $_POST['json_string'], $_POST['name'], $_POST['tags'], $_POST['cover_image']);
+			$_GET['success'] = "Deck successfully added, view it <a href='/deck/"+$id+"'>here</a>";
+		
+		
+		
+	}
+ ?>
 <div class="container">
 	<div class="page-header">
 		<h2>New Deck</h2>
@@ -5,7 +20,7 @@
 	
 	
 	<div class="row">
-	
+		<form method="post" action="">
 		<div class="row">
 			<div class="col-6 col-tab-12">
 				<div class="form-element">
@@ -20,8 +35,6 @@
 				</div>
 			</div>
 		</div>
-		
-		
 		<div class="row">
 			<div class="col-6">
 				<div class="form-element">
@@ -56,13 +69,13 @@
 				</div>
 				<div class="form-element">
 					<label>
-						<input type="checkbox" name="" value="" /> Make Deck Hidden
+						<input type="checkbox" name="isHidden" value="" /> Make Deck Hidden
 					</label>
 					
 				</div>
 				<div class="form-element">
 					<label>
-						<input type="checkbox" name="" value="" /> Deck is Made for Competitive play
+						<input type="checkbox" name="competetive" value="" /> Deck is Made for Competitive play
 					</label>
 					
 				</div>
@@ -71,19 +84,40 @@
 				<div class="form-element" id="preset">
 					<label>Preset Tags <small>Click a tag to select it</small></label>
 					<div class="col-12">
-						<span class="tag small hand" id="preset-tag" data-type="Aggro">Aggro</span>
-						<span class="tag small hand" id="preset-tag" data-type="Late Game">Late Game</span>
-						<span class="tag small hand" id="preset-tag" data-type="Control">Control</span>
-						<span class="tag small hand" id="preset-tag" data-type="Combo">Combo</span>
-						<span class="tag small hand" id="preset-tag" data-type="Tempo">Tempo</span>
-						<span class="tag small hand" id="preset-tag" data-type="Counter">Counter</span>
-						<span class="tag small hand" id="preset-tag" data-type="Ramp">Ramp</span>
-						<span class="tag small hand" id="preset-tag" data-type="Synergy">Synergy</span>
-						<span class="tag small hand" id="preset-tag" data-type="Judgement">Judgement</span>
+						<span class="tag small hand" id="preset-tag" data-type="Aggro">Aggro
+							<div class="tag-hover tag hidden">Aggro refers to a type of deck that focuses on winning the game as fast as possible. Those decks usually feature a broad selection of aggressive creatures and damage spells.</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Late Game">Late Game
+							<div class="tag-hover tag hidden">The deck is designed for the long game, with powerful and very costly creatures</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Control">Control
+							<div class="tag-hover tag hidden">This is a deck archetype which centers more around taking control of the game, preventing the other player from doing what they want. These types of decks usually use their control effects to stall the game until they can finish with powerful late-game scrolls or combos.</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Combo">Combo
+							<div class="tag-hover tag hidden">This can refer to two or more scrolls that do something together. Sometimes it is used as a synonym for “synergy”, but it commonly refers to a certain, game-changing combination of scrolls. It may also refer to deck types that are built around combos.</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Tempo">Tempo
+							<div class="tag-hover tag hidden">Like most games, CCGs will typically have one player "driving" the interactions and one player "reacting" to those actions. Tempo is an extremely important advantage and usually defaults to whoever goes first. Creating a disparity between the rate at which you are casting scrolls with increased quality and your opponent's ability to do the same. Whoever is in control of the Tempo of the match controls the game.</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Counter">Counter
+							<div class="tag-hover tag hidden">A deck constructed to counter a specific deck. These decks often utilise scrolls or mechanics which are usually not that viable, but are especially effective against the deck they mean to counter.</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Ramp">Ramp
+							<div class="tag-hover tag hidden">Permanently increasing your resources, aside from sacrificing a scroll. For example, playing Imperial Resources increases your Order resources by 1.</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Synergy">Synergy
+							<div class="tag-hover tag hidden"> Scrolls that go well together and should be used together as much as possible are referred to as having synergy. Game-changing synergy effects are usually referred to as a combo.</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Judgement">Judgement
+							<div class="tag-hover tag hidden">A Judgment deck created with the in-game draft</div>
+						</span>
+						<span class="tag small hand" id="preset-tag" data-type="Other">Other
+							<div class="tag-hover tag hidden">Other type of deck</div>
+						</span>
 					</div>
 				</div>
 				<div class="form-element">
-					<label for="text">Tags <small>comma separeted(,)</small></label>
+					<label for="text">Tags <small>comma separeted(,), Backspace to remove last tag</small></label>
 					<input id="text" type="text" class="typeahead" name="" value="" placeholder="Write a tag" />
 					<input type="hidden" id="hidden_tags" name="tags" value="" />
 					<input type="hidden" name="cover_image" id="cover_image" value="" />
@@ -93,10 +127,19 @@
 					<div class="col-12" id="tags"></div>
 				</div>
 			</div>
+			
 		</div>
-	
+		<div class="row">
+			<div class="form-element align-center">
+				<button type="submit" class="btn btn-big success" name="submit">Submit Deck</button>
+			</div>
+		</div>
+	</form>
+		
 	</div>
+	
 </div>
+
 <?php 
 
 $arrayString = array();
@@ -148,14 +191,22 @@ while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 			update();
 		});
 		
-		
+		$("[id*=preset-tag]").hover(function() {
+			$(this).find(".tag-hover").show();
+		}, function() {
+			$(this).find(".tag-hover").hide();
+		})
 		
 		
 		$("img[class*=col-3]").click(function() {
-			$("img[class*=col-3]").removeClass("active");
-			$(this).addClass("active");
-			
-			$("#cover_image").val($(this).attr("alt"));
+			if ($(this).hasClass("active")) {
+				$("img[class*=col-3]").removeClass("active");
+				$("#cover_image").val("");
+			} else {
+				$("img[class*=col-3]").removeClass("active");
+				$(this).addClass("active");
+				$("#cover_image").val($(this).attr("alt"));
+			}
 		});
 		
 	});

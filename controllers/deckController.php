@@ -1,35 +1,189 @@
 <?php 
 class Deck extends Database {
+
+	// old scrolldier code
+public function insertDeck($comp, $isHidden, $json, $title, $tags, $image) {
+
+   $query = $this->_db->prepare("INSERT INTO decks
+   		(deck_title,
+   		 deck_author,
+   		 growth,
+   		 energy,
+   		 tOrder,
+   		 decay,
+   		 wild,
+   		 competative,
+   		 JSON,
+   		 isHidden,
+   		 image,
+   		 tags
+   		 ) VALUES(
+   		 :deck_title,
+   		 :deck_author,
+   		 :growth,
+   		 :energy,
+   		 :order,
+   		 :decay,
+   		 :wild,
+   		 :competative,
+   		 :JSON,
+   		 :isHidden,
+   		 :image,
+   		 :tags)");
 	
-	private function ago($datetime, $full=false)
-	{
-	   	   $now = new DateTime;
-	       $ago = new DateTime($datetime);
-	       $diff = $now->diff($ago);
-	   
-	       $diff->w = floor($diff->d / 7);
-	       $diff->d -= $diff->w * 7;
-	   
-	       $string = array(
-	           'y' => 'year',
-	           'm' => 'month',
-	           'w' => 'week',
-	           'd' => 'day',
-	           'h' => 'hour',
-	           'i' => 'minute',
-	           's' => 'second',
-	       );
-	       foreach ($string as $k => &$v) {
-	           if ($diff->$k) {
-	               $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
-	           } else {
-	               unset($string[$k]);
-	           }
-	       }
-	   
-	       if (!$full) $string = array_slice($string, 0, 1);
-	       return $string ? implode(', ', $string) : 'just now';
-	 }
+	$data = $this->ScrollsToScrollsGuideJSON($json);
+	$factions = $this->getDeckFaction($data);
+
+	$wild = 0;
+	foreach ($factions as $key => $value) {
+		$wild += ($value > 0 ? 1 : 0);
+	}
+		
+	
+	$growth 	= ($factions['growth'] 	> 0 ? 1 : 0);
+	$order 		= ($factions['order'] 	> 0 ? 1 : 0);
+	$energy 	= ($factions['energy'] 	> 0 ? 1 : 0);
+	$decay 		= ($factions['decay'] 	> 0 ? 1 : 0);
+	$wild 		= ($wild 				> 1 ? 1 : 0);
+	
+	
+	$arr = array(
+			'deck_title' => $title,
+			'deck_author' => $_SESSION['ign'],
+			'growth' => $growth,
+			'energy' => $energy,
+			'order' => $order,
+			'decay' => $decay,
+			'wild' => $wild,
+			//'meta' => $_POST['meta'],
+			//'scrolls' => $total,
+			//'text' => $_POST['description'],
+			'competative' => $comp,
+			'tags' => trim($tags, ","),
+			'JSON' => $data,
+			'image' => $image,
+			'isHidden' => $isHidden
+			
+		);
+
+	$this->arrayBinder($query, $arr);
+//	if ($query->execute()) {
+//		//return $query->lastInsertId();
+//	}
+	try {
+		return $query->execute();
+	} catch(PDOExecption $e) { 
+	 	$_GET['error'] =  "Error!: " . $e->getMessage(); 
+	} 
+	
+}	
+//{"msg":"success","data":{"scrolls":[{"id":"164","c":3},{"id":"349","c":3},{"id":"179","c":2},{"id":"268","c":3},{"id":"276","c":3},{"id":"181","c":3},{"id":"162","c":3},{"id":"350","c":3},{"id":"159","c":3},{"id":"172","c":3},{"id":"195","c":3},{"id":"177","c":3},{"id":"174","c":3},{"id":"190","c":3},{"id":"353","c":3},{"id":"352","c":3}],"name":"Undead Decay - Conduit Madness","deleted":0,"resources":["something"]},"apiversion":1}
+
+// old scrolldier code
+public function getDeckFaction($json) {
+	$factionsCost = array(
+		"growth" => 0,
+		"order" => 0,
+		"energy" => 0,
+		"decay" => 0
+	);
+	
+	$data = json_decode($json, TRUE);
+	
+	if ($data['msg'] == "success") { 
+		$prepare = "";
+
+		for ($i = 0; $i < count($data['data']['scrolls']); $i++) {
+			$prepare .= $data['data']['scrolls'][$i]['id'].",";
+		}
+		
+		$query = $this->_db->prepare("SELECT * FROM scrollsCard WHERE id IN (164,349,179,268,276,181,162,350,159,172,195,177,174,190,353,352) ORDER BY costGrowth, costEnergy, costOrder, costDecay, name");
+
+		if ($query->execute()) {
+		
+			while ($scroll = $query->fetch(PDO::FETCH_ASSOC)) {
+				if (!empty($scroll['costgrowth'])) {
+					$factionsCost["growth"] += 1;
+				}
+				if (!empty($scroll['costorder'])) {
+					$factionsCost["order"] += 1;
+				}
+				if (!empty($scroll['costenergy'])) {
+					$factionsCost["energy"]+= 1;
+				}
+				if (!empty($scroll['costdecay'])) {
+					$factionsCost["decay"]+= 1;
+				}
+			}
+			
+			return $factionsCost;
+		}	
+			
+			
+	}
+}
+
+
+// old scrolldier code	
+public function ScrollsToScrollsGuideJSON($json) {
+	$data = json_decode($json, TRUE);
+	
+	$phpArray = array(
+		"msg" => "success",
+		"data" => array(
+			"scrolls" =>array_unique(array()),
+			"name" => $data['deck'],
+			"deleted" => 0,
+			"resources" => array("something")
+		),
+		"apiversion" => 1
+		
+	);
+	$total = 0;
+	for ($i = 0; $i < count($data['types']); $i++) {
+			$count = array_count_values($data['types']);
+			$toInsert = array(
+			        "id" => $data['types'][$i],
+			        "c" => $count[$data['types'][$i]]
+			);
+			array_push($phpArray['data']["scrolls"], $toInsert);
+			$total++;
+	}
+	$phpArray['data']['scrolls'] = array_map("unserialize", array_unique(array_map("serialize", $phpArray['data']['scrolls'])));
+	$phpArray['data']['scrolls'] = array_values($phpArray['data']['scrolls']);
+	return json_encode($phpArray);	
+}
+	
+	
+	
+private function ago($datetime, $full=false){
+   $now = new DateTime;
+   $ago = new DateTime($datetime);
+   $diff = $now->diff($ago);
+
+   $diff->w = floor($diff->d / 7);
+   $diff->d -= $diff->w * 7;
+
+   $string = array(
+       'y' => 'year',
+       'm' => 'month',
+       'w' => 'week',
+       'd' => 'day',
+       'h' => 'hour',
+       'i' => 'minute',
+       's' => 'second',
+   );
+   foreach ($string as $k => &$v) {
+       if ($diff->$k) {
+           $v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+       } else {
+           unset($string[$k]);
+       }
+   }
+
+   if (!$full) $string = array_slice($string, 0, 1);
+   return $string ? implode(', ', $string) : 'just now';
+}
 	
 	public function setDeckImage($image, $deck) {
 		
@@ -210,8 +364,7 @@ class Deck extends Database {
 		// Parse scroll IDs
 		$scroll_ids = [];
 		$scrolls_count = [];
-		foreach ($json['data']['scrolls'] as $scroll)
-		{
+		foreach ($json['data']['scrolls'] as $scroll) {
 			$scroll_ids[] = $scroll['id'];
 			$scrolls_count[$scroll['id']] = $scroll['c'];
 		}

@@ -272,7 +272,7 @@
 <!--	end content	-->
 
 		
-<?php if ($base->get_footer()) { ?>
+<!--// if ($base->get_footer()) {-->
 <!--	Footer of the page	-->
 		<div class="container clearfix">
 			<div class="row">
@@ -290,7 +290,7 @@
 			</div>
 		</div>
 <!--	end Footer	-->		
-<?php } ?>
+<!-- // }-->
 
 <!-- Dialog box -->
 <?php if (isset($_GET['error'])) { ?>
