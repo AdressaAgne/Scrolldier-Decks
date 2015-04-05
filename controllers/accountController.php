@@ -37,7 +37,7 @@ class AccountController extends Database {
 	public function login($username, $password, $remember, $use_token = false) {
 		
 		if ($use_token) {
-			$query = $this->_db->prepare("SELECT * FROM accounts WHERE ign = :username AND token = :token");
+			$query = $this->_db->prepare("SELECT * FROM accounts WHERE ign = :username AND betaKey = :token");
 			$arr = array(
 			    'username' => $username,
 			    'token' => $password
@@ -61,19 +61,35 @@ class AccountController extends Database {
 			$_SESSION['hasDonated'] = $row['hasDonated'];
 			$_SESSION['mail'] = $row['mail'];
 			$_SESSION['mailConfirmed'] = $row['mailConfirmed'];
+			
 
 			
 			if ($remember) {
+				$token = $this->updateToken($row['id']);
+				//$_SESSION['token'] = $token;
 				$expire=time()+60*60*24*30;
 				setcookie("remember_user", true, $expire);
-				setcookie("scrolldier_username", $row['username'], $expire);
-				setcookie("scrolldier_token", $row['token'], $expire);
+				setcookie("scrolldier_username", $row['ign'], $expire);
+				setcookie("scrolldier_token", $token, $expire);
 			}
 			
 			return true;
 		} else {
 			return false;
 		}
+		
+	}
+	
+	private function updateToken($id) {
+		$token = sha1(microtime(time()));
+		$query = $this->_db->prepare("UPDATE accounts SET betaKey = :token WHERE id = :id");
+		$arr = array(
+		    'id' => $id,
+		    'token' => $token
+		);
+		$this->arrayBinder($query, $arr);
+		
+		return $query->execute() ? $token : false;
 		
 	}
 	
@@ -86,9 +102,11 @@ class AccountController extends Database {
 		
 		setcookie('scrolldier_username', null, -1, '/');
 		setcookie('scrolldier_token', null, -1, '/');
+		setcookie('remember_user', null, -1, '/');
 		
 		unset($_COOKIE['scrolldier_username']);
 		unset($_COOKIE['scrolldier_token']);
+		unset($_COOKIE['remember_user']);
 		
 		session_destroy();
 	}

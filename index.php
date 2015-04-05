@@ -17,15 +17,21 @@
 	require_once("controllers/structure.php");
 	require_once("controllers/texthandler.php");
 	
+	
+	if (!session_start()) {
+		session_start();
+	}
+	
 	$deck = new Deck();
 	$base = new Structure();
 	$formating = new TextHandler();
 	$account = new AccountController();
 	$ScrollController = new ScrollController();
-        $SettingsController = new settingsController();
-        $twitch = $SettingsController->getSettingsByType(2);
+    $SettingsController = new settingsController();
+    $twitch = $SettingsController->getSettingsByType(2);
 	
-	session_start();
+	
+	
 	$account->page_setup($base);
 	//logout
 	if ($base->get_var(0) == "logout") {
@@ -35,17 +41,18 @@
 
 	//login
 	if (isset($_COOKIE['remember_user'])) {
-		$account->login($_COOKIE['scrolldier_username'], $_POST['scrolldier_token'], true, true);
+		if (!isset($_SESSION['ign'])) {
+			if($account->login($_COOKIE['scrolldier_username'], $_COOKIE['scrolldier_token'], true, true)){
+				$_GET['success'] = "You were automatically logged in as ".$_SESSION['ign'];
+			}
+		}
 	}
 	
 	if (isset($_POST['login']) && $_POST['login_form'] == "login_form") {
-		if (isset($_POST['remember'])) {
-			$remember = true;
-		} else {
-			$remember = false;
-		}
+		$remember = isset($_POST['save_pw']) ? true : false;
 		
 		if ($account->login($_POST['username'], $_POST['password'], $remember, false)) {
+			$_GET['success'] = "Login Successful";
 		} else {
 			$_GET['error'] = "Wrong password or username";
 		}
