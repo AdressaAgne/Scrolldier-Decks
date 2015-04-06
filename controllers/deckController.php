@@ -1,22 +1,12 @@
 <?php 
 class Deck extends Database {
 
-	// old scrolldier code
-public function insertDeck($comp, $isHidden, $json, $title, $tags, $image) {
+public function insertDeck($comp, $isHidden, $json, $title, $tags, $image, $guide) {
 
    $query = $this->_db->prepare("INSERT INTO decks
-   		(deck_title,
-   		 deck_author,
-   		 growth,
-   		 energy,
-   		 tOrder,
-   		 decay,
-   		 wild,
-   		 competative,
-   		 JSON,
-   		 isHidden,
-   		 image,
-   		 tags
+   		(deck_title, deck_author,
+   		 growth, energy, tOrder, decay, wild,
+   		 competative, JSON, isHidden, image, tags, guide
    		 ) VALUES(
    		 :deck_title,
    		 :deck_author,
@@ -29,7 +19,8 @@ public function insertDeck($comp, $isHidden, $json, $title, $tags, $image) {
    		 :JSON,
    		 :isHidden,
    		 :image,
-   		 :tags)");
+   		 :tags,
+   		 :guide)");
 	
 	$data = $this->ScrollsToScrollsGuideJSON($json);
 	$factions = $this->getDeckFaction($data);
@@ -62,24 +53,23 @@ public function insertDeck($comp, $isHidden, $json, $title, $tags, $image) {
 			'tags' => trim($tags, ","),
 			'JSON' => $data,
 			'image' => $image,
-			'isHidden' => $isHidden
+			'isHidden' => $isHidden,
+			'guide' => $guide
 			
 		);
 
 	$this->arrayBinder($query, $arr);
-//	if ($query->execute()) {
-//		//return $query->lastInsertId();
-//	}
+	
 	try {
-		return $query->execute();
+		$query->execute();
+		return $this->_db->lastInsertId();
 	} catch(PDOExecption $e) { 
-	 	$_GET['error'] =  "Error!: " . $e->getMessage(); 
+	 	return "Error!: " . $e->getMessage(); 
 	} 
 	
 }	
 //{"msg":"success","data":{"scrolls":[{"id":"164","c":3},{"id":"349","c":3},{"id":"179","c":2},{"id":"268","c":3},{"id":"276","c":3},{"id":"181","c":3},{"id":"162","c":3},{"id":"350","c":3},{"id":"159","c":3},{"id":"172","c":3},{"id":"195","c":3},{"id":"177","c":3},{"id":"174","c":3},{"id":"190","c":3},{"id":"353","c":3},{"id":"352","c":3}],"name":"Undead Decay - Conduit Madness","deleted":0,"resources":["something"]},"apiversion":1}
 
-// old scrolldier code
 public function getDeckFaction($json) {
 	$factionsCost = array(
 		"growth" => 0,
@@ -96,9 +86,9 @@ public function getDeckFaction($json) {
 		for ($i = 0; $i < count($data['data']['scrolls']); $i++) {
 			$prepare .= $data['data']['scrolls'][$i]['id'].",";
 		}
-		
-		$query = $this->_db->prepare("SELECT * FROM scrollsCard WHERE id IN (164,349,179,268,276,181,162,350,159,172,195,177,174,190,353,352) ORDER BY costGrowth, costEnergy, costOrder, costDecay, name");
-
+		$prepare = trim($prepare, ",");
+		$query = $this->_db->prepare("SELECT * FROM scrollsCard WHERE id IN ( $prepare ) ORDER BY costGrowth, costEnergy, costOrder, costDecay, name");
+	
 		if ($query->execute()) {
 		
 			while ($scroll = $query->fetch(PDO::FETCH_ASSOC)) {
@@ -115,8 +105,9 @@ public function getDeckFaction($json) {
 					$factionsCost["decay"]+= 1;
 				}
 			}
-			
+			//print_r($factionsCost);
 			return $factionsCost;
+			
 		}	
 			
 			

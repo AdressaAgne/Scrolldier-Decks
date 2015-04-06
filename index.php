@@ -61,14 +61,11 @@
 	
 	
 	if ($base->get_restriction()) {
-	
 		if (isset($_SESSION['rank']) && ($_SESSION['rank'] < $base->get_grade())) {
 			
 		} else {
 			header("location: /forbidden");
 		}
-	
-	
 	}
 		
  ?>

@@ -1,16 +1,20 @@
 <?php 
-	//cover_image, tags, name(title), json_string, competetive, isHidden
 
+	//cover_image, tags, name(title), json_string, competetive, isHidden
 	if (isset($_POST['submit'])) {
-		$isHidden = isset($_POST['isHidden']) ? 1 : 0;
-		$comp = isset($_POST['competetive']) ? 1 : 0;
+		if (!empty($_POST['json_string']) && !empty($_POST['name'])) {
+			$isHidden = isset($_POST['isHidden']) ? 1 : 0;
+			$comp = isset($_POST['competetive']) ? 1 : 0;
+			$guide = isset($_POST['guide']) ? 1 : 0;
 		
-		 
-			$id = $deck->insertDeck($comp, $isHidden, $_POST['json_string'], $_POST['name'], $_POST['tags'], $_POST['cover_image']);
-			$_GET['success'] = "Deck successfully added, view it <a href='/deck/"+$id+"'>here</a>";
-		
-		
-		
+			if ($deck_id_or_error = $deck->insertDeck($comp, $isHidden, $_POST['json_string'], $_POST['name'], $_POST['tags'], $_POST['cover_image'], $guide)) {
+				$_GET['success'] = "Deck successfully added. View it <a href='/deck/".$deck_id_or_error."'>Here</a>";
+			} else {
+				$_GET['error'] = "An error occurred while submitting your deck: ".$deck_id_or_error;
+			}
+		} else {
+			$_GET['error'] = "Your deck must have a name and a JSON string";
+		}
 	}
  ?>
 <div class="container">
@@ -38,7 +42,7 @@
 		<div class="row">
 			<div class="col-6">
 				<div class="form-element">
-					<label for="text">Cover Image <small>if no cover image is selected a random image will be choosen</small></label>
+					<label for="text">Cover Image <small>if no cover image is selected a random image will be chosen</small></label>
 					<div class="col-12">
 						<img src="img/decks/small-decay-1.jpg" alt="decay-1.jpg" class="col-3 clickable"/>
 						<img src="img/decks/small-decay-2.jpg" alt="decay-2.jpg" class="col-3 clickable"/>
@@ -67,17 +71,21 @@
 						<img src="img/decks/small-nutural-5.jpg" alt="nutural-5.jpg" class="col-3 clickable"/>
 					</div>
 				</div>
+					
 				<div class="form-element">
-					<label>
+					<label class="hand">
 						<input type="checkbox" name="isHidden" value="" /> Make Deck Hidden
 					</label>
-					
 				</div>
 				<div class="form-element">
-					<label>
+					<label class="hand">
 						<input type="checkbox" name="competetive" value="" /> Deck is Made for Competitive play
 					</label>
-					
+				</div>
+				<div class="form-element">
+					<label class="hand">
+						<input type="checkbox" name="guide" value="" /> Deck Guide <small>deck must have a Description with the guide</small>
+					</label>
 				</div>
 			</div>
 			<div class="col-6">
