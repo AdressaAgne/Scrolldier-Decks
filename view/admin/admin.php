@@ -3,15 +3,15 @@
 		<h2>Admin</h2>
 	</div>
     
-    <div class="row">
-        <div class="col-12">
-            <p>Twitch-Stream</p>
-                <input type="checkbox" name="twitchactive" <?= $twitch['value_int'] == 1 ? 'checked' : ''; ?>/>
-                <input type="text" name="hosted" value="<?= $twitch['value_var']; ?>"/>
-                <button class="btn" id="updatestream">Change</button>
-        </div>
+        <div class="row">
+            <div class="col-12">
+                <p>Twitch-Stream</p>
+                    <input type="checkbox" name="twitchactive" <?= $twitch['value_int'] == 1 ? 'checked' : ''; ?>/>
+                    <input type="text" name="hosted" value="<?= $twitch['value_var']; ?>" placeholder="Stream"/>
+                    <button class="btn" id="updatestream">Change</button>
+            </div>
         
-    </div>
+        </div>
 	
 	<div class="row">
 		<div class="col-12">
@@ -19,8 +19,10 @@
 			<div class="row align-center hidden" id="loading">
 				<span><i class="fa fa-refresh fa-spin"></i></span>
 			</div>
-			<table class="even divider hover border" id="page_table">
-				<thead>
+                        <button class="btn toggle" id="pages">Toggle</button>
+                        <div name="pages" hidden>
+                            <table class="even divider hover border" id="page_table">
+                                    <thead>
 					<tr>
 						<td><i class="fa fa-link"></i></td>
 						<td>Title</td>
@@ -93,13 +95,25 @@
 					<?php } ?>
 				</tbody>
 	
-			</table>
+                            </table>
+                        </div>
 		
 		</div>
 		<!--<div class="col-6">
 			<pre><?php print_r($base->pagestructure) ?></pre>
 		</div>-->
 	</div>
+    
+        <div class="row">
+            <div class="col-12">
+                <p>Add Settings(Placeholder)</p>
+                <input type="text" name="settingname" placeholder="Setting Name"/>
+                <input type="text" name="settingvalueint" placeholder="Value Int"/>
+                <input type="text" name="settingvaluevar" placeholder="Value Var"/>
+                <input type="text" name="settingtype" placeholder="Type"/>
+                <button class="btn" id="addsetting">Add Setting</button>
+            </div>
+        </div>
 </div>
 <script>
 	$(function() {
@@ -186,9 +200,49 @@
 			});
 		});
 		
-        $("#updatestream").click(function() {
-
-        });
-		
-	});
+                $("#updatestream").click(function() {
+                    var twitchactive = $("[name='twitchactive']").is(":checked")? 1 : 0;
+                    var hosted = $("[name='hosted']").val();
+                    
+                    $.ajax( {
+                        type: "POST",
+                        url: "/view/admin/ajax/update_stream.php",
+                        data: {
+                            twitchactive : twitchactive,
+                            hosted : hosted
+                        }
+                    }).done(function(data) {
+                        
+                        if (data) {
+			    console.log("Updated Stream");
+			} else {
+			    console.log("Error: " + data);
+			}
+                    });
+                });
+                
+                $("#addsetting").click(function() {
+                    var name = $("[name='settingname']").val();
+                    var valint = $("[name='settingvalueint']").val();
+                    var valvar = $("[name='settingvaluevar']").val();
+                    var type = $("[name='settingtype']").val();
+                    
+                    $.ajax( {
+                        type: "POST",
+                        url: "/view/admin/ajax/new_setting.php",
+                        data: {
+                            name : name,
+                            value_int : valint,
+                            value_var : valvar,
+                            type : type
+                        }
+                    }).done(function(data) {
+                        
+                        if (data) {
+			    console.log("Added Setting");
+			} else {
+			    console.log("Error: " + data);
+			}
+                    });
+                });
 </script>
