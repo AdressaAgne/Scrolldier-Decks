@@ -300,7 +300,7 @@ private function ago($datetime, $full=false){
 		if (ini_get('allow_url_fopen') == 1) {
 		    return json_decode(file_get_contents("http://scrolls.kodered.de/api/scrolldier"), TRUE);
 		} else {
-		    return '<p style="color: #A00;">fopen is not allowed on this host.</p>';
+		    return '<p style="color: #A00;">Could not access API</p>';
 		}
 	}
 	

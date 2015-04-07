@@ -56,7 +56,6 @@
 		} else {
 			$_GET['error'] = "Wrong password or username";
 		}
-		
 	}
 	
 	
@@ -74,16 +73,15 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="author" content="Agne Ødegaard" />
-	<meta name="description" content="" />
+	<meta name="description" content="Scrolldier is a fansite for the game Scrolls by Mojang, You can find thousends of decks here and many tools to help you enjoy the Scrolls experience." />
 	<meta name="application-name" content="Scrolldier" />
-	
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Apple Device: App-->
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	
 	<!-- Apple Device: Remove Status bar-->
-	<meta name="apple-mobile-web-app-status-bar-style" content=“black”>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	
 	<!--	Getting page title-->
 	<title><?php echo($base->get_title()); ?></title>
@@ -117,8 +115,7 @@
 	
 	<!--Chart.js-->
 	<script src="/js/min/chart-min.js"></script>
-        
-        <script src="/js/min/chartstackedbar-min.js"></script>
+    <script src="/js/min/chartstackedbar-min.js"></script>
 	
 	<!--jQuery-1.11.1.min-->
 	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
@@ -156,7 +153,7 @@
 			<?php if ($_SESSION['rank'] < 3) {
 				echo("<li><a class='tag' href='/admin'><i class='icon-".$_SESSION['rank']." small'></i></a></li>");
 			} ?>
-			<li><a class='tag' href='/user'><?= $_SESSION['ign'] ?></a></li>
+			<li><a class='tag' href='/user/<?= $_SESSION['ign'] ?>'><?= $_SESSION['ign'] ?></a></li>
 			<li><a class='tag' href='/logout'>Logout</a></li>
 		<?php } ?>
 		</ul>

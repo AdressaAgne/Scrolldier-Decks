@@ -38,39 +38,35 @@
 						<td><input type="text" class="negative col-12" required name="url" value="" id="url" placeholder="Url"/></td>
 						<td><input type="text" class="negative col-12" required name="title" value="" placeholder="Title"/></td>
 						<td><input type="text" class="negative col-12" required name="name" value="" placeholder="Name"/></td>
-						<td colspan="2">
+						<td>
 							<div class="form-element inline">
-								<label class="icon">
-									<input type="checkbox" class="negative" checked="false" name="menu" value="" /><span><i class="icon-1"></i></span>
+								<label class="">
+									<input type="checkbox" class="negative" checked="false" name="menu" value="" />
 								</label>
 							</div>	
-						
+						</td>
+						<td>
 							<div class="form-element inline">
-								<label class="icon">
-									<input type="checkbox" class="negative" checked="false" name="tool" value="" /><span><i class="icon-1"></i></span>
-								</label>
-							</div>
-						
-							<div class="form-element inline">
-								<label class="icon">
-									<input type="checkbox" class="negative" checked="false" name="restriction" value="" /><span><i class="icon-1"></i></span>
+								<label class="">
+									<input type="checkbox" class="negative" checked="false" name="tool" value="" />
 								</label>
 							</div>
 						</td>
-						<td colspan="2">
-							<div class="form-element inline right">
-								<label class="icon">
-									<input type="radio" name="grade" value="1" /> <span><i class="number-1"></i></span>
+						<td>
+							<div class="form-element inline">
+								<label class="">
+									<input type="checkbox" class="negative" checked="false" name="restriction" value="" />
 								</label>
-								<label class="icon">
-									<input type="radio" name="grade" checked value="2" /> <span><i class="number-2"></i></span>
-								</label>
-								<label class="icon">
-									<input type="radio" name="grade" value="3" /> <span><i class="number-3"></i></span>
-								</label>
-								<label class="icon">
-									<input type="radio" name="grade" value="4" /> <span><i class="number-4"></i></span>
-								</label>
+							</div>
+						</td>
+						<td>
+							<div class="form-element inline">
+								<select name="grade" class="negative">
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4" selected="selected">4</option>
+								</select>
 							</div>
 						</td>
 						<td><input type="text" class="negative col-12" required name="file" value="" placeholder="File name"/></td>
@@ -140,7 +136,7 @@
 			var menu = $("[name='menu']").val();
 			var tool = $("[name='tool']").val();
 			var restriction = $("[name='restriction']").val();
-			var grade = $("[name='grade']:checked").val();
+			var grade = $("[name='grade']").val();
 			var file = $("[name='file']").val();
 			var image = $("[name='image']").val();
 			//"<i class='ball-yellow'></i>" : "<i class='ball-red'></i>"
@@ -191,7 +187,6 @@
 		});
 		
         $("#updatestream").click(function() {
-
 
         });
 		

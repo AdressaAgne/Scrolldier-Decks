@@ -110,7 +110,40 @@ class AccountController extends Database {
 		
 		session_destroy();
 	}
+	public function getUserData($user) {
+		 $query = $this->_db->prepare("SELECT * FROM accounts WHERE ign = :username");
+		 $arr = array(
+		     'username' => $user
+		 );
+		 $this->arrayBinder($query, $arr);
+		
+		if ($query->execute()) {
+			return $query->fetch(PDO::FETCH_ASSOC);
+		} else {
+			return false;
+		}
+	}	
 	
+	public function rankToString($i, $scrolldier = false) {
+		$scrolldier = ($scrolldier == true ? "Scrollldier " : "");
+		switch ($i) {
+			case 1:
+				return $scrolldier."Admin";
+			break;
+			case 2:
+				return $scrolldier."Mod";
+			break;
+			case 3:
+				return $scrolldier."VIP";
+			break;
+			case 4:
+				return "Scrolldier";
+			break;
+			case 5:
+				return "Mojang";
+			break;
+		}
+	}
 }
 
 class Account {
