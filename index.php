@@ -17,15 +17,21 @@
 	require_once("controllers/structure.php");
 	require_once("controllers/texthandler.php");
 	
+	
+	if (!session_start()) {
+		session_start();
+	}
+	
 	$deck = new Deck();
 	$base = new Structure();
 	$formating = new TextHandler();
 	$account = new AccountController();
 	$ScrollController = new ScrollController();
-        $SettingsController = new settingsController();
-        $twitch = $SettingsController->getSettingsByType(2);
+    $SettingsController = new settingsController();
+    $twitch = $SettingsController->getSettingsByType(2);
 	
-	session_start();
+	
+	
 	$account->page_setup($base);
 	//logout
 	if ($base->get_var(0) == "logout") {
@@ -35,33 +41,30 @@
 
 	//login
 	if (isset($_COOKIE['remember_user'])) {
-		$account->login($_COOKIE['scrolldier_username'], $_POST['scrolldier_token'], true, true);
+		if (!isset($_SESSION['ign'])) {
+			if($account->login($_COOKIE['scrolldier_username'], $_COOKIE['scrolldier_token'], true, true)){
+				$_GET['success'] = "You were automatically logged in as ".$_SESSION['ign'];
+			}
+		}
 	}
 	
 	if (isset($_POST['login']) && $_POST['login_form'] == "login_form") {
-		if (isset($_POST['remember'])) {
-			$remember = true;
-		} else {
-			$remember = false;
-		}
+		$remember = isset($_POST['save_pw']) ? true : false;
 		
 		if ($account->login($_POST['username'], $_POST['password'], $remember, false)) {
+			$_GET['success'] = "Login Successful";
 		} else {
 			$_GET['error'] = "Wrong password or username";
 		}
-		
 	}
 	
 	
 	if ($base->get_restriction()) {
-	
 		if (isset($_SESSION['rank']) && ($_SESSION['rank'] < $base->get_grade())) {
 			
 		} else {
 			header("location: /forbidden");
 		}
-	
-	
 	}
 		
  ?>
@@ -70,16 +73,15 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="author" content="Agne Ødegaard" />
-	<meta name="description" content="" />
+	<meta name="description" content="Scrolldier is a fansite for the game Scrolls by Mojang, You can find thousends of decks here and many tools to help you enjoy the Scrolls experience." />
 	<meta name="application-name" content="Scrolldier" />
-	
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<!-- Apple Device: App-->
 	<meta name="apple-mobile-web-app-capable" content="yes" />
 	
 	<!-- Apple Device: Remove Status bar-->
-	<meta name="apple-mobile-web-app-status-bar-style" content=“black”>
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
 	
 	<!--	Getting page title-->
 	<title><?php echo($base->get_title()); ?></title>
@@ -113,8 +115,7 @@
 	
 	<!--Chart.js-->
 	<script src="/js/min/chart-min.js"></script>
-        
-        <script src="/js/min/chartstackedbar-min.js"></script>
+    <script src="/js/min/chartstackedbar-min.js"></script>
 	
 	<!--jQuery-1.11.1.min-->
 	<!--<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>-->
@@ -152,7 +153,7 @@
 			<?php if ($_SESSION['rank'] < 3) {
 				echo("<li><a class='tag' href='/admin'><i class='icon-".$_SESSION['rank']." small'></i></a></li>");
 			} ?>
-			<li><a class='tag' href='/user'><?= $_SESSION['ign'] ?></a></li>
+			<li><a class='tag' href='/user/<?= $_SESSION['ign'] ?>'><?= $_SESSION['ign'] ?></a></li>
 			<li><a class='tag' href='/logout'>Logout</a></li>
 		<?php } ?>
 		</ul>
@@ -265,7 +266,7 @@
 <!--	end content	-->
 
 		
-<?php if ($base->get_footer()) { ?>
+<!--// if ($base->get_footer()) {-->
 <!--	Footer of the page	-->
 		<div class="container clearfix">
 			<div class="row">
@@ -283,7 +284,7 @@
 			</div>
 		</div>
 <!--	end Footer	-->		
-<?php } ?>
+<!-- // }-->
 
 <!-- Dialog box -->
 <?php if (isset($_GET['error'])) { ?>

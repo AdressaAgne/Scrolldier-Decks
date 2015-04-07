@@ -1,4 +1,4 @@
-<div class="container">
+<!--<div class="container">
 
 	<div class="row news">
 	
@@ -6,7 +6,7 @@
 	
 	</div>
 
-</div>
+</div>-->
 
 <div class="container">	
 	
