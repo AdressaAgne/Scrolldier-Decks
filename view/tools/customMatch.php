@@ -1,30 +1,15 @@
 <div class="container">
 	<div class="col-12">
 		<div class="page-header">
-			<h2>Custome Match Maker
+			<h2>Custom Match Maker
 			</h2>
 		</div>
 		<div class="col-12">
 			<div class="col-6">
 				<div class="col-12">
 					<div class="form-element">
-					<label>Timer: <small>How many seconds each player will have on a round</small>
-						<select id="time">
-							<option value="180">180 Sec</option>
-							<option value="160">160 Sec</option>
-							<option value="140">140 Sec</option>
-							<option value="120">120 Sec</option>
-							<option selected value="90">90 Sec (Normal)</option>
-							<option value="75">75 Sec</option>
-							<option value="60">60 Sec</option>
-							<option value="60">60 Sec</option>
-							<option value="45">45 Sec</option>
-							<option value="30">30 Sec</option>
-							<option value="20">20 Sec</option>
-							<option value="15">15 Sec</option>
-							<option value="10">10 Sec</option>
-							<option value="1">1 Sec (not recomanded)</option>
-						</select>
+					<label>Timer: <small>Amount of Seconds a turn lasts</small>
+                                            <input type="text" id="time" value="90">
 					</label>
 				</div>
 				</div>
@@ -128,7 +113,7 @@
 		</div>
 			<div class="player-two">
 			<div class="page-header align-right">
-				<h3><small>Challengee</small> Player Two</h3>
+				<h3><small>Challenged</small> Player Two</h3>
 			</div>
 			<div class="col-12 align-center">
 				<div class="tile-row">
@@ -183,24 +168,32 @@
 					</label>
 				</div>
 			</div>
-			<div class="col-4">
+                        <div class="col-4">
 				<div class="form-element">
-					<label> Attack <small>Empty for normal</small>
+					<div class="col-4 align-right">
+                                                <div class="left"><h3><label for="boss">Boss</label></h3></div>
+                                                <button id="boss" class="btn btn-checkbox"></button>
+					</div>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="form-element">
+					<label> Attack <small>Leave empty for normal stats</small>
 						<input id="ap" type="text" class="" name="" value="" placeholder="Attack" />
 					</label>
 				</div>
 			</div>
-			<div class="col-4">
+			<div class="col-6">
 				<div class="form-element">
-					<label> Countdown <small>Empty for normal</small>
-						<input id="cd" type="text" class="" name="" value="" placeholder="Countdown" />
+					<label> Health <small>Leave empty for normal stats</small>
+						<input id="hp" type="text" class="" name="" value="" placeholder="Health" />
 					</label>
 				</div>
 			</div>
-			<div class="col-4">
+			<div class="col-8">
 				<div class="form-element">
-					<label> Health <small>Empty for normal</small>
-						<input id="hp" type="text" class="" name="" value="" placeholder="Health" />
+					<label> Countdown <small>Leave empty for normal stats</small>
+						<input id="cd" type="text" class="" name="" value="" placeholder="Countdown" />
 					</label>
 				</div>
 			</div>
@@ -208,10 +201,6 @@
 				<label><small>Creates a boss unit at row, column with Attack, Health added to their base stats. Selectable controls if they can be targeted by spells and certain abilities (like Slayer);</small></label>
 
 					<div class="form-element">
-						<div class="col-6 align-right">
-							<div class="left"><h3><label for="boss">Boss</label></h3></div>
-							<button id="boss" class="btn btn-checkbox"></button>
-						</div>
 						<div class="col-6 align-right">
 							<div class="left"><h3><label for="select">Selectable</label></h3></div>
 							<button id="select" class="btn btn-checkbox"></button>
@@ -265,7 +254,7 @@
 			</div>
 			<div class="col-12">
 				<div class="form-element">
-					<label>Cast Spells <small>Casts a spell every x round.</small>
+					<label>Cast Spells <small>Casts spell every x round.</small>
 						<input id="spells-text" type="text" class="typeahead" name="" value="" placeholder="Spells"/>
 					</label>
 				</div>

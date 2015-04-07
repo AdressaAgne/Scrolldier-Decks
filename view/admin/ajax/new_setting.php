@@ -1,7 +1,8 @@
 <?php
 include_once("ajax_prepend.php");
 if(isset($_SESSION['rank']) && $_SESSION['rank']<=2) {
-    $SettingsController->newSetting($_POST['name'], $_POST['value_int'], $_POST['value_var'], $_POST['type']);
+    $test = $SettingsController->newSetting($_POST['name'], $_POST['value_int'], $_POST['value_var'], $_POST['type']);
+    echo($test);
 } else {
     header("location: /forbidden");
 }
