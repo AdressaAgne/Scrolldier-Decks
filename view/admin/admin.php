@@ -108,9 +108,9 @@
             <div class="col-12">
                 <p>Add Settings(Placeholder)</p>
                 <input type="text" name="settingname" placeholder="Setting Name"/>
-                <input type="text" name="settingvalueint" placeholder="Value Int"/>
+                <input type="number" name="settingvalueint" placeholder="Value Int"/>
                 <input type="text" name="settingvaluevar" placeholder="Value Var"/>
-                <input type="text" name="settingtype" placeholder="Type"/>
+                <input type="number" name="settingtype" placeholder="Type"/>
                 <button class="btn" id="addsetting">Add Setting</button>
             </div>
         </div>

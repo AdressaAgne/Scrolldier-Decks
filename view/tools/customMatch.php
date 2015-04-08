@@ -9,7 +9,7 @@
 				<div class="col-12">
 					<div class="form-element">
 					<label>Timer: <small>Amount of Seconds a turn lasts</small>
-                                            <input type="text" id="time" value="90">
+                                            <input type="number" id="time" value="90">
 					</label>
 				</div>
 				</div>
@@ -17,15 +17,15 @@
 			<div class="col-6">
 				<div class="col-6">
 					<div class="form-element">
-						<label>Resources Player 1
-							<input id="resources-player-one" type="text" name="" value="" placeholder="Player 1"/>
+                                            <label>Resources Player 1<small> </small>
+							<input id="resources-player-one" type="number" name="" value="" placeholder="Player 1"/>
 						</label>
 					</div>
 				</div>
 				<div class="col-6">
 					<div class="form-element">
-						<label>Resources Player 2
-							<input id="resources-player-two" type="text" name="" value="" placeholder="Player 2" />
+						<label>Resources Player 2<small> </small>
+							<input id="resources-player-two" type="number" name="" value="" placeholder="Player 2" />
 						</label>
 					</div>
 				</div>
@@ -58,7 +58,7 @@
 	<div class="col-12">
 		<div class="col-12 well board" style="background-image: url(/img/customeMatch/bg.png);">
 			<div class="player-one">
-			<div class="page-header">
+			<div class="page-header" style="background: #121314; opacity: .8;">
 				<h3>Player One <small>Challenger</small></h3>
 			</div>
 			<div class="col-12 align-center">
@@ -112,7 +112,7 @@
 -->
 		</div>
 			<div class="player-two">
-			<div class="page-header align-right">
+			<div class="page-header align-right" style="background: #121314; opacity: .8;">
 				<h3><small>Challenged</small> Player Two</h3>
 			</div>
 			<div class="col-12 align-center">
@@ -161,51 +161,45 @@
 	<div class="col-12">
 		<div class="col-12">
 			<h3>Board Setup <small><span id="text-player"></span>, <span id="text-cords"></span></small></h3>
-			<div class="col-4">
+			<div class="col-12">
 				<div class="form-element">
 					<label> Unit Name <small>Type for suggestions</small>
 						<input id="unit" type="text" class="typeahead" name="" value="" placeholder="Unit" />
 					</label>
 				</div>
 			</div>
-                        <div class="col-4">
-				<div class="form-element">
-					<div class="col-4 align-right">
-                                                <div class="left"><h3><label for="boss">Boss</label></h3></div>
-                                                <button id="boss" class="btn btn-checkbox"></button>
-					</div>
-				</div>
-			</div>
 			<div class="col-6">
 				<div class="form-element">
-					<label> Attack <small>Leave empty for normal stats</small>
-						<input id="ap" type="text" class="" name="" value="" placeholder="Attack" />
+					<label> Attack <small>Will get added to base stats</small>
+						<input id="ap" type="number" class="" name="" value="" placeholder="Attack" />
 					</label>
 				</div>
 			</div>
 			<div class="col-6">
 				<div class="form-element">
-					<label> Health <small>Leave empty for normal stats</small>
-						<input id="hp" type="text" class="" name="" value="" placeholder="Health" />
+					<label> Health <small>Will get added to base stats</small>
+						<input id="hp" type="number" class="" name="" value="" placeholder="Health" />
 					</label>
 				</div>
 			</div>
-			<div class="col-8">
+                        <div class="col-6">
 				<div class="form-element">
-					<label> Countdown <small>Leave empty for normal stats</small>
-						<input id="cd" type="text" class="" name="" value="" placeholder="Countdown" />
+                                        <div><label for="boss">Boss <small>Is this unit a boss unit</small></label></div>
+                                        <button id="boss" class="btn btn-checkbox toggle"></button>
+				</div>
+			</div>
+			<div class="col-6" id="cdin" name="boss">
+				<div class="form-element">
+					<label> Countdown <small>Will get added to base stats</small>
+						<input id="cd" type="number" class="" name="" value="" placeholder="Countdown" />
 					</label>
 				</div>
 			</div>
-			<div class="col-8">
-				<label><small>Creates a boss unit at row, column with Attack, Health added to their base stats. Selectable controls if they can be targeted by spells and certain abilities (like Slayer);</small></label>
-
-					<div class="form-element">
-						<div class="col-6 align-right">
-							<div class="left"><h3><label for="select">Selectable</label></h3></div>
-							<button id="select" class="btn btn-checkbox"></button>
-						</div>
-					</div>
+			<div class="col-6" id="selectin" name="boss" hidden>
+				<div class="form-element">
+                                        <div><label for="select">Selectable <small>Unslayable and Ward</small></label></div>
+					<button id="select" class="btn btn-checkbox"></button>
+				</div>
 			</div>
 		</div>
 		</div>
@@ -262,7 +256,7 @@
 			<div class="col-12">
 				<div class="form-element">
 				<label>Every X round:
-					<input id="spell-Round" type="text" name="" value="" />
+					<input id="spell-Round" type="number" name="" value="" />
 				</label>
 				</div>
 			</div>
@@ -394,10 +388,10 @@ $(function() {
 		}
 	});
 
-	$("input[type=text]").on("input", function() {
+	$("input").on("input", function() {
 		updateTile(selectedTile);		
 	});
-	$("input[type=text]").on("blur", function() {
+	$("input").on("blur", function() {
 		updateTile(selectedTile);		
 	});
 
@@ -409,8 +403,12 @@ $(function() {
 		
 		if (getBoss(tile) == 1) {
 			$("#boss").addClass("success");
+                        $("#selectin").show();
+                        $("#cdin").hide();
 		} else {
 			$("#boss").removeClass("success");
+                        $("#selectin").hide();
+                        $("#cdin").show();
 		}
 		
 		if (getSelect(tile) == "true") {
@@ -519,11 +517,11 @@ $(function() {
 		$(tiles).each(function() {
 			if (getUnit(this) != "") {
 				if (getBoss(this) == 1) {
-						output += "boss("+getPlayer(this)+", " + getUnit(this) + ", " + getRow(this) + ", " + getCol(this) + ", " + getAp(this) + ", " + getHp(this) + ", " + getSelect(this) + ");\n";
+						output += "boss("+getPlayer(this)+", " + getUnit(this) + ", " + getRow(this) + ", " + getCol(this) + ", " + (getAp(this) != "" ? getAp(this) : "0") + ", " + (getHp(this) != "" ? getHp(this) : "0") + ", " + getSelect(this) + ");\n";
 					
 				} else {
-					if (getAp(this) != "" && getHp(this) != "" && getCd(this) != "") {
-						output += "unit("+getPlayer(this)+", " + getUnit(this) + ", " + getRow(this) + ", " + getCol(this) + ", " + getAp(this) + ", " + getCd(this) + ", " + getHp(this) + ");\n";
+					if (getAp(this) != "" || getHp(this) != "" || getCd(this) != "") {
+						output += "unit("+getPlayer(this)+", " + getUnit(this) + ", " + getRow(this) + ", " + getCol(this) + ", " + (getAp(this) != "" ? getAp(this) : "0") + ", " + (getCd(this) != "" ? getCd(this) : "0") + ", " + (getHp(this) != "" ? getHp(this) : "0") + ");\n";
 					} else {
 						output += "unit("+getPlayer(this)+", " + getUnit(this) + ", " + getRow(this) + ", " + getCol(this) + ");\n";
 					}
