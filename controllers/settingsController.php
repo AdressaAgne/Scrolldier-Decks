@@ -40,7 +40,7 @@ class settingsController extends Database {
     
     function newSetting($name, $value_int, $value_var, $type) {
         $query = $this->_db->prepare("INSERT INTO scrolldier_settings (name, value_int, value_var, type) "
-                . "VALUES (:name, :value_int, :value_var, :type");
+                . "VALUES (:name, :value_int, :value_var, :type)");
         
         $params = array(
             "name" => $name,
