@@ -6,30 +6,96 @@
 		</div>
 		<div class="col-12">
 			<div class="col-6">
-				<div class="col-12">
-					<div class="form-element">
-					<label>Timer: <small>Amount of Seconds a turn lasts</small>
-                                            <input type="number" id="time" value="90">
+				<div class="form-element">
+                                    <label>Timer: <small>Amount of Seconds a turn lasts</small>
+                                           <input type="number" id="time" value="90">
+                                    </label>
+				
+				</div>
+			</div>
+                </div>
+                <div class="col-12">
+                        <div class="form-element">
+                                <div><label for="boss">Unlimited Wild <small>No limit for Wild sacrificing</small></label></div>
+                                <button id="nowildlmt" class="btn btn-checkbox"></button>
+			</div>
+                </div>
+		<div class="col-12">
+			<div class="col-6">
+				<div class="form-element">
+                                        <label>Resources Player 1<small> </small>
+						<input id="resources-player-one" type="number" name="" value="" placeholder="Player 1"/>
 					</label>
 				</div>
-				</div>
+                                <div name="more-resources-player-one" hidden>
+                                        <div class="col-2 form-element">
+                                            <label>Decay
+                                                <input id="decay-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Energy
+                                                <input id="energy-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Growth
+                                                <input id="growth-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Order
+                                                <input id="order-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Wild
+                                                <input id="special-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                </div>
+                                <div class="col-12">
+                                    <button id="more-resources-player-one" class="btn toggle">More</button>
+                                </div>
 			</div>
 			<div class="col-6">
-				<div class="col-6">
-					<div class="form-element">
-                                            <label>Resources Player 1<small> </small>
-							<input id="resources-player-one" type="number" name="" value="" placeholder="Player 1"/>
-						</label>
-					</div>
+				<div class="form-element">
+					<label>Resources Player 2<small> </small>
+						<input id="resources-player-two" type="number" name="" value="" placeholder="Player 2" />
+					</label>
 				</div>
-				<div class="col-6">
-					<div class="form-element">
-						<label>Resources Player 2<small> </small>
-							<input id="resources-player-two" type="number" name="" value="" placeholder="Player 2" />
-						</label>
-					</div>
-				</div>
+                                <div name="more-resources-player-two" hidden>
+                                        <div class="col-2 form-element">
+                                            <label>Decay
+                                                <input id="decay-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Energy
+                                                <input id="energy-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Growth
+                                                <input id="growth-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Order
+                                                <input id="order-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Wild
+                                                <input id="special-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                </div>
+                                <div class="col-12">
+                                    <button id="more-resources-player-two" class="btn toggle">More</button>
+                                </div>
 			</div>
+		</div>
 		</div>
 	</div>
 </div>
@@ -439,6 +505,14 @@ $(function() {
 			
 		}
 	});
+        
+        $("#nowildlmt").click(function() {
+                if ($(this).hasClass("success")) {
+                    $(this).removeClass("success");
+                } else {
+                    $(this).addClass("success");
+                }
+        });
 	
 	$("#start-p1").click(function() {
 		$("#start-p1").addClass("success");
@@ -505,6 +579,10 @@ $(function() {
 		if ($("#start-p2").hasClass("success")) {
 			output += "starts(P2);\n";
 		}
+                
+                if($("#nowildlmt").hasClass("success")) {
+                        output += "limitlessWild();\n";
+                }
 		
 		if ($("#resources-player-one").val() != "") {
 			output += "resources(P1, " + $("#resources-player-one").val() + ");\n";
