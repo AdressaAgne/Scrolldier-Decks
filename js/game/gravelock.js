@@ -102,8 +102,8 @@ var game = {
 				var unit = game.units[i];
 				
 				if (unit.elderBoost) {
-					unit.ap += j;
-					unit.hp += j;
+					parseInt(unit.ap) += parseInt(j);
+					parseInt(unit.hp) += parseInt(j);
 				}
 			}
 		}
@@ -285,51 +285,16 @@ var game = {
 		$("#total_dps").text(priceDown(TDPS,""," DPS"));
 	}
 	
-	function priceDown(i, prefix, sufix) {
-		if (i > Math.pow(10, 43)) {
-			return prefix + Math.round((i/Math.pow(10, 42))) + "Tr "+sufix;
+	function priceDown(input, prefix, sufix) {
+		var shortNameMoney = ["k","m","b","t","Qa","Qi","Sx","Sp","Oc","No","De","Un","Du"];
+		
+		for (var i = shortNameMoney.length; i > 0; i--) {
+			if (input > Math.pow(10, (i*3) + 4)) {
+				return prefix + Math.round( input/Math.pow(10, (i*3) + 3 ) ) + shortNameMoney[i] + sufix;
+			}
 		}
-		if (i > Math.pow(10, 40)) {
-			return prefix + Math.round((i/Math.pow(10, 39))) + "Du "+sufix;
-		}
-		if (i > Math.pow(10, 37)) {
-			return prefix + Math.round((i/Math.pow(10, 36))) + "Un "+sufix;
-		}
-		if (i > Math.pow(10, 34)) {
-			return prefix + Math.round((i/Math.pow(10, 33))) + "De "+sufix;
-		}
-		if (i > Math.pow(10, 31)) {
-			return prefix + Math.round((i/Math.pow(10, 30))) + "No "+sufix;
-		}
-		if (i > Math.pow(10, 28)) {
-			return prefix + Math.round((i/Math.pow(10, 27))) + "Oc "+sufix;
-		}
-		if (i > Math.pow(10, 25)) {
-			return prefix + Math.round((i/Math.pow(10, 24))) + "Sp "+sufix;
-		}
-		if (i > Math.pow(10, 22)) {
-			return prefix + Math.round((i/Math.pow(10, 21))) + "Sx "+sufix;
-		}
-		if (i > Math.pow(10, 19)) {
-			return prefix + Math.round((i/Math.pow(10, 18))) + "Qi "+sufix;
-		}
-		if (i > Math.pow(10, 16)) {
-			return prefix + Math.round((i/Math.pow(10, 15))) + "Qa "+sufix;
-		}
-		if (i > Math.pow(10, 13)) {
-			return prefix + Math.round((i/Math.pow(10, 12))) + "t "+sufix;
-		}
-		if (i > Math.pow(10, 10)) {
-			return prefix + Math.round((i/Math.pow(10, 9))) + "b "+sufix;
-		}
-		if (i > Math.pow(10, 7)) {
-			return prefix + Math.round((i/Math.pow(10, 6))) + "m "+sufix;
-		}
-		if (i > Math.pow(10, 4)) {
-			return prefix + Math.round((i/Math.pow(10, 3))) + "k "+sufix;
-		} else {
-			return prefix + i + sufix;
-		}
+
+		return prefix + input + sufix;
 	}
 	
 	$("#debug").click(function() {
@@ -359,26 +324,28 @@ var game = {
 		}
 	});
 	function intrest(p, x) {
-		//return Math.round(p * Math.pow(x, (game.priceMultiplyer)));
-		//console.log(p + ", " + Math.pow(game.priceMultiplyer, x) + ", " + x);
-		lastp = p;
-		for (var i = 0; i < x; i++) {
-			p += lastp*game.priceMultiplyer
-			lastP = p;
-		}
-		return Math.round(p);
-		//p(m^x)
-	}
+		var m = game.priceMultiplyer;
+		x = parseInt(x);
+		//m = Multiplyer, 1.15
+		//x = Amount bought, 5
+		//p = StartPrice, 3
+		
+		//[STARTINGCOST•1.15^([TOTALAMOUNT+.5]-1)]/(ln(1.15) - [STARTINGCOST•1.15^(0.5-1)]/(ln(1.15)
+		var tp = (p * Math.pow(m, (x+.5) -1 )) / Math.log(m) - (p * Math.pow(m, .5 - 1)) / Math.log(m)
+		
+		return tp;
+	}	
+	
 	
 	$("[id*=xTimes-]").click(function() {
 		console.log(1);
 		var unit = game.units[$(this).attr("data-level")];
-		var x = $(this).attr("data-times");
+		var x = parseInt($(this).attr("data-times"));
 		var price = intrest(unit.price, x, "","");
 		console.log(price +"," + unit.price);
 		if (game.player.gold >= price) {
 			console.log(x);
-			unit.count += parseInt(x);
+			unit.count += x;
 			game.player.gold -= price;
 			unit.price *= Math.pow(game.priceMultiplyer, x);
 			console.log(3);
@@ -387,7 +354,7 @@ var game = {
 				unit.effect(x);
 			}
 			
-			$(this).find(".price").text(priceDown(intrest(unit.price, x,"",""), "(", "g)"));
+			$(this).find(".price").text(priceDown(intrest(unit.price, x), "(", "g)"));
 			update();
 		}
 	});
