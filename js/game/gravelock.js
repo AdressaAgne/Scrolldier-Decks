@@ -1,11 +1,19 @@
 $(function() {
-	
+var resources = {
+	growth : 0,
+	energy : 1,
+	decay  : 2,
+	order  : 3,
+	wild	: 4
+}
+var game = (function() {
 var game = {
 	gameTick	: 100,
 	gameSpeed	: 1000,
 	priceMultiplyer : 1.15,
 	unitPriceMultiplyer : 6,
 	totalUnits : 0,
+	totalSpells : 0,
 	debugMode : false,
 	idle 	: false,
 	clock	: 0,
@@ -16,7 +24,21 @@ var game = {
 		idol	: 0,
 		goldSec	: 0,
 		idolHealth	: 10,
-		idolKillReward : 20
+		idolKillReward : 20,
+		res : {
+			growth : 0,
+			energy : 0,
+			decay  : 0,
+			order  : 0,
+			wild   : 0
+		},
+		resouceName : {
+			0 : "Growth",
+			1 : "Energy",
+			3 : "Decay",
+			4 : "Order",
+			5 : "Wild"
+		}
 	},
 	
 	units : [{
@@ -202,7 +224,7 @@ var game = {
 			clock	: 0,
 			clockReset	: 150,
 			lastUnit	: "",
-			desc	: "Spawns a random Unit every 15 sec",
+			desc	: "Spawns a random Unit of lower level every 15 sec",
 			clockEffect	: function(j) {
 				var unit = game.units[8];
 				unit.clock++;
@@ -214,33 +236,183 @@ var game = {
 					unit.clock = 0;
 				}
 				
-				var time = parseInt((unit.clockReset - unit.clock) / 10);
+				var time = parseInt((unit.clockReset - unit.clock) / 10)+1;
 				return  unit.lastUnit + " (" + time + "s)";
 			}
+		},
+		{
+			name	: "Desert Memorial",
+			shortName	: "Memorial",
+			tier	: 1,
+			tier1 	: 0,
+			tier2 	: 0,
+			tier3	: 0,
+			price	: 0,
+			basePrice	: 0,
+			ap		: 0,
+			cd		: 3,
+			hp		: 4,
+			count	: 0,
+			round	: 0,
+			clock	: 0,
+			clockReset	: 100,
+			lastUnit	: "",
+			desc	: "Increase Energy by 1, every 10 sec",
+			clockEffect	: function(j) {
+				var unit = game.units[9];
+				unit.clock++;
+
+				if (unit.clock >= unit.clockReset) {
+					game.player.res.energy += unit.count;
+					unit.clock = 0;
+				}
+				
+				var time = parseInt((unit.clockReset - unit.clock) / 10)+1;
+				return  "+"+unit.count + " Energy (" + time + "s)";
+			}
+		},
+		{
+			name	: "Sand Pack Memorial",
+			shortName	: "Memorial",
+			tier	: 1,
+			tier1 	: 0,
+			tier2 	: 0,
+			tier3	: 0,
+			price	: 0,
+			basePrice	: 0,
+			ap		: 0,
+			cd		: 3,
+			hp		: 4,
+			count	: 0,
+			round	: 0,
+			clock	: 0,
+			clockReset	: 50,
+			lastUnit	: "",
+			desc	: "Increase Energy by 5, every 5 sec",
+			clockEffect	: function(j) {
+				var unit = game.units[10];
+				unit.clock++;
+
+				if (unit.clock >= unit.clockReset) {
+					game.player.res.energy += unit.count * 5;
+					unit.clock = 0;
+				}
+				
+				var time = parseInt((unit.clockReset - unit.clock) / 10)+1;
+				return  "+"+(unit.count*5) + " Energy (" + time + "s)";
+			}
 		}
-]
+],
+	spells : [{
+		name	: "Gravelock Burrows",
+		shortName	: "Burrows",
+		tier	: 1,
+		tier2 	: 0,
+		tier3	: 0,
+		price	: 30,
+		resource : resources.energy,
+		basePrice	: 0,
+		desc	: "All Gravelocks get +3 Attack",
+		effect	: function() {
+			var spell = game.spells[0];
+			
+			for (var i = 0; i < game.totalUnits; i++) {
+				var unit = game.units[i];
+				
+				if (unit.elderBoost) {
+					unit.ap += 3;
+				}
+			}
+			//return void
+		}
+	
+	},
+	{
+		name	: "Power Trip",
+		shortName	: "Power Trip",
+		tier	: 1,
+		tier2 	: 0,
+		tier3	: 0,
+		price	: 10,
+		resource : resources.energy,
+		basePrice	: 0,
+		cooldown : 600,
+		cooldownReset : 600, 
+		desc	: "<span style='color: #ffeb04;'>[Cooldown]</span> Increase Energy by 20",
+		effect	: function() {
+			var spell = game.spells[1];
+			if (spell.cooldown <= 0) {
+				game.player.res.energy += 20;
+				spell.cooldown = spell.cooldownReset;				
+			}
+			//return void
+		},
+		clockEffect : function() {
+			var spell = game.spells[1];
+			if (spell.cooldown <= 0) {
+				return "Ready";
+			} else {
+				return (parseInt((spell.cooldown) / 10)+1) + "sec";
+			}
+		}
+	
+	},
+	{
+	name	: "Fodder Pit",
+	shortName	: "Fodder Pit",
+	tier	: 1,
+	tier2 	: 0,
+	tier3	: 0,
+	price	: 1000,
+	resource : resources.energy,
+	basePrice	: 0,
+	desc	: "Double Gravelocks Attack",
+	effect	: function() {
+		var spell = game.spells[2];
+		
+		for (var i = 0; i < game.totalUnits; i++) {
+			var unit = game.units[i];
+			
+			if (unit.elderBoost) {
+				unit.ap *= 2;
+			}
+		}
+		//return void
+	}
+
+}]
 }; //end game object
 
+return game;
+})();
 	init();
 	function getRNG(min, max) {
 	  return Math.random() * (max - min) + min;
 	}
 	function init() {
 		game.totalUnits = game.units.length;
+		game.totalSpells = game.spells.length;
 		for (var i = 0; i < game.totalUnits; i++) {
 			if (i == 0) {
 				$("#units").append(insertUnit(i, false));
 			} else {
 				game.units[i].price = game.units[0].price * Math.pow(game.unitPriceMultiplyer,i);
+				game.units[i].tier2 = game.units[0].price * Math.pow(game.unitPriceMultiplyer,i) * 3;
+				game.units[i].tier3 = game.units[0].price * Math.pow(game.unitPriceMultiplyer,i) * 9;
 				game.units[i].basePrice = game.units[0].price * Math.pow(game.unitPriceMultiplyer,i);
 				$("#units").append(insertUnit(i, true));
 			}
 		}
-	
+		
+		for (var i = 0; i < game.totalSpells; i++) {
+			$("#spells").append(insertSpells(i, false));
+		}
+		
 		setInterval(newRound, game.gameTick);
 		update();
 	
 	}
+	
 	function insertUnit(i, isHidden) {
 		var isHidden = isHidden ? 'hidden' : "";
 		var unit = game.units[i];
@@ -258,7 +430,6 @@ var game = {
 				'<h3><span id="ap-'+(i)+'">'+unit.ap+'</span> - <span id="cd-'+(i)+'">'+unit.cd+'</span> - <span id="hp-'+(i)+'">'+unit.hp+'</span></h3>'+
 			'</div>'+
 			'<div class="form-element align-center">'+
-			
 				'<button id="summon-'+i+'" data-level="'+i+'" class="btn">Summon '+unit.shortName+' <span class="price">('+priceDown(unit.price,"","")+'g)</span></button>'+
 				'<div class="col-12">'+
 				'<button id="xTimes-5-'+i+'" data-level="'+i+'" data-times="5" class="btn">x5 <span class="price">('+priceDown(intrest(unit.price,5),"","")+'g)</span></button>'+
@@ -270,6 +441,29 @@ var game = {
 				'<div class="align-center col-12" id="raw-'+i+'"></div>'+
 				'<p id="desc-'+i+'"class="align-center col-12">'+desc+'</p>'+
 				'<p style="color: #ffeb04;" id="bonus-'+i+'" class="align-center col-12"></p>'+
+			'</div>'+
+				'</div>'+
+		'</div>';
+		return html;
+	}
+	
+	function insertSpells(i, isHidden) {
+		var isHidden = isHidden ? 'hidden' : '';
+		var spell = game.spells[i];
+		var desc = spell.desc ? spell.desc : "";
+		
+		var html = '<div class="col-4 '+isHidden+'" id="spell-level-'+i+'">' +
+		'<div class="col-12 game-spell">'+
+			'<h4>'+spell.name+'</h4>' +
+			'<div class="col-12 align-center">'+
+				'<img src="/img/gravelock/s'+(i+1)+'.png" alt="" />'+
+			'</div>'+
+			'<div class="form-element align-center">'+
+			
+				'<button id="cast-'+i+'" data-level="'+i+'" class="btn">Cast '+spell.shortName+' <span class="price">('+priceDown(spell.price,""," ")+game.player.resouceName[spell.resource]+')</span></button>'+
+				
+				'<p id="spell-desc-'+i+'"class="align-center col-12">'+desc+'</p>'+
+				'<p style="color: #ffeb04;" id="spell-bonus-'+i+'" class="align-center col-12"></p>'+
 			'</div>'+
 				'</div>'+
 		'</div>';
@@ -310,6 +504,22 @@ var game = {
 		
 		game.clock++;
 		
+		for (var i = 0; i < game.totalSpells; i++) {
+			var spell = game.spells[i];
+			
+			if (spell.cooldown) {
+				if (!spell.cooldown <= 0) {
+					spell.cooldown--;
+				}
+			}
+			
+			if (spell.clockEffect && typeof spell.clockEffect == "function") {
+				$("#spell-bonus-"+i).text("Cooldown: " + spell.clockEffect());
+			}
+			
+			
+		}
+		
 		if (game.clock >= game.clockReset) {
 			
 			game.idle = true;
@@ -319,26 +529,46 @@ var game = {
 		update();
 
 	}
+	function toggleResources(toggle) {
+		if (!toggle) {
+			$("#game-gold").removeClass("col-4");	
+			$("#game-gold").addClass("col-6");
+			
+			$("#game-dps").removeClass("col-4");	
+			$("#game-dps").addClass("col-6");
+			
+			$("#game-res").hide();	
+		} else {
+			$("#game-gold").removeClass("col-6");	
+			$("#game-gold").addClass("col-4");
+			$("#game-dps").removeClass("col-6");	
+			$("#game-dps").addClass("col-4");
+			
+			$("#game-res").show();			
+		}
+	}
 	function update() {
 		var gold = Math.round(game.player.gold);
 		var goldPerSec = game.player.goldSec;
 		$("#gold").text(priceDown(gold, "", " g") + " " + priceDown(goldPerSec,"(", "g/Sec)"));
 		var TDPS = 0;
+		for (var i = 0; i < game.totalSpells; i++) {
+			var spell = game.spells[i];
+			ShowAndHideBtn(game.player.res.energy, '#cast-'+i, spell.price, false);
+		}
+		if (game.player.res.energy > 0) {
+			toggleResources(true);
+		}
+		$("#res-energy").text(priceDown(game.player.res.energy, "", ""));
 		
 		for (var i = 0; i < game.totalUnits; i++) {
 			var unit = game.units[i];
 			$("#count-"+i).text(priceDown(unit.count,"","x"));
 			
-			
-			
-
 				var DPS = (unit.ap / unit.cd) * unit.count;
 				TDPS += DPS;
 				$(".value-"+i).text(priceDown(DPS, "", " DPS"));
 				$("#raw-"+i).text((unit.ap / unit.cd) + " Raw DPS");
-
-			
-			
 			
 			$("#ap-"+i).text(unit.ap);
 			$("#cd-"+i).text(unit.cd);
@@ -351,10 +581,13 @@ var game = {
 			$("#xTimes-100-"+i).find(".price").text(priceDown(Math.round(intrest(unit.price, 100)), "(", "g)"));
 			
 		
-			ShowAndHideBtn('#summon-'+i, unit.price, false);
-			ShowAndHideBtn('#xTimes-5-'+i, intrest(unit.price, 5), true);
-			ShowAndHideBtn('#xTimes-25-'+i, intrest(unit.price, 25), true);
-			ShowAndHideBtn('#xTimes-100-'+i, intrest(unit.price, 100), true);
+			ShowAndHideBtn(game.player.gold, '#summon-'+i, unit.price, false);
+			ShowAndHideBtn(game.player.gold, '#xTimes-5-'+i, intrest(unit.price, 5), true);
+			ShowAndHideBtn(game.player.gold, '#xTimes-25-'+i, intrest(unit.price, 25), true);
+			ShowAndHideBtn(game.player.gold, '#xTimes-100-'+i, intrest(unit.price, 100), true);
+		
+			
+			
 			
 			if (unit.count > 0) {
 				if ($("#level-"+(i+1))) {
@@ -369,8 +602,8 @@ var game = {
 		}
 		
 	}
-	function ShowAndHideBtn(btn, price, show) {
-		if (game.player.gold >= price) {
+	function ShowAndHideBtn(currency, btn, price, show) {
+		if (currency >= price) {
 			$(btn).addClass("success");
 			$(btn).removeClass("danger");
 			if (show) {
@@ -445,10 +678,6 @@ var game = {
 		}
 		
 		if (game.player.gold >= price || free) {
-			game.idle = false;
-			game.clock = 0;
-			
-			
 			//reset units clock
 			for (var i = 0; i < game.totalUnits; i++) {
 				var unitEf = game.units[i];
@@ -456,10 +685,13 @@ var game = {
 					unitEf.clock = 0;
 				}
 			}
+			
 			unit.count += x;
 			
 			if (!free) {
 				game.player.gold -= price;
+				game.idle = false;
+				game.clock = 0;
 			}
 			
 			if (x > 1) {
@@ -477,6 +709,36 @@ var game = {
 			update();
 		}
 	}
+	function castSpell(i, free) {
+		var spell = game.spells[i];
+		
+		if (game.player.res.energy >= spell.price || free) {
+			
+			if (!free) {
+				
+				game.idle = false;
+				game.clock = 0;
+				
+				if (spell.cooldown) {
+					if (spell.cooldown <= 0) {
+						game.player.res.energy -= spell.price;
+					}
+				} else {
+					game.player.res.energy -= spell.price;
+				}
+			}
+			
+			if (spell.effect && typeof spell.effect == "function") {
+				spell.effect();
+			}
+			
+			update();
+		}
+	}
+	$("[id*=cast-]").click(function() {
+		var unit = parseInt($(this).attr("data-level"));
+		castSpell(unit, false);
+	});
 	$("[id*=summon-]").click(function() {
 		var unit = parseInt($(this).attr("data-level"));
 		buyUnit(unit, 1, false);
