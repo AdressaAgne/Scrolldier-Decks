@@ -16,6 +16,7 @@ var game = {
 	totalSpells : 0,
 	debugMode : false,
 	idle 	: false,
+	gameLoaded : false,
 	clock	: 0,
 	clockReset : 100,
 	player	: {
@@ -122,7 +123,7 @@ var game = {
 			var gt = game.gameTick / game.gameSpeed;
 			var bonusGold = (damage / (game.player.idolHealth / gt)) * game.player.idolKillReward;
 			game.player.gold += bonusGold;
-			return priceDown(damage, "", "DPS") + ", " + priceDown(bonusGold, "", "G/s");
+			return priceDown(damage, "", "DPS");
 		}
 	},
 	{
@@ -390,6 +391,7 @@ return game;
 	  return Math.random() * (max - min) + min;
 	}
 	function init() {
+		loadGame();
 		game.totalUnits = game.units.length;
 		game.totalSpells = game.spells.length;
 		for (var i = 0; i < game.totalUnits; i++) {
@@ -524,11 +526,17 @@ return game;
 			
 			game.idle = true;
 			game.clock = 0;
+			
 		}
 		
 		update();
 
 	}
+	setInterval(function() {
+		if (game.gameLoaded) {
+			save();
+		}
+	}, 600000)
 	function toggleResources(toggle) {
 		if (!toggle) {
 			$("#game-gold").removeClass("col-4");	
@@ -622,7 +630,7 @@ return game;
 		
 		for (var i = shortNameMoney.length; i > 0; i--) {
 			if (input > Math.pow(10, (i*3) + 1)) {
-				return prefix + Math.round( input/Math.pow(10, (i*3) ) ) + shortNameMoney[i] + sufix;
+				return prefix + Math.round( input/Math.pow(10, (i*3) ) *10)/10 + shortNameMoney[i] + sufix;
 			}
 		}
 
@@ -748,5 +756,94 @@ return game;
 		var x = parseInt($(this).attr("data-times"));
 		buyUnit(unit, x, false);
 	});
+	
+	
+	$("#save-game").click(function() {
+		save();
+	});
+	
+	function save() {
+		var JSON = {
+			player : game.player,
+			units : []
+		};
+		for (var i = 0; i < game.totalUnits; i++) {
+			var unit = {
+				price 	: game.units[i].price,
+				ap		: game.units[i].ap,
+				cd		: game.units[i].cd,
+				hp		: game.units[i].hp,
+				count	: game.units[i].count
+			
+			}
+			JSON.units[i] = unit;
+		}
+		
+		$.ajax( {
+		  type: "POST",
+		  url: "/view/admin/ajax/gravelock.php",
+		  data: {json: JSON}
+		  }).done(function(data) {
+		  	if (data) {
+		  		 console.log("Game saved" + data);
+		  		  $("#save-notify").text("Game Saved");
+		  		  $("#save-game").addClass("success");
+		  		   $("#save-game").removeClass("danger");
+		  		   
+		  		   setTimeout(function() {
+		  		   	$("#save-game").addClass("danger");
+		  		   	  $("#save-game").removeClass("success");
+		  		   }, 5000);
+		  	} else {
+		  		 console.log("Error while saving game: " + data);
+		  	}
+		  })
+		  .fail(function() {
+		    console.log("Failed while saving game, with error: "+data);
+		     $("#save-notify").text("Failed to save Game");
+		  })
+		  .always(function(data) {
+		   console.log("Request done.");
+		});
+		
+	}
+	
+	function loadGame() {
+		$.ajax( {
+		  type: "POST",
+		  url: "/view/admin/ajax/gravelock_load.php",
+		  data: {json: JSON}
+		  }).done(function(data) {
+		  	if (data) {
+		  		if (data.length > 10) {
+			  		 console.log("Game Loaded " + data);
+			  		 data = jQuery.parseJSON(data);
+			  		 console.log(data)
+			  		 game.player.gold = parseInt(data.player.gold);
+			  		 game.player.res.energy = parseInt(data.player.res.energy);
+			  		 for (var i = 0; i < game.totalUnits; i++) {
+			  		 	
+			  		 	game.units[i].price = parseInt(data.units[i].price);
+			  		 	game.units[i].ap = parseInt(data.units[i].ap);
+			  		 	game.units[i].cd = parseInt(data.units[i].cd);
+			  		 	game.units[i].hp = parseInt(data.units[i].hp);
+			  		 	game.units[i].count = parseInt(data.units[i].count);
+			  		 }
+			  		 $("#save-notify").text("Game Loaded");
+			  }
+		  		 game.gameLoaded = true;
+		  		 
+		  	} else {
+		  		 console.log("Error while saving game: ");
+		  	}
+		  })
+		  .fail(function() {
+		    console.log("Failed while saving game, with error: "+data);
+		  })
+		  .always(function(data) {
+		   console.log("Request done.");
+		});
+	}
+	
 });
 
