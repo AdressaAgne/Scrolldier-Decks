@@ -25,16 +25,12 @@
 			</div>
 			<div class="col-12 game">
 				<div class="page-header">
-					<h2>Gravelock Clicker <small>By: Orangee & Atmaz</small> <small id="save-notify"></small> <button class="btn hidden" id="debug">Debug</button></h2>
+					<h2>Gravelock Clicker <small>By: Orangee & Atmaz</small>  <button class="btn hidden" id="debug">Debug</button></h2>
 				</div>
 				<div class="col-12">
 					<button class="toggle btn" id="units-div">Units</button>
 					<button class="toggle btn" id="spells-div">Spells</button>
-					<?php if ($_SESSION['ign']) { ?>
-						<button class="btn danger" id="save-game">Save Game</button>
-					<?php }  else { ?>
-						<p>Login to save... all progress will be lost when leaving page</p>
-					<?php } ?>
+					
 					
 				</div>
 				<div class="col-12" name="units-div" id="units"></div>
@@ -44,8 +40,12 @@
 	</div>
 	<div class="row">
 		<div class="col-12">
-			<p>Bugs: Times does not go by when tab not open.</p>
-			<p>Game Saves when <span style="color: #ffeb04;">[idle]</span> </p>
+			<?php if ($_SESSION['ign']) { ?>
+				<button class="btn danger" id="save-game">Save Game</button>
+			<?php }  else { ?>
+				<p><span style="color: #ffeb04;">Login to save... all progress will be lost when leaving page</span></p>
+			<?php } ?>
+			<small id="save-notify"></small>
 		</div>
 	</div>
 </div>

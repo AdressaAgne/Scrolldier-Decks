@@ -103,6 +103,34 @@ var game = {
 		round	: 0
 	},
 	{
+	name	: "Snargl",
+	shortName	: "Snargl",
+	tier1 	: 6000,
+	tier2 	: 6000*3,
+	tier3	: 6000*9,
+	price	: 839808,
+	basePrice	: 18,
+	ap		: 4,
+	cd		: 2,
+	hp		: 5,
+	count	: 0,
+	round	: 0,
+	hasIdle	: true,
+	desc	: "<span class='effect' style='color: #ffeb04;'>[Idle]</span>: Attack increases by 10",
+	clockEffect	: function(j) {	
+		var unit = game.units[4];
+		
+			if (game.idle) {
+				unit.ap = 14;
+				return "+"+unit.count*10 + " Attack";
+			} else {
+				unit.ap = 4;
+				return 0 + " Attack";
+			}
+		
+		}
+	},
+	{
 		name	: "Gravelock Freak",
 		shortName	: "Freak",
 		elderBoost	: true,
@@ -118,7 +146,7 @@ var game = {
 		round	: 0,
 		desc	: "Deals additional damage per round equal to its health.",
 		clockEffect	: function(j) {
-			var unit = game.units[4];
+			var unit = game.units[5];
 			var damage = unit.hp / unit.cd;
 			var gt = game.gameTick / game.gameSpeed;
 			var bonusGold = (damage / (game.player.idolHealth / gt)) * game.player.idolKillReward;
@@ -146,8 +174,8 @@ var game = {
 				var unit = game.units[i];
 				
 				if (unit.elderBoost) {
-					unit.ap += parseInt(j);
-					unit.hp += parseInt(j);
+					unit.ap += Number(j);
+					unit.hp += Number(j);
 				}
 			}
 		}
@@ -175,37 +203,9 @@ var game = {
 				var unit = game.units[i];
 				goldBunus += (unit.count * j);
 			}
-			goldBunus -=  game.units[6].count;
+			goldBunus -=  game.units[7].count;
 			game.player.gold += (goldBunus/10);
 			return priceDown(goldBunus,"","G/s");
-			}
-		},
-		{
-		name	: "Snargl",
-		shortName	: "Snargl",
-		tier1 	: 6000,
-		tier2 	: 6000*3,
-		tier3	: 6000*9,
-		price	: 839808,
-		basePrice	: 18,
-		ap		: 4,
-		cd		: 2,
-		hp		: 5,
-		count	: 0,
-		round	: 0,
-		hasIdle	: true,
-		desc	: "<span class='effect' style='color: #ffeb04;'>[Idle]</span>: Attack increases by 10",
-		clockEffect	: function(j) {	
-			var unit = game.units[7];
-			
-				if (game.idle) {
-					unit.ap = 14;
-					return "+"+unit.count*10 + " Attack";
-				} else {
-					unit.ap = 4;
-					return 0 + " Attack";
-				}
-			
 			}
 		},
 		{
@@ -223,9 +223,9 @@ var game = {
 			count	: 0,
 			round	: 0,
 			clock	: 0,
-			clockReset	: 150,
+			clockReset	: 600,
 			lastUnit	: "",
-			desc	: "Spawns a random Unit of lower level every 15 sec",
+			desc	: "Spawns a random Unit of lower level every 60 sec",
 			clockEffect	: function(j) {
 				var unit = game.units[8];
 				unit.clock++;
@@ -237,7 +237,7 @@ var game = {
 					unit.clock = 0;
 				}
 				
-				var time = parseInt((unit.clockReset - unit.clock) / 10)+1;
+				var time = Number((unit.clockReset - unit.clock) / 10)+1;
 				return  unit.lastUnit + " (" + time + "s)";
 			}
 		},
@@ -256,9 +256,9 @@ var game = {
 			count	: 0,
 			round	: 0,
 			clock	: 0,
-			clockReset	: 100,
+			clockReset	: 200,
 			lastUnit	: "",
-			desc	: "Increase Energy by 1, every 10 sec",
+			desc	: "Increase Energy by 1, every 20 sec",
 			clockEffect	: function(j) {
 				var unit = game.units[9];
 				unit.clock++;
@@ -268,7 +268,7 @@ var game = {
 					unit.clock = 0;
 				}
 				
-				var time = parseInt((unit.clockReset - unit.clock) / 10)+1;
+				var time = Number((unit.clockReset - unit.clock) / 10)+1;
 				return  "+"+unit.count + " Energy (" + time + "s)";
 			}
 		},
@@ -287,9 +287,9 @@ var game = {
 			count	: 0,
 			round	: 0,
 			clock	: 0,
-			clockReset	: 50,
+			clockReset	: 250,
 			lastUnit	: "",
-			desc	: "Increase Energy by 5, every 5 sec",
+			desc	: "Increase Energy by 5, every 25 sec",
 			clockEffect	: function(j) {
 				var unit = game.units[10];
 				unit.clock++;
@@ -299,7 +299,7 @@ var game = {
 					unit.clock = 0;
 				}
 				
-				var time = parseInt((unit.clockReset - unit.clock) / 10)+1;
+				var time = Number((unit.clockReset - unit.clock) / 10)+1;
 				return  "+"+(unit.count*5) + " Energy (" + time + "s)";
 			}
 		}
@@ -310,7 +310,7 @@ var game = {
 		tier	: 1,
 		tier2 	: 0,
 		tier3	: 0,
-		price	: 30,
+		price	: 50,
 		resource : resources.energy,
 		basePrice	: 0,
 		desc	: "All Gravelocks get +3 Attack",
@@ -353,7 +353,7 @@ var game = {
 			if (spell.cooldown <= 0) {
 				return "Ready";
 			} else {
-				return (parseInt((spell.cooldown) / 10)+1) + "sec";
+				return (Number((spell.cooldown) / 10)+1) + "sec";
 			}
 		}
 	
@@ -364,10 +364,10 @@ var game = {
 	tier	: 1,
 	tier2 	: 0,
 	tier3	: 0,
-	price	: 1000,
+	price	: 2000,
 	resource : resources.energy,
 	basePrice	: 0,
-	desc	: "Double Gravelocks Attack",
+	desc	: "Increese Gravelocks attack",
 	effect	: function() {
 		var spell = game.spells[2];
 		
@@ -375,7 +375,7 @@ var game = {
 			var unit = game.units[i];
 			
 			if (unit.elderBoost) {
-				unit.ap *= 2;
+				unit.ap *= 1.25;
 			}
 		}
 		//return void
@@ -576,11 +576,11 @@ return game;
 				var DPS = (unit.ap / unit.cd) * unit.count;
 				TDPS += DPS;
 				$(".value-"+i).text(priceDown(DPS, "", " DPS"));
-				$("#raw-"+i).text((unit.ap / unit.cd) + " Raw DPS");
+				$("#raw-"+i).text(priceDown(unit.ap / unit.cd,"","") + " Raw DPS");
 			
-			$("#ap-"+i).text(unit.ap);
-			$("#cd-"+i).text(unit.cd);
-			$("#hp-"+i).text(unit.hp);
+			$("#ap-"+i).text(priceDown(unit.ap,"",""));
+			$("#cd-"+i).text(priceDown(unit.cd,"",""));
+			$("#hp-"+i).text(priceDown(unit.hp,"",""));
 			
 			
 			$("#summon-"+i).find(".price").text(priceDown(Math.round(unit.price), "(", "g)"));
@@ -665,7 +665,7 @@ return game;
 	
 	function intrest(p, x) {
 		var m = game.priceMultiplyer;
-		x = parseInt(x);
+		x = Number(x);
 		//m = Multiplyer, 1.15
 		//x = Amount bought, 5
 		//p = StartPrice, 3
@@ -680,9 +680,9 @@ return game;
 		var unit = game.units[i];
 		
 		if (x > 1) {
-			var price = parseInt(intrest(unit.price, x, "",""));
+			var price = Number(intrest(unit.price, x, "",""));
 		} else {
-			var price = parseInt(unit.price);
+			var price = Number(unit.price);
 		}
 		
 		if (game.player.gold >= price || free) {
@@ -736,6 +736,8 @@ return game;
 				}
 			}
 			
+			
+			
 			if (spell.effect && typeof spell.effect == "function") {
 				spell.effect();
 			}
@@ -744,16 +746,16 @@ return game;
 		}
 	}
 	$("[id*=cast-]").click(function() {
-		var unit = parseInt($(this).attr("data-level"));
+		var unit = Number($(this).attr("data-level"));
 		castSpell(unit, false);
 	});
 	$("[id*=summon-]").click(function() {
-		var unit = parseInt($(this).attr("data-level"));
+		var unit = Number($(this).attr("data-level"));
 		buyUnit(unit, 1, false);
 	});
 	$("[id*=xTimes-]").click(function() {
-		var unit = parseInt($(this).attr("data-level"));
-		var x = parseInt($(this).attr("data-times"));
+		var unit = Number($(this).attr("data-level"));
+		var x = Number($(this).attr("data-times"));
 		buyUnit(unit, x, false);
 	});
 	
@@ -793,6 +795,7 @@ return game;
 		  		   setTimeout(function() {
 		  		   	$("#save-game").addClass("danger");
 		  		   	  $("#save-game").removeClass("success");
+		  		   	  $("#save-notify").text("");
 		  		   }, 5000);
 		  	} else {
 		  		 console.log("Error while saving game: " + data);
@@ -819,15 +822,19 @@ return game;
 			  		 console.log("Game Loaded " + data);
 			  		 data = jQuery.parseJSON(data);
 			  		 console.log(data)
-			  		 game.player.gold = parseInt(data.player.gold);
-			  		 game.player.res.energy = parseInt(data.player.res.energy);
+			  		 game.player.gold = Number(data.player.gold);
+			  		 game.player.res.energy = Number(data.player.res.energy);
+			  		 game.player.res.growth = Number(data.player.res.growth);
+			  		 game.player.res.decay = Number(data.player.res.decay);
+			  		 game.player.res.order = Number(data.player.res.order);
+			  		  game.player.res.wild = Number(data.player.res.wild);
 			  		 for (var i = 0; i < game.totalUnits; i++) {
 			  		 	
-			  		 	game.units[i].price = parseInt(data.units[i].price);
-			  		 	game.units[i].ap = parseInt(data.units[i].ap);
-			  		 	game.units[i].cd = parseInt(data.units[i].cd);
-			  		 	game.units[i].hp = parseInt(data.units[i].hp);
-			  		 	game.units[i].count = parseInt(data.units[i].count);
+			  		 	game.units[i].price = Number(data.units[i].price);
+			  		 	game.units[i].ap = Number(data.units[i].ap);
+			  		 	game.units[i].cd = Number(data.units[i].cd);
+			  		 	game.units[i].hp = Number(data.units[i].hp);
+			  		 	game.units[i].count = Number(data.units[i].count);
 			  		 }
 			  		 $("#save-notify").text("Game Loaded");
 			  }
