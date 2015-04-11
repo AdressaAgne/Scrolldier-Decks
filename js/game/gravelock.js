@@ -17,11 +17,14 @@ var game = {
 	debugMode : false,
 	idle 	: false,
 	gameLoaded : false,
+	ascendShards : 1000,
+	ascend	: Math.pow(10, 43),
 	clock	: 0,
 	clockReset : 100,
 	player	: {
 		level	: 0,
 		gold	: 3,
+		shards	: 0,
 		idol	: 0,
 		goldSec	: 0,
 		idolHealth	: 10,
@@ -568,7 +571,7 @@ return game;
 			toggleResources(true);
 		}
 		$("#res-energy").text(priceDown(game.player.res.energy, "", ""));
-		
+		var totalUnit = 0;
 		for (var i = 0; i < game.totalUnits; i++) {
 			var unit = game.units[i];
 			$("#count-"+i).text(priceDown(unit.count,"","x"));
@@ -595,13 +598,19 @@ return game;
 			ShowAndHideBtn(game.player.gold, '#xTimes-100-'+i, intrest(unit.price, 100), true);
 		
 			
-			
+			totalUnit += unit.count
 			
 			if (unit.count > 0) {
 				if ($("#level-"+(i+1))) {
 					$("#level-"+(i+1)).show();
 				}
 			}
+		}
+		if (TDPS > game.ascend) {
+			$("#game-shards-gain").text(priceDown(totalUnit / game.ascendShards,"",""));
+			$("#game-ascend-box").show();
+		} else {
+			$("#game-ascend-box").hide();
 		}
 		if (game.idle) {
 			$("#total_dps").html(priceDown(TDPS,""," DPS <span style='color: #88b837'>(Idle)</span>"));
@@ -626,12 +635,21 @@ return game;
 		}
 	}
 	function priceDown(input, prefix, sufix) {
-		var shortNameMoney = ["","k","m","b","t","Qa","Qi","Sx","Sp","Oc","No","De","Un","Du"];
+		var shortNameMoney = ["","k","m","b","t","Qa","Qi","Sx","Sp","Oc","No","De","Un","Du", "Tr", "Qat", "Qit", "Sxd", "Spd", "Ocd", "Nod", "Vi", "Unvi", "Trvi", "Qavi", "Qivi", "Ss", "damn", "omg", "woho", "a lot"];
 		
 		for (var i = shortNameMoney.length; i > 0; i--) {
-			if (input > Math.pow(10, (i*3) + 1)) {
-				return prefix + Math.round( input/Math.pow(10, (i*3) ) *10)/10 + shortNameMoney[i] + sufix;
+			if (input < Math.pow(10, 1000)) {
+				if (input < Math.pow(10, 100)) {
+					if (input > Math.pow(10, (i*3) + 1)) {
+						return prefix + Math.round( input/Math.pow(10, (i*3) ) *10)/10 + shortNameMoney[i] + sufix;
+					}
+				} else {
+					return prefix + Math.round( input/Math.pow(10, 100 )) + "Googol" + sufix;
+				}
+			} else {
+				return prefix + Math.round( input/Math.pow(10, 1000 )) + "Googolplex" + sufix;
 			}
+			
 		}
 
 		return prefix + Math.round(input) + sufix;
@@ -763,6 +781,25 @@ return game;
 	$("#save-game").click(function() {
 		save();
 	});
+	$("#reset-game").click(function() {
+		reset();
+	});
+	function reset() {
+		$.ajax( {
+		  type: "POST",
+		  url: "/view/admin/ajax/gravelock_reset.php",
+		  }).done(function() {
+		  		location.reload();
+		  })
+		  .fail(function() {
+		    console.log("Failed while saving game, with error: "+data);
+		     $("#save-notify").text("Failed to save Game");
+		  })
+		  .always(function(data) {
+		   console.log("Request done.");
+		});
+		
+	}
 	
 	function save() {
 		var JSON = {
@@ -787,16 +824,19 @@ return game;
 		  data: {json: JSON}
 		  }).done(function(data) {
 		  	if (data) {
-		  		 console.log("Game saved" + data);
 		  		  $("#save-notify").text("Game Saved");
 		  		  $("#save-game").addClass("success");
 		  		   $("#save-game").removeClass("danger");
 		  		   
 		  		   setTimeout(function() {
 		  		   	$("#save-game").addClass("danger");
-		  		   	  $("#save-game").removeClass("success");
-		  		   	  $("#save-notify").text("");
-		  		   }, 5000);
+		  		   	$("#save-game").removeClass("success");
+		  		   	$("#save-notify").text("");
+		  		   }, 3000);
+		  		   
+		  		   setTimeout(function() {
+		  		     	save();
+		  		     }, 60000);
 		  	} else {
 		  		 console.log("Error while saving game: " + data);
 		  	}
@@ -811,6 +851,16 @@ return game;
 		
 	}
 	
+	$("[class*=menu-toggle]").click(function() {
+		var box = $(this).attr("data-show");
+		var hide = $(this).attr("data-hide");
+		
+		$("[name*='"+hide+"']").hide();
+		$("#"+box).show();
+		
+		
+	});
+	
 	function loadGame() {
 		$.ajax( {
 		  type: "POST",
@@ -819,9 +869,7 @@ return game;
 		  }).done(function(data) {
 		  	if (data) {
 		  		if (data.length > 10) {
-			  		 console.log("Game Loaded " + data);
 			  		 data = jQuery.parseJSON(data);
-			  		 console.log(data)
 			  		 game.player.gold = Number(data.player.gold);
 			  		 game.player.res.energy = Number(data.player.res.energy);
 			  		 game.player.res.growth = Number(data.player.res.growth);
