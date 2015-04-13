@@ -558,7 +558,11 @@ $(function() {
                 updateCastInput(tile);
                 
                 tile.children().each(function() {
-                    $("#start-spell-list").append('<li id="' + this.getAttribute("class") + '">' + this.getAttribute("data-card") + (this.getAttribute("data-played") != "" ? ' by ' + $(this).attr("data-played") : "") + '<button id="li-close" class="btn danger small right">&times;</button></li>');
+                        $("#start-spell-list").append('<li id="' + this.getAttribute("class") + '">' + this.getAttribute("data-card") + (this.getAttribute("data-played") != "" ? ' by ' + $(this).attr("data-played") : "") + '<button id="li-close" class="btn danger small right">&times;</button></li>');
+                });
+                
+                $("[id*=li-close]").on("click", function() {
+                        $(this).parent().remove();
                 });
 	}
 	
