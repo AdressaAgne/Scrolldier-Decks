@@ -225,7 +225,7 @@
 		</div>
 	</div>
 	<div class="col-12">
-		<div class="col-12">
+		<div class="col-12" id="board-setup">
 			<h3>Board Setup <small><span id="text-player"></span>, <span id="text-cords"></span></small></h3>
                         <div class="col-12"><h4>Unit</h4></div>
                         <div class="col-12">
@@ -271,12 +271,12 @@
                         <div class="col-12"><h4>Spells</h4></div>
                         <div class="col-6">
                         <div class="col-12">
-                                <div class="form-element" name="srolls-text-unocc">
+                                <div class="form-element" name="scrolls-text-unocc">
                                         <label> Scroll Name <small>Type for suggestions</small>
                                                 <input id="scrolls-text-unocc" type="text" class="typeahead" name="" value="" placeholder="Scrolls" />
                                         </label>
                                 </div>
-                                <div class="form-element" name="srolls-text-occ" hidden>
+                                <div class="form-element" name="scrolls-text-occ" style="display: none;">
                                         <label> Scroll Name <small>Type for suggestions</small>
                                                 <input id="scrolls-text-occ" type="text" class="typeahead" name="" value="" placeholder="Scrolls" />
                                         </label>
@@ -429,6 +429,15 @@ $(function() {
 	function getSelect(tile) {
 		return $(tile).attr("data-select");
 	}
+        function updateCastInput(tile) {
+                if(tile.hasClass("ocupied")) {
+                    $("[name='scrolls-text-occ']").show();
+                    $("[name='scrolls-text-unocc']").hide();
+                } else {
+                    $("[name='scrolls-text-occ']").hide();
+                    $("[name='scrolls-text-unocc']").show();
+                }
+        }
 	
 	
 	setActiveTile($(".all-tiles .tile-row:first-of-type .tile:first-of-type"));
@@ -501,7 +510,7 @@ $(function() {
             var playedBy = $("#playcardby").val();
             
             $("#start-spell-list").append('<li id="idCard-' + counter + '">' + playedCard + (playedBy != "" ? ' by ' + playedBy : "") + '<button id="li-close" class="btn danger small right">&times;</button></li>');
-            selectedTile.append('<div hidden class="playcard idCard-' + counter +'" data-card="' + playedCard + '" data-played="' + playedBy + '"></div>');
+            selectedTile.append('<div hidden class="playcard idCard-' + counter +'" data-card="' + playedCard + '" data-type="' + scrolltypes[playedCard] + '" data-played="' + playedBy + '"></div>');
             
             counter++;
             
@@ -510,13 +519,18 @@ $(function() {
 		$(this).parent().remove();
             });
         });
-
-	$("input").on("input", function() {
-		updateTile(selectedTile);		
-	});
-	$("input").on("blur", function() {
-		updateTile(selectedTile);		
-	});
+        
+        $("#board-setup input,button,ul").on({
+                click: function(){
+                    updateTile(selectedTile);
+                },
+                input: function(){
+                    updateTile(selectedTile);
+                },
+                blur: function(){
+                    updateTile(selectedTile);
+                }
+        });
 
 	function updateForm(tile) {
 		$("#unit").val(getUnit(tile));
@@ -540,16 +554,10 @@ $(function() {
 		} else {
 			$("#select").removeClass("success");
 		}
-                if(tile.hasClass("ocupied")) {
-                    $("[name='scrolls-text-occ']").show();
-                    $("[name='scrolls-text-unocc']").hide();
-                } else {
-                    $("[name='scrolls-text-occ']").hide();
-                    $("[name='scrolls-text-unocc']").show();
-                }
+                
+                updateCastInput(tile);
                 
                 tile.children().each(function() {
-                    console.log(this);
                     $("#start-spell-list").append('<li id="' + this.getAttribute("class") + '">' + this.getAttribute("data-card") + (this.getAttribute("data-played") != "" ? ' by ' + $(this).attr("data-played") : "") + '<button id="li-close" class="btn danger small right">&times;</button></li>');
                 });
 	}
@@ -630,7 +638,7 @@ $(function() {
 	
 	
 	function updateTile(tile) {
-		if ($("#unit").val() != "") {
+		if ($("#unit").val() != "" || $(tile).has("[data-type='CREATURE']").length != 0 ) {
 			$(tile).addClass("ocupied");
 		} else {
 			$(tile).removeClass("ocupied");
@@ -641,13 +649,7 @@ $(function() {
 		$(tile).attr("data-cd", $("#cd").val());
 		$(tile).attr("data-hp", $("#hp").val());
                 
-                if(tile.hasClass("ocupied")) {
-                    $("[name='scrolls-text-occ']").show();
-                    $("[name='scrolls-text-unocc']").hide();
-                } else {
-                    $("[name='scrolls-text-occ']").hide();
-                    $("[name='scrolls-text-unocc']").show();
-                }
+                updateCastInput(tile);
 	}
 	var output;
 	//unit(target, name, row, column, ap, cd, hp);
@@ -794,31 +796,35 @@ $(function() {
 <?php 
 
 $arrayString = array();
+$mapScrollKind = array();
 
-$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard WHERE kind = 'CREATURE' OR kind = 'STRUCTURE'");
+$query = $deck->_db->prepare("SELECT name, id, kind FROM scrollsCard WHERE kind = 'CREATURE' OR kind = 'STRUCTURE'");
 $query->execute();
 
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 	array_push($arrayString, $row['name']);
+        $mapScrollKind[$row['name']] = $row['kind'];
 }
 
 
 $arrayStringEnchant = array();
 
-$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard WHERE kind = 'ENCHANTMENT'");
+$query = $deck->_db->prepare("SELECT name, id, kind FROM scrollsCard WHERE kind = 'ENCHANTMENT'");
 $query->execute();
 
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 	array_push($arrayStringEnchant, $row['name']);
+        $mapScrollKind[$row['name']] = $row['kind'];
 }
 
 $arrayStringSpells = array();
 
-$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard WHERE kind = 'SPELL'");
+$query = $deck->_db->prepare("SELECT name, id, kind FROM scrollsCard WHERE kind = 'SPELL'");
 $query->execute();
 
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 	array_push($arrayStringSpells, $row['name']);
+        $mapScrollKind[$row['name']] = $row['kind'];
 }
 
 $arrayStringUnocc = array();
@@ -870,6 +876,7 @@ $(function() {
 	var spells = <?php echo json_encode($arrayStringSpells) ?>;
         var unocc = <?php echo json_encode($arrayStringUnocc) ?>;
         var occ = <?php echo json_encode($arrayStringOcc) ?>;
+        scrolltypes = <?php echo json_encode($mapScrollKind) ?>;
 	 
 	$('#unit').typeahead({
 	  hint: false,
