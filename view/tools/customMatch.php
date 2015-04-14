@@ -6,12 +6,6 @@
 		</div>
 		<div class="col-12">
 			<div class="col-6">
-				<div class="col-12">
-					<div class="form-element">
-					<label>Timer: <small>Amount of Seconds a turn lasts</small>
-                                            <input type="number" id="time" value="90">
-					</label>
-				</div>
 				<div class="form-element">
                                     <label>Timer: <small>Amount of Seconds a turn lasts</small>
                                            <input type="number" id="time" value="90">
@@ -28,19 +22,6 @@
                 </div>
 		<div class="col-12">
 			<div class="col-6">
-				<div class="col-6">
-					<div class="form-element">
-                                            <label>Resources Player 1<small> </small>
-							<input id="resources-player-one" type="number" name="" value="" placeholder="Player 1"/>
-						</label>
-					</div>
-				</div>
-				<div class="col-6">
-					<div class="form-element">
-						<label>Resources Player 2<small> </small>
-							<input id="resources-player-two" type="number" name="" value="" placeholder="Player 2" />
-						</label>
-					</div>
 				<div class="form-element">
                                         <label>Resources Player 1<small> </small>
 						<input id="resources-player-one" type="number" name="" value="" placeholder="Player 1"/>
@@ -82,7 +63,6 @@
 					<label>Resources Player 2<small> </small>
 						<input id="resources-player-two" type="number" name="" value="" placeholder="Player 2" />
 					</label>
->>>>>>> af700b40a5d053f73791c3eed799504c4a784533
 				</div>
                                 <div name="more-resources-player-two" hidden>
                                         <div class="col-2 form-element">
@@ -247,8 +227,6 @@
 	<div class="col-12">
 		<div class="col-12" id="board-setup">
 			<h3>Board Setup <small><span id="text-player"></span>, <span id="text-cords"></span></small></h3>
-			<div class="col-12">
-				<div class="form-element">
                         <div class="col-12"><h4>Unit</h4></div>
                         <div class="col-12">
                             <div class="form-element">
@@ -520,13 +498,6 @@ $(function() {
 				
 			});
 		}
-	});
-
-	$("input").on("input", function() {
-		updateTile(selectedTile);		
-	});
-	$("input").on("blur", function() {
-		updateTile(selectedTile);		
 	});
         
         $("#addCard").on("click", function() {

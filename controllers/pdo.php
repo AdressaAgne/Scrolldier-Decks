@@ -10,10 +10,10 @@ class Database {
 	
 	function __construct() {
 		
-		$this->_db_host = "localhost";
-		$this->_db_username = "root";
-		$this->_db_password = "root";
-		$this->_db_name = "orangee_test";
+		$this->_db_host = "scrolldier.com.mysql";
+		$this->_db_username = "scrolldier_com";
+		$this->_db_password = "wDtvKMgE";
+		$this->_db_name = "scrolldier_com";
 		
 
 			

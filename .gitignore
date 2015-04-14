@@ -7,3 +7,5 @@
 nbproject/project.properties
 nbproject/private/private.xml
 nbproject/private/private.properties
+
+controllers/pdo.php
