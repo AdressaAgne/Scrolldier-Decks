@@ -12,8 +12,21 @@
                                             <input type="number" id="time" value="90">
 					</label>
 				</div>
+				<div class="form-element">
+                                    <label>Timer: <small>Amount of Seconds a turn lasts</small>
+                                           <input type="number" id="time" value="90">
+                                    </label>
+				
 				</div>
 			</div>
+                </div>
+                <div class="col-12">
+                        <div class="form-element">
+                                <div><label for="boss">Unlimited Wild <small>No limit for Wild sacrificing</small></label></div>
+                                <button id="nowildlmt" class="btn btn-checkbox"></button>
+			</div>
+                </div>
+		<div class="col-12">
 			<div class="col-6">
 				<div class="col-6">
 					<div class="form-element">
@@ -28,8 +41,81 @@
 							<input id="resources-player-two" type="number" name="" value="" placeholder="Player 2" />
 						</label>
 					</div>
+				<div class="form-element">
+                                        <label>Resources Player 1<small> </small>
+						<input id="resources-player-one" type="number" name="" value="" placeholder="Player 1"/>
+					</label>
 				</div>
+                                <div name="more-resources-player-one" hidden>
+                                        <div class="col-2 form-element">
+                                            <label>Decay
+                                                <input id="decay-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Energy
+                                                <input id="energy-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Growth
+                                                <input id="growth-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Order
+                                                <input id="order-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Wild
+                                                <input id="special-player-one" type="number"/>
+                                            </label>
+                                        </div>
+                                </div>
+                                <div class="col-12">
+                                    <button id="more-resources-player-one" class="btn toggle" name="more-resources">More</button>
+                                </div>
 			</div>
+			<div class="col-6">
+				<div class="form-element">
+					<label>Resources Player 2<small> </small>
+						<input id="resources-player-two" type="number" name="" value="" placeholder="Player 2" />
+					</label>
+>>>>>>> af700b40a5d053f73791c3eed799504c4a784533
+				</div>
+                                <div name="more-resources-player-two" hidden>
+                                        <div class="col-2 form-element">
+                                            <label>Decay
+                                                <input id="decay-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Energy
+                                                <input id="energy-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Growth
+                                                <input id="growth-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Order
+                                                <input id="order-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                        <div class="col-2 form-element">
+                                            <label>Wild
+                                                <input id="special-player-two" type="number"/>
+                                            </label>
+                                        </div>
+                                </div>
+                                <div class="col-12">
+                                    <button id="more-resources-player-two" class="btn toggle" name="more-resources">More</button>
+                                </div>
+			</div>
+		</div>
 		</div>
 	</div>
 </div>
@@ -159,10 +245,13 @@
 		</div>
 	</div>
 	<div class="col-12">
-		<div class="col-12">
+		<div class="col-12" id="board-setup">
 			<h3>Board Setup <small><span id="text-player"></span>, <span id="text-cords"></span></small></h3>
 			<div class="col-12">
 				<div class="form-element">
+                        <div class="col-12"><h4>Unit</h4></div>
+                        <div class="col-12">
+                            <div class="form-element">
 					<label> Unit Name <small>Type for suggestions</small>
 						<input id="unit" type="text" class="typeahead" name="" value="" placeholder="Unit" />
 					</label>
@@ -201,6 +290,41 @@
 					<button id="select" class="btn btn-checkbox"></button>
 				</div>
 			</div>
+                        <div class="col-12"><h4>Spells</h4></div>
+                        <div class="col-6">
+                        <div class="col-12">
+                                <div class="form-element" name="scrolls-text-unocc">
+                                        <label> Scroll Name <small>Type for suggestions</small>
+                                                <input id="scrolls-text-unocc" type="text" class="typeahead" name="" value="" placeholder="Scrolls" />
+                                        </label>
+                                </div>
+                                <div class="form-element" name="scrolls-text-occ" style="display: none;">
+                                        <label> Scroll Name <small>Type for suggestions</small>
+                                                <input id="scrolls-text-occ" type="text" class="typeahead" name="" value="" placeholder="Scrolls" />
+                                        </label>
+                                </div>
+                        </div>
+                        <div class="col-12">
+                                <div class="form-element">
+                                        <label> Cast by Player <small></small>
+                                            <select id="playcardby">
+                                                <option value="" selected="">Default</option>
+                                                <option value="P1">Player 1</option>
+                                                <option value="P2">Player 2</option>
+                                            </select>
+                                        </label>
+                                </div>
+                        </div>
+                        <div class="col-12">
+                                <div class="form-element">
+                                        <button id="addCard" class="btn">Add</button>
+                                </div>
+                        </div>
+                        </div>
+                        <div class="col-6">
+				<ul class="list-well" id="start-spell-list"></ul>
+			</div>
+                            
 		</div>
 		</div>
 	<div class="col-12">
@@ -289,6 +413,7 @@
 $(function() {
 	var selectedTile;
 	var tiles = $("[class$=tile]");
+        var counter = 0;
 	
 	
 	function removeAllActive() {
@@ -326,6 +451,15 @@ $(function() {
 	function getSelect(tile) {
 		return $(tile).attr("data-select");
 	}
+        function updateCastInput(tile) {
+                if(tile.hasClass("ocupied")) {
+                    $("[name='scrolls-text-occ']").show();
+                    $("[name='scrolls-text-unocc']").hide();
+                } else {
+                    $("[name='scrolls-text-occ']").hide();
+                    $("[name='scrolls-text-unocc']").show();
+                }
+        }
 	
 	
 	setActiveTile($(".all-tiles .tile-row:first-of-type .tile:first-of-type"));
@@ -339,7 +473,7 @@ $(function() {
 	}
 	
 	$(tiles).click(function() {
-		setActiveTile(this);
+		setActiveTile($(this));
 		
 		//console.log("unit("+getPlayer(this)+", Unit Name, "+ getRow(this) +", "+ getCol(this) +")")
 	});
@@ -394,12 +528,45 @@ $(function() {
 	$("input").on("blur", function() {
 		updateTile(selectedTile);		
 	});
+        
+        $("#addCard").on("click", function() {
+            var playedCard;
+            if(selectedTile.hasClass("ocupied")) {
+                playedCard = $("#scrolls-text-occ").val();
+            } else {
+                playedCard = $("#scrolls-text-unocc").val();
+            }
+            var playedBy = $("#playcardby").val();
+            
+            $("#start-spell-list").append('<li id="idCard-' + counter + '">' + playedCard + (playedBy != "" ? ' by ' + playedBy : "") + '<button id="li-close" class="btn danger small right">&times;</button></li>');
+            selectedTile.append('<div hidden class="playcard idCard-' + counter +'" data-card="' + playedCard + '" data-type="' + scrolltypes[playedCard] + '" data-played="' + playedBy + '"></div>');
+            
+            counter++;
+            
+            $("[id*=li-close]").on("click", function() {
+                $("." + $(this).parent().attr("id")).remove();
+		$(this).parent().remove();
+            });
+        });
+        
+        $("#board-setup input,button,ul").on({
+                click: function(){
+                    updateTile(selectedTile);
+                },
+                input: function(){
+                    updateTile(selectedTile);
+                },
+                blur: function(){
+                    updateTile(selectedTile);
+                }
+        });
 
 	function updateForm(tile) {
 		$("#unit").val(getUnit(tile));
 		$("#ap").val(getAp(tile));
 		$("#cd").val(getCd(tile));
 		$("#hp").val(getHp(tile));
+                $("#start-spell-list").children().remove();
 		
 		if (getBoss(tile) == 1) {
 			$("#boss").addClass("success");
@@ -416,6 +583,16 @@ $(function() {
 		} else {
 			$("#select").removeClass("success");
 		}
+                
+                updateCastInput(tile);
+                
+                tile.children().each(function() {
+                        $("#start-spell-list").append('<li id="' + this.getAttribute("class") + '">' + this.getAttribute("data-card") + (this.getAttribute("data-played") != "" ? ' by ' + $(this).attr("data-played") : "") + '<button id="li-close" class="btn danger small right">&times;</button></li>');
+                });
+                
+                $("[id*=li-close]").on("click", function() {
+                        $(this).parent().remove();
+                });
 	}
 	
 	$("#boss").click(function() {
@@ -439,6 +616,20 @@ $(function() {
 			
 		}
 	});
+        
+        $("#nowildlmt").click(function() {
+                $(this).toggleClass("success");
+        });
+        
+        $("[name='more-resources']").click(function() {
+                if ($(this).hasClass("success")) {
+                    $(this).removeClass("success");
+                    $(this).html("More");
+                } else {
+                    $(this).addClass("success");
+                    $(this).html("Less");
+                }
+        });
 	
 	$("#start-p1").click(function() {
 		$("#start-p1").addClass("success");
@@ -480,16 +671,18 @@ $(function() {
 	
 	
 	function updateTile(tile) {
-		if ($("#unit").val() != "") {
+		if ($("#unit").val() != "" || $(tile).has("[data-type='CREATURE']").length != 0 ) {
 			$(tile).addClass("ocupied");
 		} else {
 			$(tile).removeClass("ocupied");
-		}
+		} 
 	
 		$(tile).attr("data-unit", $("#unit").val());
 		$(tile).attr("data-ap", $("#ap").val());
 		$(tile).attr("data-cd", $("#cd").val());
 		$(tile).attr("data-hp", $("#hp").val());
+                
+                updateCastInput(tile);
 	}
 	var output;
 	//unit(target, name, row, column, ap, cd, hp);
@@ -505,13 +698,54 @@ $(function() {
 		if ($("#start-p2").hasClass("success")) {
 			output += "starts(P2);\n";
 		}
+                
+                if($("#nowildlmt").hasClass("success")) {
+                        output += "limitlessWild();\n";
+                }
 		
 		if ($("#resources-player-one").val() != "") {
 			output += "resources(P1, " + $("#resources-player-one").val() + ");\n";
 		}
+                
+                if($("#more-resources-player-one").hasClass("success")) {
+                        if($("#decay-player-one").val() != "") {
+                            output += "resources(P1, decay, " + $("#decay-player-one").val() + ");\n";
+                        }
+                        if($("#energy-player-one").val() != "") {
+                            output += "resources(P1, energy, " + $("#energy-player-one").val() + ");\n";
+                        }
+                        if($("#growth-player-one").val() != "") {
+                            output += "resources(P1, growth, " + $("#growth-player-one").val() + ");\n";
+                        }
+                        if($("#order-player-one").val() != "") {
+                            output += "resources(P1, order, " + $("#order-player-one").val() + ");\n";
+                        }
+                        if($("#special-player-one").val() != "") {
+                            output += "resources(P1, special, " + $("#special-player-one").val() + ");\n";
+                        }
+                }
+                
 		if ($("#resources-player-two").val() != "") {
 			output += "resources(P2, " + $("#resources-player-two").val() + ");\n";
 		}
+                
+                if($("#more-resources-player-two").hasClass("success")) {
+                        if($("#decay-player-two").val() != "") {
+                            output += "resources(P2, decay, " + $("#decay-player-two").val() + ");\n";
+                        }
+                        if($("#energy-player-two").val() != "") {
+                            output += "resources(P2, energy, " + $("#energy-player-two").val() + ");\n";
+                        }
+                        if($("#growth-player-two").val() != "") {
+                            output += "resources(P2, growth, " + $("#growth-player-two").val() + ");\n";
+                        }
+                        if($("#order-player-two").val() != "") {
+                            output += "resources(P2, order, " + $("#order-player-two").val() + ");\n";
+                        }
+                        if($("#special-player-two").val() != "") {
+                            output += "resources(P2, special, " + $("#special-player-two").val() + ");\n";
+                        }
+                }
 		//resources(target, amount);
 		
 		$(tiles).each(function() {
@@ -530,6 +764,11 @@ $(function() {
 				
 			}
 		});
+                
+                $(".playcard").each(function() {
+                    var parent = this.parentNode;
+                    output += "playCard(" + getPlayer(parent) + ", " + this.getAttribute("data-card").replace(",", "\,") + ", " + getRow(parent) + ", " + getCol(parent) + (this.getAttribute("data-played") != "" ? ", " + this.getAttribute("data-played") : "") + ");\n";
+                });
 		
 		//buffUnitCreated(target, enchantmentName);
 		//<li id="idEnchant-1" data-player="'+player+'" data-enchantment="'+enchantName+'"
@@ -585,38 +824,59 @@ $(function() {
 	$("#genCode").click(function() {
 		generateCode();
 	});
-	
+        
 });
 <?php 
 
 $arrayString = array();
+$mapScrollKind = array();
 
-$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard WHERE kind = 'CREATURE' OR kind = 'STRUCTURE'");
+$query = $deck->_db->prepare("SELECT name, id, kind FROM scrollsCard WHERE kind = 'CREATURE' OR kind = 'STRUCTURE'");
 $query->execute();
 
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 	array_push($arrayString, $row['name']);
+        $mapScrollKind[$row['name']] = $row['kind'];
 }
 
 
 $arrayStringEnchant = array();
 
-$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard WHERE kind = 'ENCHANTMENT'");
+$query = $deck->_db->prepare("SELECT name, id, kind FROM scrollsCard WHERE kind = 'ENCHANTMENT'");
 $query->execute();
 
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 	array_push($arrayStringEnchant, $row['name']);
+        $mapScrollKind[$row['name']] = $row['kind'];
 }
 
 $arrayStringSpells = array();
 
-$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard WHERE kind = 'SPELL'");
+$query = $deck->_db->prepare("SELECT name, id, kind FROM scrollsCard WHERE kind = 'SPELL'");
 $query->execute();
 
 while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 	array_push($arrayStringSpells, $row['name']);
+        $mapScrollKind[$row['name']] = $row['kind'];
 }
 
+$arrayStringUnocc = array();
+
+$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard WHERE kind != 'ENCHANTMENT' AND targetarea != 'TILE' AND targetarea != 'SEQUENTIAL'");
+$query->execute();
+
+while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+	array_push($arrayStringUnocc, $row['name']);
+}
+
+$arrayStringOcc = array();
+
+$query = $deck->_db->prepare("SELECT name, id FROM scrollsCard WHERE kind != 'CREATURE' AND kind != 'STRUCTURE'");
+$query->execute();
+
+while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
+	array_push($arrayStringOcc, $row['name']);
+}
 
  ?>
 $(function() {
@@ -647,6 +907,9 @@ $(function() {
 	var scrolls = <?php echo json_encode($arrayString) ?>;
 	var enchant = <?php echo json_encode($arrayStringEnchant) ?>;
 	var spells = <?php echo json_encode($arrayStringSpells) ?>;
+        var unocc = <?php echo json_encode($arrayStringUnocc) ?>;
+        var occ = <?php echo json_encode($arrayStringOcc) ?>;
+        scrolltypes = <?php echo json_encode($mapScrollKind) ?>;
 	 
 	$('#unit').typeahead({
 	  hint: false,
@@ -679,5 +942,27 @@ $(function() {
 	  displayKey: 'value',
 	  source: substringMatcher(spells)
 	});
+        
+        $('#scrolls-text-unocc').typeahead({
+           hint: false,
+           highlight: true,
+           minLength: 1
+        },
+        {
+           name: 'all',
+           displayKey: 'value',
+           source: substringMatcher(unocc)
+        });
+        
+        $('#scrolls-text-occ').typeahead({
+           hint: false,
+           highlight: true,
+           minLength: 1
+        },
+        {
+           name: 'all',
+           displayKey: 'value',
+           source: substringMatcher(occ)
+        });
 });
 </script>
