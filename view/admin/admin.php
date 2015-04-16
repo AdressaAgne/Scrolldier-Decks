@@ -19,8 +19,8 @@
 			<div class="row align-center hidden" id="loading">
 				<span><i class="fa fa-refresh fa-spin"></i></span>
 			</div>
-                        <button class="btn toggle" id="pages">Toggle</button>
-                        <div name="pages" hidden>
+                        <button class="btn toggle" data-toggle-target="pages">Toggle</button>
+                        <div data-toggle-name="pages" hidden>
                             <table class="even divider hover border" id="page_table">
                                     <thead>
 					<tr>

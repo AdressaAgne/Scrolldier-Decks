@@ -27,7 +27,7 @@
 						<input id="resources-player-one" type="number" name="" value="" placeholder="Player 1"/>
 					</label>
 				</div>
-                                <div name="more-resources-player-one" hidden>
+                                <div data-toggle-name="more-resources-player-one" hidden>
                                         <div class="col-2 form-element">
                                             <label>Decay
                                                 <input id="decay-player-one" type="number"/>
@@ -55,7 +55,7 @@
                                         </div>
                                 </div>
                                 <div class="col-12">
-                                    <button id="more-resources-player-one" class="btn toggle" name="more-resources">More</button>
+                                    <button id="more-resources-player-one" data-toggle-target="more-resources-player-one" class="btn toggle" name="more-resources">More</button>
                                 </div>
 			</div>
 			<div class="col-6">
@@ -64,7 +64,7 @@
 						<input id="resources-player-two" type="number" name="" value="" placeholder="Player 2" />
 					</label>
 				</div>
-                                <div name="more-resources-player-two" hidden>
+                                <div data-toggle-name="more-resources-player-two" hidden>
                                         <div class="col-2 form-element">
                                             <label>Decay
                                                 <input id="decay-player-two" type="number"/>
@@ -92,7 +92,7 @@
                                         </div>
                                 </div>
                                 <div class="col-12">
-                                    <button id="more-resources-player-two" class="btn toggle" name="more-resources">More</button>
+                                    <button id="more-resources-player-two" data-toggle-target="more-resources-player-two" class="btn toggle" name="more-resources">More</button>
                                 </div>
 			</div>
 		</div>
@@ -252,17 +252,17 @@
                         <div class="col-6">
 				<div class="form-element">
                                         <div><label for="boss">Boss <small>Is this unit a boss unit</small></label></div>
-                                        <button id="boss" class="btn btn-checkbox toggle"></button>
+                                        <button id="boss" class="btn btn-checkbox toggle" data-toggle-target="isboss"></button>
 				</div>
 			</div>
-			<div class="col-6" id="cdin" name="boss">
+			<div class="col-6" id="cdin" data-toggle-name="isboss">
 				<div class="form-element">
-					<label> Countdown <small>Will get added to base stats</small>
+					<label> Countdown <small>Will change the starting Countdown</small>
 						<input id="cd" type="number" class="" name="" value="" placeholder="Countdown" />
 					</label>
 				</div>
 			</div>
-			<div class="col-6" id="selectin" name="boss" hidden>
+			<div class="col-6" id="selectin" data-toggle-name="isboss" hidden>
 				<div class="form-element">
                                         <div><label for="select">Selectable <small>Unslayable and Ward</small></label></div>
 					<button id="select" class="btn btn-checkbox"></button>

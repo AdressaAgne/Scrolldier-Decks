@@ -182,8 +182,8 @@ $(function(){
 	});
         
         $(".toggle").click(function() {
-                var name = $(this).attr("id");
-                $("[name='" + name + "']").toggle();
+                var name = $(this).attr("data-toggle-target");
+                $("[data-toggle-name='" + name + "']").toggle();
         });
 });
 
