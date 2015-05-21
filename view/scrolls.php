@@ -2,9 +2,6 @@
 	<div class="row">
 		<div class="col-12">
 		<?php 
-			function flavorReplace($searchText) {
-				return preg_replace("/\\\\n/u", "<br />", $searchText);
-			}
 		//SELECT * FROM decks WHERE JSON LIKE '%\"id\":scrollsCard.id%' AND isHidden = 0 ORDER BY vote DESC LIMIT 5
 	
 		
@@ -49,69 +46,7 @@
 					$row = 0;
 					
 					for ($i = 0; $i < count($delay); $i++) {
-						if ($delay[$i]['kind'] == "CREATURE" || $delay[$i]['kind'] == "STRUCTURE") {
-							$stats = $delay[$i]['ap']."/".$delay[$i]['ac']."/".$delay[$i]['hp'];
-						} else {
-							$stats = "";
-						}
-					
-						?>
-						<div class="col-12" id="scroll-<?= $delay[$i]['id'] ?>"  hidden>
-							<div class="col-5 align-center">
-								<img src="img/scrolls/<?= $delay[$i]['image'] ?>.png" alt="" />
-							</div>
-							
-							<div class="col-7">
-								<div class="col-12">
-								<h4>
-									<i class="number-<?= $deck->getFactionCost($delay[$i]) ?> text"></i>
-									<i class="icon-<?= $deck->getFaction($delay[$i]) ?> text"></i>
-									<?= $delay[$i]['name']." ".$stats ?><small class="right">Set: <?= $delay[$i]['scrollsSet'] ?></small><br />
-									<small><?= $delay[$i]['kind'] ?>: <?= $delay[$i]['types'] ?></small></h4>
-								</div>
-								<div class="col-12">
-									<?php 
-										if (!empty($delay[$i]['passiverules_1'])) {
-											echo("<p><i>* ".$delay[$i]['passiverules_1']."</i></p>");
-										}
-										if (!empty($delay[$i]['passiverules_2'])) {
-											echo("<p><i>* ".$delay[$i]['passiverules_2']."</i></p>");
-										}
-										if (!empty($delay[$i]['passiverules_3'])) {
-											echo("<p><i>* ".$delay[$i]['passiverules_3']."</i></p>");
-										}
-									 ?>
-									<p><?= $delay[$i]['description'] ?></p>
-								</div>
-								<?php if (!empty($delay[$i]['flavor'])) { ?>
-									<div class="col-8 col-offset-2 tag align-center">
-										<p><i><?= flavorReplace($delay[$i]['flavor']) ?></i></p>
-									</div>
-								<?php } ?>
-							</div>
-							
-							<div class="col-12">
-								<div class="col-12">
-									<h4>Decks</h4>
-									<?php 
-									$decks = $deck->_db->prepare("SELECT id, deck_title, JSON, vote FROM decks WHERE JSON LIKE '%\"id\":".$delay[$i]['id']."%' AND isHidden = 0 ORDER BY vote DESC LIMIT 6");
-										if ($decks->execute()) {
-											while ($deckRow = $decks->fetch(PDO::FETCH_ASSOC)) {  ?>
-													<div class="col-4">
-														<p><?= $deckRow['vote'] ?> <i class="fa fa-star"></i> <a href="/deck/<?= $deckRow['id'] ?>" target="_blank"><?= $deckRow['deck_title'] ?></a></p>
-													</div>
-											<?php }
-										}
-									
-									?>
-								</div>
-							</div>
-							<div class="col-12">
-								<p><a href="http://api.scrolldier.com/view/php/api/scrollimage.php?id=<?= $delay[$i]['id'] ?>"  target="_blank">Full Scroll</a></p>
-							</div>
-						</div>
-						
-						<?php
+						echo("<div id='scroll-".$delay[$i]['id']."'></div>");
 					}
 					$delay = [];
 				}
@@ -125,7 +60,22 @@
 <script>
 $(function() {
 	$(".scroll-container").click(function() {
+		var id = $(this).attr("data-id");
 		$("[id*=scroll-]").slideUp();
+		
+		if ($("#scroll-"+id).html() == "") {
+			$.ajax({
+			  method: "POST",
+			  url: "view/admin/ajax/scroll.php",
+			  data: { id: $(this).attr("data-id") }
+			})
+			  .done(function( data ) {
+			  	
+			    $("#scroll-"+id).html(data);
+			    $("#scroll-"+id).slideDown();
+			    console.log("done fetching data for scrolls #"+id);
+			  });
+		}
 		
 		if ($("#scroll-"+$(this).attr("data-id")).css("display") == "block") {
 			$("#scroll-"+$(this).attr("data-id")).slideUp();
