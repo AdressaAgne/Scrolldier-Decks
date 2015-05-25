@@ -56,7 +56,7 @@ if ($scroll['kind'] == "CREATURE" || $scroll['kind'] == "STRUCTURE") {
 <script>
 	console.log('begin');
 	
-	var url = 'https://cdn.rawgit.com/darosh/scrolls-and-decks/master/client/';
+	var url = 'data/';
 	var id = <?= $scroll['bundle'] ?>;
 	var element = document.getElementById("unit-<?= $scroll['id'] ?>");
 	var attrs = {};
@@ -85,12 +85,12 @@ if ($scroll['kind'] == "CREATURE" || $scroll['kind'] == "STRUCTURE") {
 	var data;
 	
 	data = $.ajax({
-	  url: url + 'data/bundles/' + id + '/data.json',
+	  url: url + 'bundles/' + id + '/data.json',
 	});
 	
 	var deferred = $.Deferred();
 	
-	spritesImg.src = url + 'data/bundles/' + id + '/sprites.png';
+	spritesImg.src = url + 'bundles/' + id + '/sprites.png';
 	spritesImg.onload = function() {
 	  deferred.img = spritesImg;
 	  deferred.resolve(deferred);
